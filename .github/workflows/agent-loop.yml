@@ -74,25 +74,26 @@ jobs:
   review-claude:
     if: github.event_name == 'pull_request'
     needs: validate-pr-contract
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - Linux
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          fetch-depth: 0
+
+      - name: Preflight local Claude CLI
+        run: ./scripts/agent/check-cli-health.sh --agent claude
 
       - name: Run Claude reviewer
-        env:
-          CLAUDE_REVIEW_COMMAND: ${{ secrets.CLAUDE_REVIEW_COMMAND }}
         run: |
           python3 scripts/agent/run-review.py \
             --task-id "${{ github.event.pull_request.number }}" \
             --agent claude \
             --pr-number "${{ github.event.pull_request.number }}" \
             --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --timeout-seconds 300 \
             --output "artifacts/reviews/${{ github.event.pull_request.number }}/claude.json"
 
       - name: Upload Claude artifact
@@ -105,25 +106,26 @@ jobs:
   review-gemini:
     if: github.event_name == 'pull_request'
     needs: validate-pr-contract
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - Linux
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          fetch-depth: 0
+
+      - name: Preflight local Gemini CLI
+        run: ./scripts/agent/check-cli-health.sh --agent gemini
 
       - name: Run Gemini reviewer
-        env:
-          GEMINI_REVIEW_COMMAND: ${{ secrets.GEMINI_REVIEW_COMMAND }}
         run: |
           python3 scripts/agent/run-review.py \
             --task-id "${{ github.event.pull_request.number }}" \
             --agent gemini \
             --pr-number "${{ github.event.pull_request.number }}" \
             --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --timeout-seconds 300 \
             --output "artifacts/reviews/${{ github.event.pull_request.number }}/gemini.json"
 
       - name: Upload Gemini artifact
@@ -136,25 +138,26 @@ jobs:
   review-codex:
     if: github.event_name == 'pull_request'
     needs: validate-pr-contract
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - Linux
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          fetch-depth: 0
+
+      - name: Preflight local Codex CLI
+        run: ./scripts/agent/check-cli-health.sh --agent codex
 
       - name: Run Codex reviewer
-        env:
-          CODEX_REVIEW_COMMAND: ${{ secrets.CODEX_REVIEW_COMMAND }}
         run: |
           python3 scripts/agent/run-review.py \
             --task-id "${{ github.event.pull_request.number }}" \
             --agent codex \
             --pr-number "${{ github.event.pull_request.number }}" \
             --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --timeout-seconds 300 \
             --output "artifacts/reviews/${{ github.event.pull_request.number }}/codex.json"
 
       - name: Upload Codex artifact

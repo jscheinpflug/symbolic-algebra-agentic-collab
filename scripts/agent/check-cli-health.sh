@@ -4,6 +4,7 @@ set -euo pipefail
 probe=0
 prompt="say hello"
 timeout_seconds=30
+target_agent=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -27,12 +28,31 @@ while [[ $# -gt 0 ]]; do
       timeout_seconds="$2"
       shift 2
       ;;
+    --agent)
+      if [[ $# -lt 2 ]]; then
+        echo "Missing value for --agent" >&2
+        exit 2
+      fi
+      target_agent="$2"
+      shift 2
+      ;;
     *)
       echo "Unknown argument: $1" >&2
       exit 2
       ;;
   esac
 done
+
+if [[ -n "${target_agent}" ]]; then
+  case "${target_agent}" in
+    claude|gemini|codex) ;;
+    *)
+      echo "Invalid --agent value: ${target_agent}" >&2
+      echo "Expected one of: claude, gemini, codex" >&2
+      exit 2
+      ;;
+  esac
+fi
 
 check_binary() {
   local bin="$1"
@@ -62,16 +82,32 @@ probe_model() {
 }
 
 failures=0
+agents=()
+if [[ -n "${target_agent}" ]]; then
+  agents=("${target_agent}")
+else
+  agents=("codex" "claude" "gemini")
+fi
 
-check_binary "codex" || failures=$((failures + 1))
-check_binary "claude" || failures=$((failures + 1))
-check_binary "gemini" || failures=$((failures + 1))
+for agent in "${agents[@]}"; do
+  check_binary "${agent}" || failures=$((failures + 1))
+done
 
 if [[ ${probe} -eq 1 ]]; then
   echo "Running non-interactive probes with prompt: ${prompt}"
-  probe_model "codex" codex exec "${prompt}" || failures=$((failures + 1))
-  probe_model "claude" claude -p "${prompt}" || failures=$((failures + 1))
-  probe_model "gemini" gemini "${prompt}" || failures=$((failures + 1))
+  for agent in "${agents[@]}"; do
+    case "${agent}" in
+      codex)
+        probe_model "codex" codex exec "${prompt}" || failures=$((failures + 1))
+        ;;
+      claude)
+        probe_model "claude" claude -p "${prompt}" || failures=$((failures + 1))
+        ;;
+      gemini)
+        probe_model "gemini" gemini "${prompt}" || failures=$((failures + 1))
+        ;;
+    esac
+  done
 fi
 
 if [[ ${failures} -gt 0 ]]; then

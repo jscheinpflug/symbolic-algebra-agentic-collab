@@ -49,12 +49,14 @@ Use `./scripts/format.sh` to rewrite files in place.
   - at least 2 of 3 approvals,
   - no `blocking=true`,
   - no `critical` severity findings.
-- Configure reviewer command secrets in GitHub:
-  - `CLAUDE_REVIEW_COMMAND`
-  - `GEMINI_REVIEW_COMMAND`
-  - `CODEX_REVIEW_COMMAND`
+- Reviewer jobs are executed on a self-hosted Linux runner.
+- Local CLIs must be installed and authenticated on the runner account:
+  - `claude`
+  - `gemini`
+  - `codex`
 - Local CLI availability check:
   - `./scripts/agent/check-cli-health.sh`
+  - Per-agent check: `./scripts/agent/check-cli-health.sh --agent claude`
   - Optional non-interactive probe: `./scripts/agent/check-cli-health.sh --probe --timeout 60`
 
 ## Daily Policy Adaptation

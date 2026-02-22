@@ -29,10 +29,11 @@
   - No reviewer may mark `blocking=true`.
   - No reviewer may report `severity=critical`.
 - If gate fails, PR remains blocked until a new revision cycle produces passing reviewer artifacts.
-- GitHub secrets must provide reviewer commands:
-  - `CLAUDE_REVIEW_COMMAND`
-  - `GEMINI_REVIEW_COMMAND`
-  - `CODEX_REVIEW_COMMAND`
+- Reviewer jobs run on a self-hosted Linux runner.
+- Local reviewer CLIs must exist and be authenticated on that runner:
+  - `claude`
+  - `gemini`
+  - `codex`
 
 ## Policy Adaptation Governance
 
