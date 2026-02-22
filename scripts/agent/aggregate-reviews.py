@@ -8,7 +8,7 @@ import sys
 from typing import Any
 
 
-REQUIRED_REVIEWERS = ("claude", "gemini", "codex")
+DEFAULT_REVIEWERS = ("claude", "gemini", "codex")
 
 
 def fail(message: str) -> int:
@@ -56,7 +56,9 @@ def load_review(artifacts_dir: Path, reviewer: str) -> dict[str, Any]:
     return data
 
 
-def build_summary(reviews: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def build_summary(
+    reviews: dict[str, dict[str, Any]], approvals_required: int
+) -> dict[str, Any]:
     approvals = 0
     blocking_reviewers = []
     critical_reviewers = []
@@ -69,9 +71,14 @@ def build_summary(reviews: dict[str, dict[str, Any]]) -> dict[str, Any]:
         if review["severity"] == "critical":
             critical_reviewers.append(reviewer)
 
-    passed = approvals >= 2 and not blocking_reviewers and not critical_reviewers
+    passed = (
+        approvals >= approvals_required
+        and not blocking_reviewers
+        and not critical_reviewers
+    )
     return {
         "approvals": approvals,
+        "approvals_required": approvals_required,
         "total_reviewers": len(reviews),
         "blocking_reviewers": blocking_reviewers,
         "critical_reviewers": critical_reviewers,
@@ -80,13 +87,18 @@ def build_summary(reviews: dict[str, dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def write_summary_markdown(path: Path, reviews: dict[str, dict[str, Any]], summary: dict[str, Any]) -> None:
+def write_summary_markdown(
+    path: Path,
+    reviews: dict[str, dict[str, Any]],
+    summary: dict[str, Any],
+    reviewer_order: list[str],
+) -> None:
     lines = [
         "# Agent Review Summary",
         "",
         f"- Decision: `{summary['decision']}`",
         f"- Gate passed: `{summary['gate_passed']}`",
-        f"- Approvals: `{summary['approvals']}/{summary['total_reviewers']}`",
+        f"- Approvals: `{summary['approvals']}/{summary['total_reviewers']}` (required: `{summary['approvals_required']}`)",
         f"- Blocking reviewers: `{', '.join(summary['blocking_reviewers']) if summary['blocking_reviewers'] else 'none'}`",
         f"- Critical reviewers: `{', '.join(summary['critical_reviewers']) if summary['critical_reviewers'] else 'none'}`",
         "",
@@ -94,7 +106,7 @@ def write_summary_markdown(path: Path, reviews: dict[str, dict[str, Any]], summa
         "",
     ]
 
-    for reviewer in REQUIRED_REVIEWERS:
+    for reviewer in reviewer_order:
         review = reviews[reviewer]
         lines.extend(
             [
@@ -116,21 +128,56 @@ def write_summary_markdown(path: Path, reviews: dict[str, dict[str, Any]], summa
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def normalize_reviewer_list(reviewers: list[str]) -> list[str]:
+    allowed = set(DEFAULT_REVIEWERS)
+    normalized: list[str] = []
+    for reviewer in reviewers:
+        item = reviewer.strip().lower()
+        if item not in allowed:
+            raise ValueError(
+                f"Invalid reviewer '{reviewer}'. Expected one of: {sorted(allowed)}"
+            )
+        if item not in normalized:
+            normalized.append(item)
+    return normalized
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Aggregate Claude/Gemini/Codex review artifacts.")
+    parser = argparse.ArgumentParser(
+        description="Aggregate reviewer artifacts with configurable required reviewers."
+    )
     parser.add_argument("--artifacts-dir", required=True)
     parser.add_argument("--output-json", required=True)
     parser.add_argument("--output-md", required=True)
+    parser.add_argument("--required-reviewer", action="append")
+    parser.add_argument("--required-approvals", type=int, default=2)
     args = parser.parse_args()
 
     artifacts_dir = Path(args.artifacts_dir)
     output_json = Path(args.output_json)
     output_md = Path(args.output_md)
+    required_approvals = args.required_approvals
+
+    if required_approvals <= 0:
+        return fail("--required-approvals must be > 0")
+
+    try:
+        required_reviewers = normalize_reviewer_list(
+            args.required_reviewer or list(DEFAULT_REVIEWERS)
+        )
+    except ValueError as exc:
+        return fail(str(exc))
+
+    if len(required_reviewers) < required_approvals:
+        return fail(
+            "Not enough required reviewers to satisfy approvals threshold: "
+            f"required_reviewers={required_reviewers}, required_approvals={required_approvals}"
+        )
 
     reviews: dict[str, dict[str, Any]] = {}
     validation_errors: list[str] = []
 
-    for reviewer in REQUIRED_REVIEWERS:
+    for reviewer in required_reviewers:
         try:
             review = load_review(artifacts_dir, reviewer)
         except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
@@ -147,12 +194,14 @@ def main() -> int:
             print(item, file=sys.stderr)
         return 1
 
-    summary = build_summary(reviews)
+    summary = build_summary(reviews, approvals_required=required_approvals)
     payload = {"summary": summary, "reviews": reviews}
 
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    write_summary_markdown(output_md, reviews, summary)
+    write_summary_markdown(
+        output_md, reviews, summary, reviewer_order=required_reviewers
+    )
 
     if not summary["gate_passed"]:
         return fail("Agent review gate failed.")

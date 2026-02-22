@@ -58,6 +58,8 @@ Use `./scripts/format.sh` to rewrite files in place.
   - `claude`
   - `gemini`
   - `codex`
+- Reviewer availability is probed first; unavailable reviewers (for example a frozen `gemini` CLI) are skipped automatically.
+- At least 2 reviewer artifacts are still required for a passing aggregate gate.
 - Local CLI availability check:
   - `./scripts/agent/check-cli-health.sh`
   - Per-agent check: `./scripts/agent/check-cli-health.sh --agent claude`

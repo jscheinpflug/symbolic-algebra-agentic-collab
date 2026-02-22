@@ -58,8 +58,46 @@ jobs:
             core.setOutput("pr_number", String(prNumber));
             core.setOutput("pr_head_sha", pr.head.sha);
 
-  review-claude:
+  detect-reviewers:
     needs: trust-gate
+    runs-on:
+      - self-hosted
+      - Linux
+    outputs:
+      claude_available: ${{ steps.detect.outputs.claude_available }}
+      gemini_available: ${{ steps.detect.outputs.gemini_available }}
+      codex_available: ${{ steps.detect.outputs.codex_available }}
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ needs.trust-gate.outputs.pr_number }}/head
+          fetch-depth: 0
+
+      - name: Detect available local reviewer CLIs
+        id: detect
+        run: |
+          set +e
+          timeout_value="${{ inputs.timeout_seconds }}"
+
+          detect_agent() {
+            local agent="$1"
+            if ./scripts/agent/check-cli-health.sh --agent "${agent}" --probe --timeout "${timeout_value}"; then
+              echo "${agent}_available=true" >> "${GITHUB_OUTPUT}"
+            else
+              echo "${agent}_available=false" >> "${GITHUB_OUTPUT}"
+            fi
+          }
+
+          detect_agent claude
+          detect_agent gemini
+          detect_agent codex
+
+  review-claude:
+    if: needs.detect-reviewers.outputs.claude_available == 'true'
+    needs:
+      - trust-gate
+      - detect-reviewers
     runs-on:
       - self-hosted
       - Linux
@@ -91,7 +129,10 @@ jobs:
           if-no-files-found: error
 
   review-gemini:
-    needs: trust-gate
+    if: needs.detect-reviewers.outputs.gemini_available == 'true'
+    needs:
+      - trust-gate
+      - detect-reviewers
     runs-on:
       - self-hosted
       - Linux
@@ -123,7 +164,10 @@ jobs:
           if-no-files-found: error
 
   review-codex:
-    needs: trust-gate
+    if: needs.detect-reviewers.outputs.codex_available == 'true'
+    needs:
+      - trust-gate
+      - detect-reviewers
     runs-on:
       - self-hosted
       - Linux
@@ -157,6 +201,7 @@ jobs:
   aggregate-reviews:
     needs:
       - trust-gate
+      - detect-reviewers
       - review-claude
       - review-gemini
       - review-codex
@@ -171,18 +216,21 @@ jobs:
           python-version: "3.x"
 
       - name: Download Claude artifact
+        if: needs.detect-reviewers.outputs.claude_available == 'true'
         uses: actions/download-artifact@v4
         with:
           name: review-claude
           path: artifacts/download/claude
 
       - name: Download Gemini artifact
+        if: needs.detect-reviewers.outputs.gemini_available == 'true'
         uses: actions/download-artifact@v4
         with:
           name: review-gemini
           path: artifacts/download/gemini
 
       - name: Download Codex artifact
+        if: needs.detect-reviewers.outputs.codex_available == 'true'
         uses: actions/download-artifact@v4
         with:
           name: review-codex
@@ -190,8 +238,31 @@ jobs:
 
       - name: Aggregate reviewer artifacts
         run: |
+          reviewers=()
+          if [ "${{ needs.detect-reviewers.outputs.claude_available }}" = "true" ]; then
+            reviewers+=(claude)
+          fi
+          if [ "${{ needs.detect-reviewers.outputs.gemini_available }}" = "true" ]; then
+            reviewers+=(gemini)
+          fi
+          if [ "${{ needs.detect-reviewers.outputs.codex_available }}" = "true" ]; then
+            reviewers+=(codex)
+          fi
+
+          if [ "${#reviewers[@]}" -lt 2 ]; then
+            echo "Need at least 2 available reviewers. Detected: ${reviewers[*]}" >&2
+            exit 1
+          fi
+
+          reviewer_args=()
+          for reviewer in "${reviewers[@]}"; do
+            reviewer_args+=(--required-reviewer "${reviewer}")
+          done
+
           python3 scripts/agent/aggregate-reviews.py \
             --artifacts-dir artifacts/download \
+            --required-approvals 2 \
+            "${reviewer_args[@]}" \
             --output-json "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.json" \
             --output-md "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.md"
 
