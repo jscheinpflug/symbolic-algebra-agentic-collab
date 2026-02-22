@@ -53,6 +53,9 @@ Use `./scripts/format.sh` to rewrite files in place.
   - `CLAUDE_REVIEW_COMMAND`
   - `GEMINI_REVIEW_COMMAND`
   - `CODEX_REVIEW_COMMAND`
+- Local CLI availability check:
+  - `./scripts/agent/check-cli-health.sh`
+  - Optional non-interactive probe: `./scripts/agent/check-cli-health.sh --probe --timeout 60`
 
 ## Daily Policy Adaptation
 
