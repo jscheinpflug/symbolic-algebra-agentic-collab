@@ -27,6 +27,18 @@ jobs:
             const association = context.payload.comment.author_association;
             const body = (context.payload.comment.body || "").trim();
             const commandMatch = body.match(/^\/trusted-review(?:\s+timeout=(\d+))?\s*$/i);
+            const safeComment = async (commentBody) => {
+              try {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: prNumber,
+                  body: commentBody
+                });
+              } catch (error) {
+                core.warning(`Failed to post PR comment: ${error}`);
+              }
+            };
 
             if (!commandMatch) {
               core.info("No /trusted-review command found.");
@@ -35,12 +47,9 @@ jobs:
 
             const trustedAssociations = ["OWNER", "MEMBER", "COLLABORATOR"];
             if (!trustedAssociations.includes(association)) {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body: `@${commenter} trusted review dispatch is restricted to OWNER/MEMBER/COLLABORATOR.`
-              });
+              await safeComment(
+                `@${commenter} trusted review dispatch is restricted to OWNER/MEMBER/COLLABORATOR.`
+              );
               return;
             }
 
@@ -51,24 +60,18 @@ jobs:
             });
 
             if (pr.state !== "open") {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body: `@${commenter} PR #${prNumber} is not open; trusted review was not dispatched.`
-              });
+              await safeComment(
+                `@${commenter} PR #${prNumber} is not open; trusted review was not dispatched.`
+              );
               return;
             }
 
             const fromFork = pr.head.repo.full_name !== `${owner}/${repo}`;
             const trustedAuthor = trustedAssociations.includes(pr.author_association);
             if (fromFork || !trustedAuthor) {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body: `@${commenter} trusted review dispatch blocked by trust policy (fromFork=${fromFork}, pr_author_association=${pr.author_association}).`
-              });
+              await safeComment(
+                `@${commenter} trusted review dispatch blocked by trust policy (fromFork=${fromFork}, pr_author_association=${pr.author_association}).`
+              );
               return;
             }
 
@@ -87,9 +90,6 @@ jobs:
               }
             });
 
-            await github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number: prNumber,
-              body: `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s.`
-            });
+            await safeComment(
+              `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s.`
+            );
