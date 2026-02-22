@@ -17,7 +17,7 @@ fi
 missing=0
 for path in "${referenced_paths[@]}"; do
   case "$path" in
-    AGENTS.md|README.md|docs/*|schemas/*|scripts/*|.github/*|symbolic-algebra-agentic-collab.cabal)
+    AGENTS.md|README.md|docs/*|schemas/*|scripts/*|.github/*|.agent-reviewer-policy.json|symbolic-algebra-agentic-collab.cabal)
       if [ ! -e "$path" ]; then
         echo "docs/index.md references missing path: $path"
         missing=1

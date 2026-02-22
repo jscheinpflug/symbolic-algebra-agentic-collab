@@ -23,8 +23,10 @@
 - Trusted review workflow: `.github/workflows/trusted-agent-review.yml`
 - Trusted review dispatch workflow: `.github/workflows/trusted-review-dispatch.yml`
 - Daily policy workflow: `.github/workflows/policy-daily.yml`
+- Reviewer policy: `.agent-reviewer-policy.json`
 - Reviewer runner script: `scripts/agent/run-review.py`
 - Review aggregation script: `scripts/agent/aggregate-reviews.py`
+- Reviewer policy validator: `scripts/agent/validate-reviewer-policy.py`
 - Task schema: `schemas/agent-task.schema.json`
 - Review schema: `schemas/review-artifact.schema.json`
 - Decision packet schema: `schemas/decision-packet.schema.json`

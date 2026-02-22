@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "reviewers": {
+    "claude": {
+      "enabled": true
+    },
+    "gemini": {
+      "enabled": false
+    },
+    "codex": {
+      "enabled": true
+    }
+  },
+  "minimum_required_approvals": 2
+}

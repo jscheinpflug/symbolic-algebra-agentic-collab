@@ -38,6 +38,7 @@ Use `./scripts/format.sh` to rewrite files in place.
 - Trusted local review loop: `.github/workflows/trusted-agent-review.yml`
 - Trusted review comment-dispatch loop: `.github/workflows/trusted-review-dispatch.yml`
 - Daily policy adaptation: `.github/workflows/policy-daily.yml`
+- Reviewer policy: `.agent-reviewer-policy.json`
 - Schemas: `schemas/`
 - Protocol and architecture docs: `docs/`
 
@@ -48,7 +49,7 @@ Use `./scripts/format.sh` to rewrite files in place.
   - Gemini
   - Codex
 - Aggregation gate requires:
-  - at least 2 of 3 approvals,
+  - at least `minimum_required_approvals` approvals from `.agent-reviewer-policy.json` (default `2`),
   - no `blocking=true`,
   - no `critical` severity findings.
 - Standard trust split:
@@ -60,13 +61,15 @@ Use `./scripts/format.sh` to rewrite files in place.
   - `/trusted-review timeout=600`
   - `/trusted-review no-gemini`
   - `/trusted-review timeout=600 no-gemini`
+- Reviewer baseline is loaded from `.agent-reviewer-policy.json` (default: `claude=on`, `gemini=off`, `codex=on`).
+- Effective reviewers for a run are: `policy-enabled` AND `dispatch override` AND `health-check available`.
 - Trusted workflow writes commit status context `trusted-agent-review/aggregate` on the PR head SHA.
 - Local CLIs must be installed and authenticated on the runner account:
   - `claude`
   - `gemini`
   - `codex`
-- Reviewer availability is probed first; unavailable reviewers (for example a frozen `gemini` CLI) are skipped automatically.
-- At least 2 reviewer artifacts are still required for a passing aggregate gate.
+- Reviewer availability is probed first; unavailable reviewers are skipped automatically.
+- Available reviewer count must still satisfy `minimum_required_approvals` from policy.
 - For protected branches, require status checks:
   - `lint-format-build-test`
   - `trusted-agent-review/aggregate`

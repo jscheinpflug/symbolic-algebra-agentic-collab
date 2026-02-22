@@ -25,7 +25,7 @@
 
 - Three independent reviewer artifacts are required: Claude, Gemini, and Codex.
 - Aggregation policy:
-  - At least 2 of 3 verdicts must be `approve`.
+  - At least `minimum_required_approvals` verdicts must be `approve` (configured in `.agent-reviewer-policy.json`, default `2`).
   - No reviewer may mark `blocking=true`.
   - No reviewer may report `severity=critical`.
 - If gate fails, PR remains blocked until a new revision cycle produces passing reviewer artifacts.
@@ -34,9 +34,11 @@
   - Trusted local reviewer execution runs only via `workflow_dispatch` in `.github/workflows/trusted-agent-review.yml`.
 - Trusted users can trigger trusted review from PR comments through `.github/workflows/trusted-review-dispatch.yml` using `/trusted-review` (optional `timeout=<seconds>`).
 - Trusted users can disable Gemini for a run by adding `no-gemini` (for example `/trusted-review timeout=600 no-gemini`).
+- Reviewer baseline is loaded from `.agent-reviewer-policy.json` (`claude=on`, `gemini=off`, `codex=on` by default).
 - Trusted review dispatch validates PR source and author before self-hosted execution.
 - Trusted workflow probes reviewer availability first; unavailable CLIs are skipped.
-- Aggregate gate still requires at least two reviewer approvals with no blocking/critical findings.
+- Effective reviewer set is `policy-enabled` AND `dispatch override` AND `health-check available`.
+- Aggregate gate requires available reviewers to satisfy policy `minimum_required_approvals`.
 - Trusted workflow also writes commit status context `trusted-agent-review/aggregate` on the PR head SHA.
 - Branch protection should require both `lint-format-build-test` and `trusted-agent-review/aggregate`.
 - Local reviewer CLIs must exist and be authenticated on that runner:

@@ -117,5 +117,5 @@ jobs:
             });
 
             await safeComment(
-              `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s and gemini=${enableGemini ? "on" : "off"}.`
+              `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s and requested_gemini=${enableGemini ? "on" : "off"} (repo policy still applies).`
             );

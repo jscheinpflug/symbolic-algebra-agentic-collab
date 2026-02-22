@@ -3,7 +3,7 @@
 ## Layers
 
 1. Contracts layer
-- Files: `schemas/`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`
+- Files: `schemas/`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`, `.agent-reviewer-policy.json`
 - Purpose: machine-readable workflow contracts.
 
 2. Core domain layer
