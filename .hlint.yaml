@@ -1,0 +1,9 @@
+- arguments:
+    - --cross
+    - --color=never
+
+- ignore:
+    name: "Use lambda-case"
+
+- ignore:
+    name: "Use newtype instead of data"

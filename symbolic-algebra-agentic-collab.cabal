@@ -1,0 +1,65 @@
+cabal-version: 3.0
+name: symbolic-algebra-agentic-collab
+version: 0.1.0.0
+synopsis: Agentic collaboration scaffold for symbolic algebra in Haskell
+description:
+  Project scaffold for a type/test-driven symbolic algebra system with
+  multi-agent development workflows and CI-enforced policy checks.
+license: MIT
+license-file: LICENSE
+author: Jaroslav Scheinpflug
+maintainer: jscheinpflug@g.harvard.edu
+build-type: Simple
+extra-doc-files:
+  CHANGELOG.md
+  README.md
+  rules.md
+  plan.md
+
+common warnings
+  default-extensions:
+    OverloadedStrings
+  ghc-options:
+    -Wall
+    -Werror
+    -Wcompat
+    -Wincomplete-patterns
+    -Wincomplete-uni-patterns
+    -Wincomplete-record-updates
+    -Wpartial-fields
+    -Wredundant-constraints
+
+library
+  import: warnings
+  exposed-modules:
+    SymbolicAlgebraAgenticCollab
+    SymbolicAlgebraAgenticCollab.Config
+    SymbolicAlgebraAgenticCollab.Logging
+    SymbolicAlgebraAgenticCollab.Workflow
+  build-depends:
+    base >=4.18 && <5,
+    text >=2.0 && <2.2,
+    hslogger >=1.3 && <1.4
+  hs-source-dirs: src
+  default-language: GHC2021
+
+executable symbolic-algebra-agentic-collab
+  import: warnings
+  main-is: Main.hs
+  build-depends:
+    base >=4.18 && <5,
+    text >=2.0 && <2.2,
+    symbolic-algebra-agentic-collab
+  hs-source-dirs: app
+  default-language: GHC2021
+
+test-suite symbolic-algebra-agentic-collab-test
+  import: warnings
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  build-depends:
+    base >=4.18 && <5,
+    text >=2.0 && <2.2,
+    symbolic-algebra-agentic-collab
+  hs-source-dirs: test
+  default-language: GHC2021

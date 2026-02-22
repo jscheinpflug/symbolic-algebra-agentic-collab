@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentTask",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "goal": { "type": "string", "minLength": 1 },
+    "scope_in": { "type": "string", "minLength": 1 },
+    "scope_out": { "type": "string", "minLength": 1 },
+    "acceptance_criteria": { "type": "string", "minLength": 1 },
+    "risk_level": { "type": "string", "enum": ["low", "medium", "high"] },
+    "benchmark_subset": { "type": "string", "minLength": 1 },
+    "constraints": { "type": "string", "minLength": 1 }
+  },
+  "required": [
+    "goal",
+    "scope_in",
+    "scope_out",
+    "acceptance_criteria",
+    "risk_level",
+    "benchmark_subset",
+    "constraints"
+  ]
+}

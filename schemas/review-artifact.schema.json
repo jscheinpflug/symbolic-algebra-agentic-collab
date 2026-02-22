@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReviewArtifact",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "task_id": { "type": "string", "minLength": 1 },
+    "agent_role": {
+      "type": "string",
+      "enum": ["claude", "gemini", "codex", "tie_break"]
+    },
+    "verdict": { "type": "string", "enum": ["approve", "request_changes"] },
+    "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+    "blocking": { "type": "boolean" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "findings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "required_changes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "required": [
+    "task_id",
+    "agent_role",
+    "verdict",
+    "severity",
+    "blocking",
+    "confidence",
+    "findings",
+    "required_changes"
+  ]
+}

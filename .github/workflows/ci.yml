@@ -1,0 +1,54 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-format-build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Haskell
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: "9.6.7"
+          cabal-version: "3.14.2.0"
+
+      - name: Cache cabal store
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cabal/store
+            dist-newstyle
+          key: ${{ runner.os }}-ghc-9.6.7-${{ hashFiles('**/*.cabal', 'cabal.project') }}
+          restore-keys: |
+            ${{ runner.os }}-ghc-9.6.7-
+
+      - name: Install dependencies
+        run: cabal update
+
+      - name: Install formatter and linter
+        run: |
+          cabal install --installdir="$HOME/.local/bin" --overwrite-policy=always fourmolu hlint
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build
+        run: cabal build all
+
+      - name: Test
+        run: cabal test all
+
+      - name: Format check
+        run: ./scripts/format-check.sh
+
+      - name: Lint
+        run: ./scripts/lint.sh
+
+      - name: Policy checks
+        run: ./scripts/policy/check-all.sh

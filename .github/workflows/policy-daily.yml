@@ -1,0 +1,198 @@
+name: policy-daily
+
+on:
+  schedule:
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  collect-propose-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Collect policy signals
+        id: collect
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const path = require("path");
+
+            const now = new Date();
+            const date = now.toISOString().slice(0, 10);
+            const since = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const workflowRuns = [];
+            for (let page = 1; page <= 3; page += 1) {
+              const response = await github.rest.actions.listWorkflowRunsForRepo({
+                owner,
+                repo,
+                per_page: 100,
+                page
+              });
+              workflowRuns.push(...response.data.workflow_runs);
+              if (response.data.workflow_runs.length < 100) {
+                break;
+              }
+            }
+
+            const recentRuns = workflowRuns.filter(
+              (run) => new Date(run.created_at) >= since
+            );
+            const failedRuns = recentRuns.filter((run) =>
+              ["failure", "cancelled", "timed_out", "action_required"].includes(run.conclusion)
+            );
+            const failingChecks = [...new Set(failedRuns.map((run) => run.name))];
+
+            const pullRequests = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: "open",
+              sort: "updated",
+              direction: "desc",
+              per_page: 100
+            });
+
+            let changesRequested = 0;
+            const findingCounts = new Map();
+
+            for (const pull of pullRequests) {
+              if (new Date(pull.updated_at) < since) {
+                continue;
+              }
+              const reviews = await github.paginate(github.rest.pulls.listReviews, {
+                owner,
+                repo,
+                pull_number: pull.number,
+                per_page: 100
+              });
+              for (const review of reviews) {
+                if (review.state !== "CHANGES_REQUESTED") {
+                  continue;
+                }
+                changesRequested += 1;
+                const body = (review.body || "changes_requested_without_body").trim();
+                const normalized = body.split("\n")[0].slice(0, 120) || "changes_requested_without_body";
+                findingCounts.set(normalized, (findingCounts.get(normalized) || 0) + 1);
+              }
+            }
+
+            const recurringFindings = [...findingCounts.entries()]
+              .filter(([, count]) => count >= 2)
+              .map(([finding]) => finding);
+
+            const catalogPath = path.join("docs", "policy", "rules-catalog.md");
+            const catalogText = fs.readFileSync(catalogPath, "utf8");
+            const catalogRows = catalogText
+              .split("\n")
+              .filter((line) => line.startsWith("| RULE-"));
+            const deadRules = [];
+            for (const row of catalogRows) {
+              const cells = row
+                .split("|")
+                .slice(1, -1)
+                .map((cell) => cell.trim());
+              if (cells.length < 7) {
+                continue;
+              }
+              const ruleId = cells[0];
+              const reviewedRaw = cells[4];
+              const freshnessRaw = Number(cells[5]);
+              const reviewedAt = new Date(`${reviewedRaw}T00:00:00Z`);
+              if (Number.isNaN(reviewedAt.getTime()) || Number.isNaN(freshnessRaw)) {
+                continue;
+              }
+              const ageDays = Math.floor((now - reviewedAt) / (24 * 60 * 60 * 1000));
+              if (ageDays > freshnessRaw) {
+                deadRules.push({ rule_id: ruleId, age_days: ageDays });
+              }
+            }
+
+            const signal = {
+              date,
+              window_hours: 24,
+              ci: {
+                failed_runs: failedRuns.length,
+                failing_checks: failingChecks,
+                flaky_checks: []
+              },
+              reviews: {
+                changes_requested: changesRequested,
+                recurring_findings: recurringFindings
+              },
+              dead_rules: deadRules
+            };
+
+            const outputDir = path.join("artifacts", "policy-signals");
+            fs.mkdirSync(outputDir, { recursive: true });
+            const signalFile = path.join(outputDir, `${date}.json`);
+            fs.writeFileSync(signalFile, `${JSON.stringify(signal, null, 2)}\n`);
+
+            core.setOutput("date", date);
+            core.setOutput("signal_file", signalFile);
+
+      - name: Validate signal artifact
+        run: python3 scripts/policy/validate-policy-artifact.py signal "${{ steps.collect.outputs.signal_file }}"
+
+      - name: Generate policy proposal
+        run: |
+          python3 scripts/policy/generate-daily-policy-proposal.py \
+            "${{ steps.collect.outputs.signal_file }}" \
+            "artifacts/policy-proposals/${{ steps.collect.outputs.date }}.json" \
+            "artifacts/policy-proposals/${{ steps.collect.outputs.date }}.md"
+
+      - name: Validate proposal artifact
+        run: python3 scripts/policy/validate-policy-artifact.py proposal "artifacts/policy-proposals/${{ steps.collect.outputs.date }}.json"
+
+      - name: Update policy changelog
+        run: |
+          DATE="${{ steps.collect.outputs.date }}"
+          if ! grep -q "^## ${DATE}$" docs/policy/changelog.md; then
+            {
+              echo ""
+              echo "## ${DATE}"
+              echo ""
+              echo "1. Added daily policy signal artifact: \`artifacts/policy-signals/${DATE}.json\`."
+              echo "2. Added daily policy proposal artifacts under \`artifacts/policy-proposals/\`."
+            } >> docs/policy/changelog.md
+          fi
+
+      - name: Create policy update PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: policy/daily-${{ steps.collect.outputs.date }}
+          commit-message: "policy: daily adaptation ${{ steps.collect.outputs.date }}"
+          title: "policy: daily adaptation ${{ steps.collect.outputs.date }}"
+          body: |
+            Automated daily policy adaptation PR.
+
+            Included artifacts:
+            - `artifacts/policy-signals/${{ steps.collect.outputs.date }}.json`
+            - `artifacts/policy-proposals/${{ steps.collect.outputs.date }}.json`
+            - `artifacts/policy-proposals/${{ steps.collect.outputs.date }}.md`
+
+            This PR is generated from CI and review signals for the last 24 hours.
+          labels: |
+            policy-update
+            automated
+          add-paths: |
+            artifacts/policy-signals/${{ steps.collect.outputs.date }}.json
+            artifacts/policy-proposals/${{ steps.collect.outputs.date }}.json
+            artifacts/policy-proposals/${{ steps.collect.outputs.date }}.md
+            docs/policy/changelog.md

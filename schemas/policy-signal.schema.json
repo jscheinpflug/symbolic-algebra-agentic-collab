@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PolicySignal",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": { "type": "string", "format": "date" },
+    "window_hours": { "type": "integer", "minimum": 1 },
+    "ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "failed_runs": { "type": "integer", "minimum": 0 },
+        "failing_checks": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "flaky_checks": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "required": ["failed_runs", "failing_checks", "flaky_checks"]
+    },
+    "reviews": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "changes_requested": { "type": "integer", "minimum": 0 },
+        "recurring_findings": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "required": ["changes_requested", "recurring_findings"]
+    },
+    "dead_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rule_id": { "type": "string", "minLength": 1 },
+          "age_days": { "type": "integer", "minimum": 0 }
+        },
+        "required": ["rule_id", "age_days"]
+      }
+    }
+  },
+  "required": ["date", "window_hours", "ci", "reviews", "dead_rules"]
+}

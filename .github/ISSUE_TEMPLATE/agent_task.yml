@@ -1,0 +1,65 @@
+name: Agent Task
+description: Queue a scoped task for the autonomous agent loop.
+title: "[agent-task] "
+labels:
+  - agent-task
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What outcome should be achieved?
+      placeholder: Implement X so that Y is possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope_in
+    attributes:
+      label: In Scope
+      description: Explicitly list what is included.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope_out
+    attributes:
+      label: Out of Scope
+      description: Explicitly list what must not be changed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Measurable checks that define completion.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: risk_level
+    attributes:
+      label: Risk Level
+      options:
+        - low
+        - medium
+        - high
+    validations:
+      required: true
+
+  - type: textarea
+    id: benchmark_subset
+    attributes:
+      label: Benchmark Subset
+      description: Which benchmark slice should be used for regression checks?
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: Hard constraints (APIs, compatibility, performance bounds).
+    validations:
+      required: true

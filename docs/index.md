@@ -1,0 +1,30 @@
+# Docs Index
+
+- Agent entrypoint: `AGENTS.md`
+- Project README: `README.md`
+- Core package spec: `symbolic-algebra-agentic-collab.cabal`
+- Architecture boundaries: `docs/architecture/layers.md`
+- Agentic loop contract: `docs/domains/agentic-loop.md`
+- Logging contract: `docs/domains/logging.md`
+- Safety contract: `docs/domains/safety.md`
+- Rules catalog: `docs/policy/rules-catalog.md`
+- Policy changelog: `docs/policy/changelog.md`
+- Quality posture: `docs/quality/scorecard.md`
+- Policy scripts: `scripts/policy/check-all.sh`
+- Partial ban policy: `scripts/policy/check-no-partials.sh`
+- String ban policy: `scripts/policy/check-no-string.sh`
+- Rule freshness policy: `scripts/policy/check-rule-freshness.sh`
+- Policy coverage policy: `scripts/policy/check-policy-coverage.sh`
+- Dead-rule policy: `scripts/policy/check-dead-rules.sh`
+- Issue template: `.github/ISSUE_TEMPLATE/agent_task.yml`
+- PR template: `.github/pull_request_template.md`
+- CI workflow: `.github/workflows/ci.yml`
+- Agent loop workflow: `.github/workflows/agent-loop.yml`
+- Daily policy workflow: `.github/workflows/policy-daily.yml`
+- Reviewer runner script: `scripts/agent/run-review.py`
+- Review aggregation script: `scripts/agent/aggregate-reviews.py`
+- Task schema: `schemas/agent-task.schema.json`
+- Review schema: `schemas/review-artifact.schema.json`
+- Decision packet schema: `schemas/decision-packet.schema.json`
+- Policy signal schema: `schemas/policy-signal.schema.json`
+- Policy proposal schema: `schemas/policy-change-proposal.schema.json`

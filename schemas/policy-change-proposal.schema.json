@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PolicyChangeProposal",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": { "type": "string", "format": "date" },
+    "source_signal_file": { "type": "string", "minLength": 1 },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "change": { "type": "string", "minLength": 1 },
+          "evidence": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "risk": { "type": "string", "minLength": 1 },
+          "rollback_condition": { "type": "string", "minLength": 1 }
+        },
+        "required": [
+          "id",
+          "target",
+          "severity",
+          "change",
+          "evidence",
+          "risk",
+          "rollback_condition"
+        ]
+      }
+    }
+  },
+  "required": ["date", "source_signal_file", "proposals"]
+}

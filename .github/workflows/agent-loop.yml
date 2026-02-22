@@ -1,0 +1,229 @@
+name: agent-loop
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+      - reopened
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-agent-task:
+    if: github.event_name == 'issues' && contains(join(github.event.issue.labels.*.name, ','), 'agent-task')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate issue structure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || "";
+            const required = [
+              "### Goal",
+              "### In Scope",
+              "### Out of Scope",
+              "### Acceptance Criteria",
+              "### Risk Level",
+              "### Benchmark Subset",
+              "### Constraints"
+            ];
+            const missing = required.filter((section) => !body.includes(section));
+            if (missing.length > 0) {
+              core.setFailed(`Issue missing required sections: ${missing.join(", ")}`);
+            }
+
+  validate-pr-contract:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate PR template sections
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const required = [
+              "## Type Changes",
+              "## Tests Added",
+              "## Benchmark Impact",
+              "## Known Risks",
+              "## Source Provenance",
+              "## Agent Protocol Tags"
+            ];
+            const missing = required.filter((section) => !body.includes(section));
+            if (missing.length > 0) {
+              core.setFailed(`PR description missing required sections: ${missing.join(", ")}`);
+            }
+
+      - name: Policy checks
+        run: ./scripts/policy/check-all.sh
+
+  review-claude:
+    if: github.event_name == 'pull_request'
+    needs: validate-pr-contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run Claude reviewer
+        env:
+          CLAUDE_REVIEW_COMMAND: ${{ secrets.CLAUDE_REVIEW_COMMAND }}
+        run: |
+          python3 scripts/agent/run-review.py \
+            --task-id "${{ github.event.pull_request.number }}" \
+            --agent claude \
+            --pr-number "${{ github.event.pull_request.number }}" \
+            --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --output "artifacts/reviews/${{ github.event.pull_request.number }}/claude.json"
+
+      - name: Upload Claude artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-claude
+          path: artifacts/reviews/${{ github.event.pull_request.number }}/claude.json
+          if-no-files-found: error
+
+  review-gemini:
+    if: github.event_name == 'pull_request'
+    needs: validate-pr-contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run Gemini reviewer
+        env:
+          GEMINI_REVIEW_COMMAND: ${{ secrets.GEMINI_REVIEW_COMMAND }}
+        run: |
+          python3 scripts/agent/run-review.py \
+            --task-id "${{ github.event.pull_request.number }}" \
+            --agent gemini \
+            --pr-number "${{ github.event.pull_request.number }}" \
+            --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --output "artifacts/reviews/${{ github.event.pull_request.number }}/gemini.json"
+
+      - name: Upload Gemini artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-gemini
+          path: artifacts/reviews/${{ github.event.pull_request.number }}/gemini.json
+          if-no-files-found: error
+
+  review-codex:
+    if: github.event_name == 'pull_request'
+    needs: validate-pr-contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run Codex reviewer
+        env:
+          CODEX_REVIEW_COMMAND: ${{ secrets.CODEX_REVIEW_COMMAND }}
+        run: |
+          python3 scripts/agent/run-review.py \
+            --task-id "${{ github.event.pull_request.number }}" \
+            --agent codex \
+            --pr-number "${{ github.event.pull_request.number }}" \
+            --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --output "artifacts/reviews/${{ github.event.pull_request.number }}/codex.json"
+
+      - name: Upload Codex artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-codex
+          path: artifacts/reviews/${{ github.event.pull_request.number }}/codex.json
+          if-no-files-found: error
+
+  aggregate-reviews:
+    if: github.event_name == 'pull_request'
+    needs:
+      - review-claude
+      - review-gemini
+      - review-codex
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Download Claude artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: review-claude
+          path: artifacts/download/claude
+
+      - name: Download Gemini artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: review-gemini
+          path: artifacts/download/gemini
+
+      - name: Download Codex artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: review-codex
+          path: artifacts/download/codex
+
+      - name: Aggregate reviewer artifacts
+        run: |
+          python3 scripts/agent/aggregate-reviews.py \
+            --artifacts-dir artifacts/download \
+            --output-json "artifacts/reviews/${{ github.event.pull_request.number }}/summary.json" \
+            --output-md "artifacts/reviews/${{ github.event.pull_request.number }}/summary.md"
+
+      - name: Upload review summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-summary
+          path: |
+            artifacts/reviews/${{ github.event.pull_request.number }}/summary.json
+            artifacts/reviews/${{ github.event.pull_request.number }}/summary.md
+          if-no-files-found: error
+
+      - name: Comment review summary on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const summaryPath = `artifacts/reviews/${context.payload.pull_request.number}/summary.md`;
+            const body = fs.readFileSync(summaryPath, "utf8");
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body
+            });
