@@ -50,6 +50,7 @@ Use `./scripts/format.sh` to rewrite files in place.
   - no `blocking=true`,
   - no `critical` severity findings.
 - Reviewer jobs are executed on a self-hosted Linux runner.
+- Self-hosted reviewer jobs are blocked for fork/untrusted PRs by workflow safety gate.
 - Local CLIs must be installed and authenticated on the runner account:
   - `claude`
   - `gemini`

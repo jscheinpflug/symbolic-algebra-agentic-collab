@@ -30,6 +30,7 @@
   - No reviewer may report `severity=critical`.
 - If gate fails, PR remains blocked until a new revision cycle produces passing reviewer artifacts.
 - Reviewer jobs run on a self-hosted Linux runner.
+- A safety gate blocks self-hosted reviewer jobs for fork or untrusted PR authors.
 - Local reviewer CLIs must exist and be authenticated on that runner:
   - `claude`
   - `gemini`

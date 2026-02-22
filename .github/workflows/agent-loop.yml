@@ -71,9 +71,31 @@ jobs:
       - name: Policy checks
         run: ./scripts/policy/check-all.sh
 
-  review-claude:
+  review-safety-gate:
     if: github.event_name == 'pull_request'
     needs: validate-pr-contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Block untrusted PRs from self-hosted execution
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const fromFork = pr.head.repo.full_name !== context.repo.owner + "/" + context.repo.repo;
+            const association = pr.author_association;
+            const trustedAssociations = ["OWNER", "MEMBER", "COLLABORATOR"];
+            const trustedAuthor = trustedAssociations.includes(association);
+            if (fromFork || !trustedAuthor) {
+              core.setFailed(
+                `Blocked self-hosted reviewer jobs for untrusted PR source. fromFork=${fromFork}, author_association=${association}.`
+              );
+            }
+
+  review-claude:
+    if: github.event_name == 'pull_request'
+    needs:
+      - validate-pr-contract
+      - review-safety-gate
     runs-on:
       - self-hosted
       - Linux
@@ -105,7 +127,9 @@ jobs:
 
   review-gemini:
     if: github.event_name == 'pull_request'
-    needs: validate-pr-contract
+    needs:
+      - validate-pr-contract
+      - review-safety-gate
     runs-on:
       - self-hosted
       - Linux
@@ -137,7 +161,9 @@ jobs:
 
   review-codex:
     if: github.event_name == 'pull_request'
-    needs: validate-pr-contract
+    needs:
+      - validate-pr-contract
+      - review-safety-gate
     runs-on:
       - self-hosted
       - Linux
