@@ -1,0 +1,220 @@
+name: trusted-agent-review
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull request number to review with trusted local agents"
+        required: true
+        type: string
+      timeout_seconds:
+        description: "Per-agent review timeout in seconds"
+        required: false
+        default: "300"
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  trust-gate:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.guard.outputs.pr_number }}
+      pr_head_sha: ${{ steps.guard.outputs.pr_head_sha }}
+    steps:
+      - name: Validate trusted PR source and author
+        id: guard
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumberRaw = core.getInput("pr_number", { required: true });
+            const prNumber = Number(prNumberRaw);
+            if (!Number.isInteger(prNumber) || prNumber <= 0) {
+              core.setFailed(`Invalid pr_number input: ${prNumberRaw}`);
+              return;
+            }
+
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+
+            const repoFullName = `${context.repo.owner}/${context.repo.repo}`;
+            const fromFork = pr.head.repo.full_name !== repoFullName;
+            const trustedAssociations = ["OWNER", "MEMBER", "COLLABORATOR"];
+            const trustedAuthor = trustedAssociations.includes(pr.author_association);
+
+            if (fromFork || !trustedAuthor) {
+              core.setFailed(
+                `Blocked trusted-agent-review dispatch. fromFork=${fromFork}, author_association=${pr.author_association}, pr=${prNumber}.`
+              );
+              return;
+            }
+
+            core.setOutput("pr_number", String(prNumber));
+            core.setOutput("pr_head_sha", pr.head.sha);
+
+  review-claude:
+    needs: trust-gate
+    runs-on:
+      - self-hosted
+      - Linux
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ needs.trust-gate.outputs.pr_number }}/head
+          fetch-depth: 0
+
+      - name: Preflight local Claude CLI
+        run: ./scripts/agent/check-cli-health.sh --agent claude
+
+      - name: Run Claude reviewer
+        run: |
+          python3 scripts/agent/run-review.py \
+            --task-id "${{ needs.trust-gate.outputs.pr_number }}" \
+            --agent claude \
+            --pr-number "${{ needs.trust-gate.outputs.pr_number }}" \
+            --head-sha "${{ needs.trust-gate.outputs.pr_head_sha }}" \
+            --timeout-seconds "${{ inputs.timeout_seconds }}" \
+            --output "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/claude.json"
+
+      - name: Upload Claude artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-claude
+          path: artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/claude.json
+          if-no-files-found: error
+
+  review-gemini:
+    needs: trust-gate
+    runs-on:
+      - self-hosted
+      - Linux
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ needs.trust-gate.outputs.pr_number }}/head
+          fetch-depth: 0
+
+      - name: Preflight local Gemini CLI
+        run: ./scripts/agent/check-cli-health.sh --agent gemini
+
+      - name: Run Gemini reviewer
+        run: |
+          python3 scripts/agent/run-review.py \
+            --task-id "${{ needs.trust-gate.outputs.pr_number }}" \
+            --agent gemini \
+            --pr-number "${{ needs.trust-gate.outputs.pr_number }}" \
+            --head-sha "${{ needs.trust-gate.outputs.pr_head_sha }}" \
+            --timeout-seconds "${{ inputs.timeout_seconds }}" \
+            --output "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/gemini.json"
+
+      - name: Upload Gemini artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-gemini
+          path: artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/gemini.json
+          if-no-files-found: error
+
+  review-codex:
+    needs: trust-gate
+    runs-on:
+      - self-hosted
+      - Linux
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ needs.trust-gate.outputs.pr_number }}/head
+          fetch-depth: 0
+
+      - name: Preflight local Codex CLI
+        run: ./scripts/agent/check-cli-health.sh --agent codex
+
+      - name: Run Codex reviewer
+        run: |
+          python3 scripts/agent/run-review.py \
+            --task-id "${{ needs.trust-gate.outputs.pr_number }}" \
+            --agent codex \
+            --pr-number "${{ needs.trust-gate.outputs.pr_number }}" \
+            --head-sha "${{ needs.trust-gate.outputs.pr_head_sha }}" \
+            --timeout-seconds "${{ inputs.timeout_seconds }}" \
+            --output "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/codex.json"
+
+      - name: Upload Codex artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-codex
+          path: artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/codex.json
+          if-no-files-found: error
+
+  aggregate-reviews:
+    needs:
+      - trust-gate
+      - review-claude
+      - review-gemini
+      - review-codex
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Download Claude artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: review-claude
+          path: artifacts/download/claude
+
+      - name: Download Gemini artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: review-gemini
+          path: artifacts/download/gemini
+
+      - name: Download Codex artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: review-codex
+          path: artifacts/download/codex
+
+      - name: Aggregate reviewer artifacts
+        run: |
+          python3 scripts/agent/aggregate-reviews.py \
+            --artifacts-dir artifacts/download \
+            --output-json "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.json" \
+            --output-md "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.md"
+
+      - name: Upload review summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-summary
+          path: |
+            artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.json
+            artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.md
+          if-no-files-found: error
+
+      - name: Comment review summary on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const prNumber = Number(`${{ needs.trust-gate.outputs.pr_number }}`);
+            const summaryPath = `artifacts/reviews/${prNumber}/summary.md`;
+            const body = fs.readFileSync(summaryPath, "utf8");
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body
+            });

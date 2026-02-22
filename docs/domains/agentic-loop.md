@@ -29,8 +29,10 @@
   - No reviewer may mark `blocking=true`.
   - No reviewer may report `severity=critical`.
 - If gate fails, PR remains blocked until a new revision cycle produces passing reviewer artifacts.
-- Reviewer jobs run on a self-hosted Linux runner.
-- A safety gate blocks self-hosted reviewer jobs for fork or untrusted PR authors.
+- Trust split:
+  - Untrusted PR checks run on GitHub-hosted CI via `pull_request`.
+  - Trusted local reviewer execution runs only via `workflow_dispatch` in `.github/workflows/trusted-agent-review.yml`.
+- Trusted review dispatch validates PR source and author before self-hosted execution.
 - Local reviewer CLIs must exist and be authenticated on that runner:
   - `claude`
   - `gemini`

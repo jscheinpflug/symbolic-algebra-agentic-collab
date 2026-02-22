@@ -14,6 +14,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate PR template sections
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const required = [
+              "## Type Changes",
+              "## Tests Added",
+              "## Benchmark Impact",
+              "## Known Risks",
+              "## Source Provenance",
+              "## Agent Protocol Tags"
+            ];
+            const missing = required.filter((section) => !body.includes(section));
+            if (missing.length > 0) {
+              core.setFailed(`PR description missing required sections: ${missing.join(", ")}`);
+            }
+
       - name: Setup Haskell
         uses: haskell-actions/setup@v2
         with:
