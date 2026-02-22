@@ -17,6 +17,7 @@ permissions:
   contents: read
   issues: write
   pull-requests: write
+  statuses: write
 
 jobs:
   trust-gate:
@@ -288,4 +289,51 @@ jobs:
               repo: context.repo.repo,
               issue_number: prNumber,
               body
+            });
+
+  publish-status:
+    if: always() && needs.trust-gate.result == 'success'
+    needs:
+      - trust-gate
+      - detect-reviewers
+      - review-claude
+      - review-gemini
+      - review-codex
+      - aggregate-reviews
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish trusted review status for branch protection
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const aggregateResult = `${{ needs.aggregate-reviews.result }}`;
+            const sha = `${{ needs.trust-gate.outputs.pr_head_sha }}`;
+
+            const stateByResult = {
+              success: "success",
+              failure: "failure",
+              cancelled: "error",
+              skipped: "error"
+            };
+            const descriptionByResult = {
+              success: "Trusted review aggregate passed.",
+              failure: "Trusted review aggregate failed.",
+              cancelled: "Trusted review aggregate was cancelled.",
+              skipped: "Trusted review aggregate was skipped."
+            };
+
+            const state = stateByResult[aggregateResult] || "error";
+            const description =
+              descriptionByResult[aggregateResult] ||
+              `Trusted review aggregate ended with result=${aggregateResult}.`;
+            const targetUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state,
+              context: "trusted-agent-review/aggregate",
+              description,
+              target_url: targetUrl
             });

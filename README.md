@@ -58,12 +58,16 @@ Use `./scripts/format.sh` to rewrite files in place.
 - Trusted review can be dispatched from PR comments by trusted users:
   - `/trusted-review`
   - `/trusted-review timeout=600`
+- Trusted workflow writes commit status context `trusted-agent-review/aggregate` on the PR head SHA.
 - Local CLIs must be installed and authenticated on the runner account:
   - `claude`
   - `gemini`
   - `codex`
 - Reviewer availability is probed first; unavailable reviewers (for example a frozen `gemini` CLI) are skipped automatically.
 - At least 2 reviewer artifacts are still required for a passing aggregate gate.
+- For protected branches, require status checks:
+  - `lint-format-build-test`
+  - `trusted-agent-review/aggregate`
 - Local CLI availability check:
   - `./scripts/agent/check-cli-health.sh`
   - Per-agent check: `./scripts/agent/check-cli-health.sh --agent claude`

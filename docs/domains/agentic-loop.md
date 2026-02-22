@@ -36,6 +36,8 @@
 - Trusted review dispatch validates PR source and author before self-hosted execution.
 - Trusted workflow probes reviewer availability first; unavailable CLIs are skipped.
 - Aggregate gate still requires at least two reviewer approvals with no blocking/critical findings.
+- Trusted workflow also writes commit status context `trusted-agent-review/aggregate` on the PR head SHA.
+- Branch protection should require both `lint-format-build-test` and `trusted-agent-review/aggregate`.
 - Local reviewer CLIs must exist and be authenticated on that runner:
   - `claude`
   - `gemini`
