@@ -26,7 +26,8 @@ jobs:
             const commenter = context.payload.comment.user.login;
             const association = context.payload.comment.author_association;
             const body = (context.payload.comment.body || "").trim();
-            const commandMatch = body.match(/^\/trusted-review(?:\s+timeout=(\d+))?\s*$/i);
+            const commandPrefix = "/trusted-review";
+            const startsWithCommand = body.toLowerCase().startsWith(commandPrefix);
             const safeComment = async (commentBody) => {
               try {
                 await github.rest.issues.createComment({
@@ -40,8 +41,34 @@ jobs:
               }
             };
 
-            if (!commandMatch) {
+            if (!startsWithCommand) {
               core.info("No /trusted-review command found.");
+              return;
+            }
+
+            const rawArgs = body.slice(commandPrefix.length).trim();
+            const tokens = rawArgs.length > 0 ? rawArgs.split(/\s+/) : [];
+
+            let parsedTimeout = 300;
+            let enableGemini = true;
+
+            for (const tokenRaw of tokens) {
+              const token = tokenRaw.toLowerCase();
+              if (token === "no-gemini") {
+                enableGemini = false;
+                continue;
+              }
+
+              const timeoutMatch = token.match(/^timeout=(\d+)$/);
+              if (timeoutMatch) {
+                parsedTimeout = Number(timeoutMatch[1]);
+                continue;
+              }
+
+              await safeComment(
+                `@${commenter} invalid token \`${tokenRaw}\`. Use \`/trusted-review [timeout=<seconds>] [no-gemini]\`.`
+              );
+              core.setFailed(`Invalid trusted-review token: ${tokenRaw}`);
               return;
             }
 
@@ -75,8 +102,6 @@ jobs:
               return;
             }
 
-            const timeoutRaw = commandMatch[1];
-            const parsedTimeout = timeoutRaw ? Number(timeoutRaw) : 300;
             const timeoutSeconds = String(Math.min(900, Math.max(30, parsedTimeout)));
 
             await github.rest.actions.createWorkflowDispatch({
@@ -86,10 +111,11 @@ jobs:
               ref: "main",
               inputs: {
                 pr_number: String(prNumber),
-                timeout_seconds: timeoutSeconds
+                timeout_seconds: timeoutSeconds,
+                enable_gemini: String(enableGemini)
               }
             });
 
             await safeComment(
-              `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s.`
+              `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s and gemini=${enableGemini ? "on" : "off"}.`
             );

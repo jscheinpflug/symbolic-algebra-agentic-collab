@@ -33,6 +33,7 @@
   - Untrusted PR checks run on GitHub-hosted CI via `pull_request`.
   - Trusted local reviewer execution runs only via `workflow_dispatch` in `.github/workflows/trusted-agent-review.yml`.
 - Trusted users can trigger trusted review from PR comments through `.github/workflows/trusted-review-dispatch.yml` using `/trusted-review` (optional `timeout=<seconds>`).
+- Trusted users can disable Gemini for a run by adding `no-gemini` (for example `/trusted-review timeout=600 no-gemini`).
 - Trusted review dispatch validates PR source and author before self-hosted execution.
 - Trusted workflow probes reviewer availability first; unavailable CLIs are skipped.
 - Aggregate gate still requires at least two reviewer approvals with no blocking/critical findings.

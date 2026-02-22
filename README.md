@@ -58,6 +58,8 @@ Use `./scripts/format.sh` to rewrite files in place.
 - Trusted review can be dispatched from PR comments by trusted users:
   - `/trusted-review`
   - `/trusted-review timeout=600`
+  - `/trusted-review no-gemini`
+  - `/trusted-review timeout=600 no-gemini`
 - Trusted workflow writes commit status context `trusted-agent-review/aggregate` on the PR head SHA.
 - Local CLIs must be installed and authenticated on the runner account:
   - `claude`

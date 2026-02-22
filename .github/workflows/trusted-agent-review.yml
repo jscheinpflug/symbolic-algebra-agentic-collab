@@ -12,6 +12,11 @@ on:
         required: false
         default: "300"
         type: string
+      enable_gemini:
+        description: "Whether Gemini reviewer is enabled for this run"
+        required: false
+        default: "true"
+        type: string
 
 permissions:
   contents: read
@@ -80,6 +85,8 @@ jobs:
         run: |
           set +e
           timeout_value="${{ inputs.timeout_seconds }}"
+          enable_gemini_raw="${{ inputs.enable_gemini }}"
+          enable_gemini="$(printf '%s' "${enable_gemini_raw}" | tr '[:upper:]' '[:lower:]')"
 
           detect_agent() {
             local agent="$1"
@@ -91,7 +98,17 @@ jobs:
           }
 
           detect_agent claude
-          detect_agent gemini
+
+          case "${enable_gemini}" in
+            false|0|no|off)
+              echo "gemini_available=false" >> "${GITHUB_OUTPUT}"
+              echo "Gemini reviewer explicitly disabled for this run."
+              ;;
+            *)
+              detect_agent gemini
+              ;;
+          esac
+
           detect_agent codex
 
   review-claude:
