@@ -21,6 +21,7 @@ required_paths=(
   ".github/pull_request_template.md"
   ".github/workflows/ci.yml"
   ".github/workflows/agent-loop.yml"
+  ".github/workflows/trusted-agent-review.yml"
   ".github/workflows/policy-daily.yml"
   "scripts/policy/check-no-partials.sh"
   "scripts/policy/check-no-string.sh"

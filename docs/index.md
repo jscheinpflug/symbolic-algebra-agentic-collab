@@ -20,6 +20,7 @@
 - PR template: `.github/pull_request_template.md`
 - CI workflow: `.github/workflows/ci.yml`
 - Agent loop workflow: `.github/workflows/agent-loop.yml`
+- Trusted review workflow: `.github/workflows/trusted-agent-review.yml`
 - Daily policy workflow: `.github/workflows/policy-daily.yml`
 - Reviewer runner script: `scripts/agent/run-review.py`
 - Review aggregation script: `scripts/agent/aggregate-reviews.py`

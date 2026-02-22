@@ -34,7 +34,8 @@ Use `./scripts/format.sh` to rewrite files in place.
 - Issue template: `.github/ISSUE_TEMPLATE/agent_task.yml`
 - PR contract: `.github/pull_request_template.md`
 - CI policy checks: `.github/workflows/ci.yml`
-- Agent loop trigger: `.github/workflows/agent-loop.yml`
+- Issue governance loop: `.github/workflows/agent-loop.yml`
+- Trusted local review loop: `.github/workflows/trusted-agent-review.yml`
 - Daily policy adaptation: `.github/workflows/policy-daily.yml`
 - Schemas: `schemas/`
 - Protocol and architecture docs: `docs/`
@@ -49,10 +50,20 @@ Use `./scripts/format.sh` to rewrite files in place.
   - at least 2 of 3 approvals,
   - no `blocking=true`,
   - no `critical` severity findings.
-- Configure reviewer command secrets in GitHub:
-  - `CLAUDE_REVIEW_COMMAND`
-  - `GEMINI_REVIEW_COMMAND`
-  - `CODEX_REVIEW_COMMAND`
+- Standard trust split:
+  - `pull_request` CI runs only on GitHub-hosted runners (`ubuntu-latest`), with no local model execution.
+  - Local model reviews run only in manually dispatched trusted workflow.
+- Trusted review workflow validates PR trust before self-hosted execution.
+- Local CLIs must be installed and authenticated on the runner account:
+  - `claude`
+  - `gemini`
+  - `codex`
+- Reviewer availability is probed first; unavailable reviewers (for example a frozen `gemini` CLI) are skipped automatically.
+- At least 2 reviewer artifacts are still required for a passing aggregate gate.
+- Local CLI availability check:
+  - `./scripts/agent/check-cli-health.sh`
+  - Per-agent check: `./scripts/agent/check-cli-health.sh --agent claude`
+  - Optional non-interactive probe: `./scripts/agent/check-cli-health.sh --probe --timeout 60`
 
 ## Daily Policy Adaptation
 

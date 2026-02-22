@@ -29,10 +29,16 @@
   - No reviewer may mark `blocking=true`.
   - No reviewer may report `severity=critical`.
 - If gate fails, PR remains blocked until a new revision cycle produces passing reviewer artifacts.
-- GitHub secrets must provide reviewer commands:
-  - `CLAUDE_REVIEW_COMMAND`
-  - `GEMINI_REVIEW_COMMAND`
-  - `CODEX_REVIEW_COMMAND`
+- Trust split:
+  - Untrusted PR checks run on GitHub-hosted CI via `pull_request`.
+  - Trusted local reviewer execution runs only via `workflow_dispatch` in `.github/workflows/trusted-agent-review.yml`.
+- Trusted review dispatch validates PR source and author before self-hosted execution.
+- Trusted workflow probes reviewer availability first; unavailable CLIs are skipped.
+- Aggregate gate still requires at least two reviewer approvals with no blocking/critical findings.
+- Local reviewer CLIs must exist and be authenticated on that runner:
+  - `claude`
+  - `gemini`
+  - `codex`
 
 ## Policy Adaptation Governance
 
