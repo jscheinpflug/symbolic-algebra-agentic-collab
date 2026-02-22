@@ -22,6 +22,7 @@ required_paths=(
   ".github/workflows/ci.yml"
   ".github/workflows/agent-loop.yml"
   ".github/workflows/trusted-agent-review.yml"
+  ".github/workflows/trusted-review-dispatch.yml"
   ".github/workflows/policy-daily.yml"
   "scripts/policy/check-no-partials.sh"
   "scripts/policy/check-no-string.sh"

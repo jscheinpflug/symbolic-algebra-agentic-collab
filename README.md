@@ -36,6 +36,7 @@ Use `./scripts/format.sh` to rewrite files in place.
 - CI policy checks: `.github/workflows/ci.yml`
 - Issue governance loop: `.github/workflows/agent-loop.yml`
 - Trusted local review loop: `.github/workflows/trusted-agent-review.yml`
+- Trusted review comment-dispatch loop: `.github/workflows/trusted-review-dispatch.yml`
 - Daily policy adaptation: `.github/workflows/policy-daily.yml`
 - Schemas: `schemas/`
 - Protocol and architecture docs: `docs/`
@@ -54,6 +55,9 @@ Use `./scripts/format.sh` to rewrite files in place.
   - `pull_request` CI runs only on GitHub-hosted runners (`ubuntu-latest`), with no local model execution.
   - Local model reviews run only in manually dispatched trusted workflow.
 - Trusted review workflow validates PR trust before self-hosted execution.
+- Trusted review can be dispatched from PR comments by trusted users:
+  - `/trusted-review`
+  - `/trusted-review timeout=600`
 - Local CLIs must be installed and authenticated on the runner account:
   - `claude`
   - `gemini`

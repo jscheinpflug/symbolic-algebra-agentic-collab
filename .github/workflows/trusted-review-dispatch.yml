@@ -1,0 +1,95 @@
+name: trusted-review-dispatch
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  actions: write
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  dispatch:
+    if: github.event.issue.pull_request != null
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch trusted review from PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = context.payload.issue.number;
+            const commenter = context.payload.comment.user.login;
+            const association = context.payload.comment.author_association;
+            const body = (context.payload.comment.body || "").trim();
+            const commandMatch = body.match(/^\/trusted-review(?:\s+timeout=(\d+))?\s*$/i);
+
+            if (!commandMatch) {
+              core.info("No /trusted-review command found.");
+              return;
+            }
+
+            const trustedAssociations = ["OWNER", "MEMBER", "COLLABORATOR"];
+            if (!trustedAssociations.includes(association)) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body: `@${commenter} trusted review dispatch is restricted to OWNER/MEMBER/COLLABORATOR.`
+              });
+              return;
+            }
+
+            const { data: pr } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: prNumber
+            });
+
+            if (pr.state !== "open") {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body: `@${commenter} PR #${prNumber} is not open; trusted review was not dispatched.`
+              });
+              return;
+            }
+
+            const fromFork = pr.head.repo.full_name !== `${owner}/${repo}`;
+            const trustedAuthor = trustedAssociations.includes(pr.author_association);
+            if (fromFork || !trustedAuthor) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body: `@${commenter} trusted review dispatch blocked by trust policy (fromFork=${fromFork}, pr_author_association=${pr.author_association}).`
+              });
+              return;
+            }
+
+            const timeoutRaw = commandMatch[1];
+            const parsedTimeout = timeoutRaw ? Number(timeoutRaw) : 300;
+            const timeoutSeconds = String(Math.min(900, Math.max(30, parsedTimeout)));
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner,
+              repo,
+              workflow_id: "trusted-agent-review.yml",
+              ref: "main",
+              inputs: {
+                pr_number: String(prNumber),
+                timeout_seconds: timeoutSeconds
+              }
+            });
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: prNumber,
+              body: `@${commenter} dispatched \`trusted-agent-review\` for PR #${prNumber} with timeout=${timeoutSeconds}s.`
+            });

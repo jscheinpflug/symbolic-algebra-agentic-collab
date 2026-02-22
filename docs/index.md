@@ -21,6 +21,7 @@
 - CI workflow: `.github/workflows/ci.yml`
 - Agent loop workflow: `.github/workflows/agent-loop.yml`
 - Trusted review workflow: `.github/workflows/trusted-agent-review.yml`
+- Trusted review dispatch workflow: `.github/workflows/trusted-review-dispatch.yml`
 - Daily policy workflow: `.github/workflows/policy-daily.yml`
 - Reviewer runner script: `scripts/agent/run-review.py`
 - Review aggregation script: `scripts/agent/aggregate-reviews.py`
