@@ -9,6 +9,7 @@ required_paths=(
   "docs/domains/agentic-loop.md"
   "docs/domains/logging.md"
   "docs/domains/safety.md"
+  "docs/domains/tdd-phases.md"
   "docs/policy/rules-catalog.md"
   "docs/policy/changelog.md"
   "docs/quality/scorecard.md"
@@ -18,6 +19,7 @@ required_paths=(
   "schemas/decision-packet.schema.json"
   "schemas/policy-signal.schema.json"
   "schemas/policy-change-proposal.schema.json"
+  "schemas/tdd-phase.schema.json"
   ".github/ISSUE_TEMPLATE/agent_task.yml"
   ".github/pull_request_template.md"
   ".github/workflows/ci.yml"
@@ -32,6 +34,8 @@ required_paths=(
   "scripts/policy/check-no-string.sh"
   "scripts/policy/check-rule-freshness.sh"
   "scripts/policy/check-policy-coverage.sh"
+  "scripts/policy/check-tdd-phase.sh"
+  "scripts/policy/test-check-tdd-phase-fixtures.sh"
   "scripts/policy/check-dead-rules.sh"
   "scripts/bench/run-benchmarks.sh"
   "scripts/bench/check-regressions.py"
@@ -44,6 +48,7 @@ required_paths=(
   "bench/baseline/workflow-benchmarks.json"
   "artifacts/policy-signals/.gitkeep"
   "artifacts/policy-proposals/.gitkeep"
+  "artifacts/tdd/.gitkeep"
 )
 
 missing=0

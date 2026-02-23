@@ -18,6 +18,7 @@ required_rule_ids = {
     "RULE-005",
     "RULE-006",
     "RULE-007",
+    "RULE-008",
 }
 
 required_tags = {
@@ -32,6 +33,11 @@ required_tags = {
     "benchmark",
     "baseline-presence",
     "performance-regression",
+    "types-first",
+    "tests-first",
+    "phase-gate",
+    "feature-context",
+    "module-docs",
 }
 
 rule_ids = set()

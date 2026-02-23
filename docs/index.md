@@ -7,6 +7,7 @@
 - Agentic loop contract: `docs/domains/agentic-loop.md`
 - Logging contract: `docs/domains/logging.md`
 - Safety contract: `docs/domains/safety.md`
+- TDD phase contract: `docs/domains/tdd-phases.md`
 - Benchmark harness: `bench/Main.hs`
 - Benchmark baseline: `bench/baseline/workflow-benchmarks.json`
 - Rules catalog: `docs/policy/rules-catalog.md`
@@ -22,6 +23,7 @@
 - Rule freshness policy: `scripts/policy/check-rule-freshness.sh`
 - Policy coverage policy: `scripts/policy/check-policy-coverage.sh`
 - Dead-rule policy: `scripts/policy/check-dead-rules.sh`
+- TDD phase fixture tests: `scripts/policy/test-check-tdd-phase-fixtures.sh`
 - Issue template: `.github/ISSUE_TEMPLATE/agent_task.yml`
 - PR template: `.github/pull_request_template.md`
 - CI workflow: `.github/workflows/ci.yml`
@@ -38,3 +40,5 @@
 - Decision packet schema: `schemas/decision-packet.schema.json`
 - Policy signal schema: `schemas/policy-signal.schema.json`
 - Policy proposal schema: `schemas/policy-change-proposal.schema.json`
+- TDD phase schema: `schemas/tdd-phase.schema.json`
+- TDD phase policy gate: `scripts/policy/check-tdd-phase.sh`

@@ -13,6 +13,7 @@
 - Review gate: three reviewer artifacts (Claude/Gemini/Codex) with aggregation policy
 - Rule lifecycle: freshness, coverage, and dead-rule checks enabled
 - Adaptation cadence: daily policy signal/proposal PR workflow enabled
+- TDD phase gate: enforced `TYPES -> TESTS -> IMPL` artifact and path policy checks
 
 ## Open Gaps
 
