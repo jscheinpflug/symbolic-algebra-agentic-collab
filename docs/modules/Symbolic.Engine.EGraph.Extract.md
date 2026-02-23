@@ -18,7 +18,8 @@ strategy layer.
   types.
 - The tuple returned by `extractBestWithCost` enforces that `costRule` is
   considered before `costSize` to mirror the deterministic tie-break plan.
-- TYPES-phase placeholders return typed saturation errors only.
+- Extraction remains deterministic by ordering candidates on
+  `(costRule, costSize, term)`.
 
 ## Feature Progress
 
@@ -26,7 +27,7 @@ strategy layer.
 - [x] Cost-aware extraction contracts defined.
 - [x] TYPES-phase typed placeholder behavior added.
 - [x] Contract-level `TESTS` coverage added.
-- [ ] Deterministic extraction implementation wired.
+- [x] Deterministic extraction implementation wired.
 
 ## Test Status
 
@@ -37,12 +38,12 @@ strategy layer.
 
 ## Known Gaps / Next Steps
 
-- Add extraction heuristics that minimize `rule-cost` then `size`.
-- Ensure extractor ties into `Strategy`-driven planning once the backend is
-  available.
+- Replace current structural candidate model with full backend-driven extraction.
+- Extend `costRule` accounting to reflect realized rewrite usage.
 
 ## Change Log
 
 - 2026-02-23: Documented extraction contracts for the strategy roadmap.
 - 2026-02-23: Added TYPES-phase typed placeholders for extraction contracts.
 - 2026-02-23: Added `TESTS`-phase unit/property/integration coverage for extraction contracts.
+- 2026-02-23: Implemented deterministic candidate extraction with objective ordering.

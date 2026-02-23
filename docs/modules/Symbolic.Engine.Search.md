@@ -31,7 +31,8 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - [x] E-graph translation wrapper contracts added
 - [x] Foundation wrapper wiring implemented
 - [x] Strategy planning contracts created (`runStrategy`)
-- [ ] Bounded saturation and extraction behavior
+- [x] Strategy wrapper implementation wired
+- [ ] Full strategy-to-backend planning behavior
 
 ## Test Status
 
@@ -43,9 +44,9 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 
 ## Known Gaps / Next Steps
 
-- Implement deterministic saturation orchestration on `hegg` with typed limit failures in `IMPL` phase.
-- Add `runStrategy` wiring to orchestrate `SaturationConfig` plus extraction heuristics.
-- Replace TYPES-phase `runStrategy` typed placeholder with full strategy execution flow.
+- Replace rule-presence gating with strategy-directed planning semantics.
+- Add trace-step population for successful strategy runs.
+- Extend strategy execution to cover non-placeholder saturation/extraction backends.
 
 ## Change Log
 
@@ -57,3 +58,4 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - 2026-02-23: Completed IMPL-phase wrapper wiring for build/recover contracts.
 - 2026-02-23: Documented `runStrategy` contract to prepare deterministic strategy planning.
 - 2026-02-23: Added `TESTS`-phase deterministic coverage for `runStrategy` wrapper contracts.
+- 2026-02-23: Implemented deterministic `runStrategy` wrapper across saturation and extraction modules.
