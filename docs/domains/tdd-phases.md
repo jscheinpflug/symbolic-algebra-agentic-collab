@@ -55,6 +55,7 @@ Policy restrictions:
 - Must include at least one changed file under `test/`.
 - Must not change `src/`.
 - Must not change `app/`.
+- Must not change `scripts/`.
 - Must not change `bench/baseline/`.
 - Requires existing prerequisite artifact:
   - `artifacts/tdd/<feature-id>/TYPES.json`
@@ -85,7 +86,14 @@ Policy restrictions:
 
 ## Bootstrap Exception
 
-To bootstrap this policy itself, `depends_on_pr: "bootstrap-initial"` is allowed as a one-time exception for missing prerequisite artifacts only when `feature_id` is `policy-tdd-phase-gate`.
+To bootstrap this policy itself, `depends_on_pr: "bootstrap-initial"` is allowed as a one-time exception for missing prerequisite artifacts only when all conditions are true:
+
+1. `feature_id` is `policy-tdd-phase-gate`.
+2. `phase` is `IMPL`.
+3. Base branch does not yet contain rollout files:
+   - `scripts/policy/check-tdd-phase.sh`
+   - `docs/domains/tdd-phases.md`
+   - `schemas/tdd-phase.schema.json`
 
 ## PR Template Requirements
 

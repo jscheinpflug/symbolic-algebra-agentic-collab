@@ -16,3 +16,4 @@
 5. Registered RULE-008 for phase-gate enforcement and updated policy coverage requirements.
 6. Incorporated reviewer feedback: phase-order prerequisite checks, schema-aligned key strictness, and commit-range/error-message edge-case fixes in `check-tdd-phase.sh`.
 7. Aligned enforcement with contract by removing mandatory per-phase `FEATURE.md` edits while retaining feature context existence and heading validation.
+8. Tightened feedback follow-up: `TESTS` phase now forbids `scripts/` changes, and bootstrap bypass is one-time based on base-branch rollout-file absence.

@@ -10,6 +10,13 @@ from pathlib import Path
 from typing import Iterable
 
 PHASE_RE = re.compile(r"^artifacts/tdd/([^/]+)/(TYPES|TESTS|IMPL)\.json$")
+BOOTSTRAP_FEATURE_ID = "policy-tdd-phase-gate"
+BOOTSTRAP_TOKEN = "bootstrap-initial"
+BOOTSTRAP_ROLLOUT_PATHS = (
+    "scripts/policy/check-tdd-phase.sh",
+    "docs/domains/tdd-phases.md",
+    "schemas/tdd-phase.schema.json",
+)
 REQUIRED_FEATURE_HEADINGS = {
     "## Problem",
     "## Goal",
@@ -42,7 +49,7 @@ def detect_local_changes() -> list[str]:
     return unique(working + staged + untracked)
 
 
-def detect_commit_range_changes() -> list[str]:
+def resolve_base_commit() -> str | None:
     base_ref = os.getenv("TDD_PHASE_BASE_REF") or os.getenv("GITHUB_BASE_REF") or "main"
 
     base_commit = None
@@ -55,9 +62,14 @@ def detect_commit_range_changes() -> list[str]:
     elif subprocess.run(["git", "rev-parse", "--verify", "HEAD~1"], capture_output=True).returncode == 0:
         base_commit = "HEAD~1"
 
+    if base_commit:
+        return base_commit
+    return None
+
+
+def detect_commit_range_changes(base_commit: str | None) -> list[str]:
     if not base_commit:
         return []
-
     return lines(run_git(["diff", "--name-only", f"{base_commit}...HEAD"]))
 
 
@@ -165,7 +177,7 @@ def check_phase_paths(phase: str, changed: list[str]) -> None:
     elif phase == "TESTS":
         if not any(item.startswith("test/") for item in changed):
             raise ValueError("Phase TESTS requires at least one changed file under test/")
-        fail_if_prefix(["src/", "app/", "bench/baseline/"])
+        fail_if_prefix(["src/", "app/", "scripts/", "bench/baseline/"])
 
     elif phase == "IMPL":
         if not any_prefix(["src/", "app/", "scripts/"]):
@@ -173,13 +185,26 @@ def check_phase_paths(phase: str, changed: list[str]) -> None:
         fail_if_prefix(["test/"])
 
 
-def check_phase_order(feature_id: str, phase: str, depends_on_pr: str | None) -> None:
-    # Bootstrap escape hatch for first deployment of this policy itself.
-    if (
-        feature_id == "policy-tdd-phase-gate"
-        and isinstance(depends_on_pr, str)
-        and depends_on_pr.strip() == "bootstrap-initial"
-    ):
+def path_exists_in_commit(commit: str, path: str) -> bool:
+    return subprocess.run(["git", "cat-file", "-e", f"{commit}:{path}"], capture_output=True).returncode == 0
+
+
+def allow_bootstrap_exception(feature_id: str, phase: str, depends_on_pr: str | None, base_commit: str | None) -> bool:
+    if feature_id != BOOTSTRAP_FEATURE_ID:
+        return False
+    if phase != "IMPL":
+        return False
+    if not isinstance(depends_on_pr, str) or depends_on_pr.strip() != BOOTSTRAP_TOKEN:
+        return False
+    if not base_commit:
+        return False
+
+    # One-time bootstrap only when the rollout files do not yet exist on base.
+    return all(not path_exists_in_commit(base_commit, path) for path in BOOTSTRAP_ROLLOUT_PATHS)
+
+
+def check_phase_order(feature_id: str, phase: str, depends_on_pr: str | None, base_commit: str | None) -> None:
+    if allow_bootstrap_exception(feature_id, phase, depends_on_pr, base_commit):
         return
 
     if phase == "TYPES":
@@ -202,8 +227,9 @@ def check_phase_order(feature_id: str, phase: str, depends_on_pr: str | None) ->
 
 def main() -> int:
     changed = detect_local_changes()
+    base_commit = resolve_base_commit()
     if not changed:
-        changed = detect_commit_range_changes()
+        changed = detect_commit_range_changes(base_commit)
 
     if not changed:
         if os.getenv("GITHUB_EVENT_NAME") == "pull_request":
@@ -242,6 +268,7 @@ def main() -> int:
             feature_id=payload["feature_id"],
             phase=payload["phase"],
             depends_on_pr=payload["depends_on_pr"],
+            base_commit=base_commit,
         )
         check_phase_paths(payload["phase"], changed)
     except ValueError as err:
