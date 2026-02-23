@@ -15,6 +15,7 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 - Exactly one phase artifact JSON changed per PR.
 - Artifact path must match payload fields (`feature_id`, `phase`).
 - Feature context file exists and contains required headings.
+- Feature context file is not required to be modified in every phase PR.
 - Referenced module docs exist and are updated in the same PR.
 
 ## Feature Progress
@@ -43,3 +44,4 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 
 - 2026-02-23: Initial module doc and enforcement script contract added.
 - 2026-02-23: Added phase-order checks, stricter artifact key validation, and reviewer-requested edge-case fixes.
+- 2026-02-23: Removed per-PR feature-context edit requirement; kept heading validation and path consistency checks.

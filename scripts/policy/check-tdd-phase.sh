@@ -6,7 +6,6 @@ import json
 import os
 import re
 import subprocess
-import sys
 from pathlib import Path
 from typing import Iterable
 
@@ -238,9 +237,6 @@ def main() -> int:
         stale_docs = [path for path in module_docs if path not in changed]
         if stale_docs:
             raise ValueError(f"Module docs must be updated in this PR: {', '.join(stale_docs)}")
-
-        if payload["feature_context"] not in changed:
-            raise ValueError("Feature context file must be updated in the same PR")
 
         check_phase_order(
             feature_id=payload["feature_id"],

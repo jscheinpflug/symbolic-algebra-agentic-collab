@@ -77,6 +77,7 @@ Policy restrictions:
 2. Artifact path must match artifact payload (`feature_id` and `phase`).
 3. Artifact `feature_context` path must match `artifacts/tdd/<feature-id>/FEATURE.md`.
 4. `FEATURE.md` must exist and satisfy required headings.
+   - Updating `FEATURE.md` on every phase PR is optional; required when feature intent/acceptance changes.
 5. Every path listed in artifact `module_docs` must:
    - exist, and
    - be changed in the same PR.

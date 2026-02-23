@@ -60,25 +60,6 @@
       "if": {
         "properties": {
           "phase": {
-            "const": "TYPES"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "depends_on_pr": {
-            "type": [
-              "string",
-              "null"
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "phase": {
             "enum": [
               "TESTS",
               "IMPL"
