@@ -35,9 +35,22 @@ library
     SymbolicAlgebraAgenticCollab
     SymbolicAlgebraAgenticCollab.Config
     SymbolicAlgebraAgenticCollab.Logging
+    SymbolicAlgebraAgenticCollab.Symbolic.Corpus
+    SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Ast
+    SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Parser
+    SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Pretty
+    SymbolicAlgebraAgenticCollab.Symbolic.Engine.Apply
+    SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search
+    SymbolicAlgebraAgenticCollab.Symbolic.Pattern
+    SymbolicAlgebraAgenticCollab.Symbolic.Rule
+    SymbolicAlgebraAgenticCollab.Symbolic.Strategy
+    SymbolicAlgebraAgenticCollab.Symbolic.Symbol
+    SymbolicAlgebraAgenticCollab.Symbolic.Term
+    SymbolicAlgebraAgenticCollab.Symbolic.Trace
     SymbolicAlgebraAgenticCollab.Workflow
   build-depends:
     base >=4.18 && <5,
+    containers >=0.6 && <0.9,
     text >=2.0 && <2.2,
     hslogger >=1.3 && <1.4
   hs-source-dirs: src

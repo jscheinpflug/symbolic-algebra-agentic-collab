@@ -1,0 +1,22 @@
+{
+  "feature_id": "symbolic-dsl-scaffold",
+  "phase": "TYPES",
+  "feature_context": "artifacts/tdd/symbolic-dsl-scaffold/FEATURE.md",
+  "depends_on_pr": null,
+  "module_docs": [
+    "docs/modules/Symbolic.Term.md",
+    "docs/modules/Symbolic.Symbol.md",
+    "docs/modules/Symbolic.Pattern.md",
+    "docs/modules/Symbolic.Rule.md",
+    "docs/modules/Symbolic.Strategy.md",
+    "docs/modules/Symbolic.Trace.md",
+    "docs/modules/Symbolic.Engine.Apply.md",
+    "docs/modules/Symbolic.Engine.Search.md",
+    "docs/modules/Symbolic.Dsl.Ast.md",
+    "docs/modules/Symbolic.Dsl.Parser.md",
+    "docs/modules/Symbolic.Dsl.Pretty.md",
+    "docs/modules/Symbolic.Corpus.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}
