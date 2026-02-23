@@ -19,17 +19,21 @@ Define typed contracts for bounded equality saturation over e-graph snapshots.
 
 - [x] Module scaffold created
 - [x] Saturation contract placeholders added
+- [x] Contract-level `TESTS` coverage added
 - [ ] Bounded saturation implementation
 
 ## Test Status
 
-- `TESTS` phase pending: limit-failure and determinism tests will be added in `symbolic-egraph-saturation/TESTS`.
+- `TESTS` phase: unit coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/SaturateTest.hs`.
+- `TESTS` phase: integration determinism coverage added in
+  `test/Integration/Symbolic/ContractsIntegrationTest.hs`.
 
 ## Known Gaps / Next Steps
 
-- Add failing-first tests for iteration/e-node/e-class limits and deterministic repeated runs in `TESTS`.
 - Implement bounded saturation and typed limit exits in `IMPL` phase.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for saturation contracts.
+- 2026-02-23: Added `TESTS`-phase unit/property/integration coverage for saturation contract determinism.

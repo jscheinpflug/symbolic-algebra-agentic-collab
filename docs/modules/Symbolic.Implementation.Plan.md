@@ -34,7 +34,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-01 `symbolic-egraph-foundation/TYPES`
 - [x] PR-02 `symbolic-egraph-foundation/TESTS`
 - [x] PR-03 `symbolic-egraph-foundation/IMPL`
-- [ ] PR-04 `symbolic-egraph-saturation/TYPES`
+- [x] PR-04 `symbolic-egraph-saturation/TYPES`
 - [ ] PR-05 `symbolic-egraph-saturation/TESTS`
 - [ ] PR-06 `symbolic-egraph-saturation/IMPL`
 - [ ] PR-07 `symbolic-egraph-strategy/TYPES`
@@ -152,12 +152,12 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
   - [x] module docs updated in same PR
   - [x] no implementation logic added
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-05: `symbolic-egraph-saturation/TESTS`
 
 - Feature id: `symbolic-egraph-saturation`
-- Depends on: `commit:<PR-04 merge sha>`
+- Depends on: `commit:f5b20b5`
 - Branch: `feature/symbolic-egraph-saturation-tests`
 - Scope:
   - unit tests for limits and typed failures
@@ -170,10 +170,10 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
   - e-class limit failure
   - stable behavior for same input/rules/config
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] deterministic assertions present
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] deterministic assertions present
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-06: `symbolic-egraph-saturation/IMPL`

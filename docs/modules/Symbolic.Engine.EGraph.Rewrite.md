@@ -18,17 +18,19 @@ Define typed contracts for compiling project `Rule` values into backend rewrite 
 
 - [x] Module scaffold created
 - [x] Rewrite contract placeholders added
+- [x] Contract-level `TESTS` coverage added
 - [ ] Rewrite compilation implementation
 
 ## Test Status
 
-- `TESTS` phase pending: unit and integration coverage will be added in `symbolic-egraph-saturation/TESTS`.
+- `TESTS` phase: unit coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/RewriteTest.hs`.
 
 ## Known Gaps / Next Steps
 
-- Add failing-first tests for rewrite compilation limits and deterministic behavior in `TESTS`.
 - Implement rewrite compilation in `IMPL` phase.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for rewrite compilation contracts.
+- 2026-02-23: Added `TESTS`-phase unit and property coverage for rewrite contract determinism.
