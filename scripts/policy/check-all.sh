@@ -9,6 +9,8 @@ set -euo pipefail
 ./scripts/policy/check-bench-regressions.sh
 ./scripts/policy/check-no-partials.sh
 ./scripts/policy/check-no-string.sh
+./scripts/policy/check-test-layout.sh
+./scripts/policy/check-property-tests.sh
 ./scripts/policy/check-rule-freshness.sh
 ./scripts/policy/check-policy-coverage.sh
 ./scripts/policy/check-tdd-phase.sh
