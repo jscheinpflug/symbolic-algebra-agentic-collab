@@ -29,6 +29,8 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: integration coverage added for deterministic repeated
+  e-graph wrapper calls in `test/Integration/Symbolic/ContractsIntegrationTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -40,3 +42,4 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Updated roadmap to e-graph saturation/extraction execution model.
 - 2026-02-23: Added e-graph foundation wrapper contracts for snapshot build/recover flow.
+- 2026-02-23: Added integration test coverage for deterministic wrapper behavior.

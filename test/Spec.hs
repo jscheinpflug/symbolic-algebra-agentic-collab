@@ -10,6 +10,8 @@ import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.AstTest qualified as DslAs
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.ParserTest qualified as DslParserTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.PrettyTest qualified as DslPrettyTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.ApplyTest qualified as EngineApplyTest
+import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.BuildTest qualified as EGraphBuildTest
+import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.TranslateTest qualified as EGraphTranslateTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.SearchTest qualified as EngineSearchTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.PatternTest qualified as PatternTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.RuleTest qualified as RuleTest
@@ -35,6 +37,8 @@ main =
             StrategyTest.spec
             TraceTest.spec
             EngineApplyTest.spec
+            EGraphBuildTest.spec
+            EGraphTranslateTest.spec
             EngineSearchTest.spec
             DslAstTest.spec
             DslParserTest.spec

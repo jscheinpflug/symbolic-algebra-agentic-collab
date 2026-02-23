@@ -21,7 +21,8 @@ Define the opaque snapshot contract used to carry backend e-graph state.
 
 ## Test Status
 
-- `TESTS` phase: pending for translation roundtrip and typed failure behavior.
+- `TESTS` phase: unit coverage added for opaque snapshot contract in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/BuildTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -31,3 +32,4 @@ Define the opaque snapshot contract used to carry backend e-graph state.
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for e-graph snapshot contract.
+- 2026-02-23: Added `TESTS`-phase unit coverage for snapshot contract shape.
