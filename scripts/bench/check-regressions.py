@@ -277,9 +277,14 @@ def print_summary(report: dict) -> None:
 
 def main() -> int:
     args = parse_args()
-    threshold_percent = require_finite(
-        float(args.threshold_percent), "--threshold-percent"
-    )
+    try:
+        threshold_percent = require_finite(
+            float(args.threshold_percent), "--threshold-percent"
+        )
+    except ValueError as err:
+        print(f"Benchmark regression check setup failed: {err}", file=sys.stderr)
+        return 1
+
     if threshold_percent < 0:
         print("threshold-percent must be non-negative.", file=sys.stderr)
         return 1
