@@ -1,0 +1,12 @@
+{
+  "feature_id": "symbolic-dsl-scaffold",
+  "phase": "IMPL",
+  "feature_context": "artifacts/tdd/symbolic-dsl-scaffold/FEATURE.md",
+  "depends_on_pr": "commit:9dd7b8d",
+  "module_docs": [
+    "docs/modules/scripts.check-test-layout.md",
+    "docs/modules/scripts.check-property-tests.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}

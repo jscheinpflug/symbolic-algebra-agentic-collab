@@ -19,6 +19,7 @@ required_rule_ids = {
     "RULE-006",
     "RULE-007",
     "RULE-008",
+    "RULE-009",
 }
 
 required_tags = {
@@ -38,6 +39,10 @@ required_tags = {
     "phase-gate",
     "feature-context",
     "module-docs",
+    "property-tests",
+    "test-layout",
+    "unit-tests",
+    "integration-tests",
 }
 
 rule_ids = set()

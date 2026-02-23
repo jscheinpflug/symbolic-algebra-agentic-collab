@@ -18,3 +18,7 @@
 7. Aligned enforcement with contract by removing mandatory per-phase `FEATURE.md` edits while retaining feature context existence and heading validation.
 8. Tightened feedback follow-up: `TESTS` phase now forbids `scripts/` changes, and bootstrap bypass is one-time based on base-branch rollout-file absence.
 9. Added fixture-based regression tests for TDD phase enforcement and removed `HEAD~1` range fallback to avoid partial PR-range validation.
+10. Added a dedicated testing contract (`docs/domains/testing.md`) that defines mirrored unit tests, integration test placement, and core property-test requirements.
+11. Added `scripts/policy/check-test-layout.sh` to enforce test layout mirroring and naming contracts.
+12. Added `scripts/policy/check-property-tests.sh` to enforce baseline QuickCheck property coverage for symbolic core AST modules.
+13. Registered RULE-009 and extended policy-coverage requirements for `unit-tests`, `integration-tests`, `property-tests`, and `test-layout`.
