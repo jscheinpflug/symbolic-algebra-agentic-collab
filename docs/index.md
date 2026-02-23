@@ -23,6 +23,7 @@
 - Rule freshness policy: `scripts/policy/check-rule-freshness.sh`
 - Policy coverage policy: `scripts/policy/check-policy-coverage.sh`
 - Dead-rule policy: `scripts/policy/check-dead-rules.sh`
+- TDD phase fixture tests: `scripts/policy/test-check-tdd-phase-fixtures.sh`
 - Issue template: `.github/ISSUE_TEMPLATE/agent_task.yml`
 - PR template: `.github/pull_request_template.md`
 - CI workflow: `.github/workflows/ci.yml`

@@ -80,6 +80,7 @@ Policy restrictions:
 4. `FEATURE.md` must exist and satisfy required headings.
    - Updating `FEATURE.md` on every phase PR is optional; required when feature intent/acceptance changes.
 5. Every path listed in artifact `module_docs` must:
+   - include at least one path,
    - exist, and
    - be changed in the same PR.
 6. For `TESTS` and `IMPL`, `depends_on_pr` must be non-null and non-empty.
@@ -114,4 +115,5 @@ Primary enforcement point:
 Included in:
 
 - `scripts/policy/check-all.sh`
+- `scripts/policy/test-check-tdd-phase-fixtures.sh`
 - `.github/workflows/ci.yml`

@@ -59,8 +59,12 @@ def resolve_base_commit() -> str | None:
             base_commit = base_commit[0]
         else:
             base_commit = None
-    elif subprocess.run(["git", "rev-parse", "--verify", "HEAD~1"], capture_output=True).returncode == 0:
-        base_commit = "HEAD~1"
+    elif subprocess.run(["git", "rev-parse", "--verify", base_ref], capture_output=True).returncode == 0:
+        base_commit = lines(run_git(["merge-base", "HEAD", base_ref]))
+        if base_commit:
+            base_commit = base_commit[0]
+        else:
+            base_commit = None
 
     if base_commit:
         return base_commit
@@ -105,8 +109,8 @@ def validate_artifact_shape(payload: dict, path: Path) -> None:
     status = payload["status"]
     updated_at = payload["updated_at"]
 
-    if not isinstance(feature_id, str) or not re.match(r"^[a-z0-9][a-z0-9-]{2,63}$", feature_id):
-        raise ValueError(f"{path}: feature_id must match ^[a-z0-9][a-z0-9-]{{2,63}}$")
+    if not isinstance(feature_id, str) or not re.match(r"^[a-z0-9](?:[a-z0-9-]{1,62}[a-z0-9])$", feature_id):
+        raise ValueError(f"{path}: feature_id must match ^[a-z0-9](?:[a-z0-9-]{{1,62}}[a-z0-9])$")
 
     if phase not in {"TYPES", "TESTS", "IMPL"}:
         raise ValueError(f"{path}: phase must be one of TYPES|TESTS|IMPL")
@@ -132,7 +136,7 @@ def validate_artifact_shape(payload: dict, path: Path) -> None:
         raise ValueError(f"{path}: module_docs must be a non-empty array")
 
     for doc in module_docs:
-        if not isinstance(doc, str) or not re.match(r"^docs/modules/.+\.md$", doc):
+        if not isinstance(doc, str) or not re.match(r"^docs/modules/[^/]+\.md$", doc):
             raise ValueError(f"{path}: invalid module_docs path: {doc}")
 
 

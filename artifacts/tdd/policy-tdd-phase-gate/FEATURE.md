@@ -32,3 +32,4 @@ Introduces a new project workflow artifact schema and policy script. No runtime 
 - Bootstrap escape hatch is scoped to `policy-tdd-phase-gate` only.
 - TESTS phase does not allow `scripts/` implementation changes.
 - Bootstrap escape hatch is one-time via base-rollout file absence checks.
+- Fixture-based regression tests now cover key policy branches.

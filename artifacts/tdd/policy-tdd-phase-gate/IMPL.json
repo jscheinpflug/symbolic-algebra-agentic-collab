@@ -3,9 +3,7 @@
   "phase": "IMPL",
   "feature_context": "artifacts/tdd/policy-tdd-phase-gate/FEATURE.md",
   "depends_on_pr": "bootstrap-initial",
-  "module_docs": [
-    "docs/modules/scripts.check-tdd-phase.md"
-  ],
+  "module_docs": ["docs/modules/scripts.check-tdd-phase.md"],
   "status": "ready",
   "updated_at": "2026-02-23"
 }

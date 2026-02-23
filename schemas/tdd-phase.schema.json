@@ -15,7 +15,7 @@
   "properties": {
     "feature_id": {
       "type": "string",
-      "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{1,62}[a-z0-9])$"
     },
     "phase": {
       "type": "string",
@@ -40,7 +40,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "pattern": "^docs/modules/.+\\.md$"
+        "pattern": "^docs/modules/[^/]+\\.md$"
       }
     },
     "status": {

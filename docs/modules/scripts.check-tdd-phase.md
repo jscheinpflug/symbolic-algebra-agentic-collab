@@ -32,6 +32,7 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 ## Test Status
 
 - Covered by policy integration run via `./scripts/policy/check-all.sh`.
+- Dedicated fixture coverage is enforced by `./scripts/policy/test-check-tdd-phase-fixtures.sh`.
 - Edge-case fixes applied for:
   - newline rendering in violation output,
   - empty merge-base handling,
@@ -39,7 +40,7 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 
 ## Known Gaps / Next Steps
 
-- Add fixture-based script tests to make edge-case behavior fully regression-tested.
+- Add JSON-schema conformance testing against intentionally malformed fixture artifacts.
 
 ## Change Log
 
@@ -47,3 +48,4 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 - 2026-02-23: Added phase-order checks, stricter artifact key validation, and reviewer-requested edge-case fixes.
 - 2026-02-23: Removed per-PR feature-context edit requirement; kept heading validation and path consistency checks.
 - 2026-02-23: Disallowed `scripts/` changes during TESTS phase and hardened bootstrap bypass to be one-time by base-rollout detection.
+- 2026-02-23: Added fixture-based regression tests and stricter base-resolution logic (no `HEAD~1` fallback).

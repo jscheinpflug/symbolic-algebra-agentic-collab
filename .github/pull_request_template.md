@@ -20,7 +20,7 @@
 
 ## Module Docs Updated
 
-<!-- List docs/modules/*.md files updated in this PR. -->
+<!-- List docs/modules/*.md files updated in this PR (at least one required). -->
 
 - [ ] I confirm this PR only includes changes allowed for the declared TDD phase.
 
