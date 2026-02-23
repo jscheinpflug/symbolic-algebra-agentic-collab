@@ -7,6 +7,7 @@
 - Agentic loop contract: `docs/domains/agentic-loop.md`
 - Logging contract: `docs/domains/logging.md`
 - Safety contract: `docs/domains/safety.md`
+- Testing contract: `docs/domains/testing.md`
 - TDD phase contract: `docs/domains/tdd-phases.md`
 - Benchmark harness: `bench/Main.hs`
 - Benchmark baseline: `bench/baseline/workflow-benchmarks.json`
@@ -28,6 +29,9 @@
 - Symbolic scaffold feature context: `artifacts/tdd/symbolic-dsl-scaffold/FEATURE.md`
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TYPES.json`
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TESTS.json`
+- Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/IMPL.json`
+- Policy module doc: `docs/modules/scripts.check-test-layout.md`
+- Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`
 - Benchmark regression checker: `scripts/bench/check-regressions.py`
 - Benchmark cost sanity checker: `scripts/bench/check-cost-sanity.py`
@@ -35,6 +39,8 @@
 - Benchmark policy gate: `scripts/policy/check-bench-regressions.sh`
 - Partial ban policy: `scripts/policy/check-no-partials.sh`
 - String ban policy: `scripts/policy/check-no-string.sh`
+- Test layout policy: `scripts/policy/check-test-layout.sh`
+- Property coverage policy: `scripts/policy/check-property-tests.sh`
 - Rule freshness policy: `scripts/policy/check-rule-freshness.sh`
 - Policy coverage policy: `scripts/policy/check-policy-coverage.sh`
 - Dead-rule policy: `scripts/policy/check-dead-rules.sh`
