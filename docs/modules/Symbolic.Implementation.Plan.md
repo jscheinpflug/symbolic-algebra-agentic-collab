@@ -38,7 +38,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-05 `symbolic-egraph-saturation/TESTS`
 - [x] PR-06 `symbolic-egraph-saturation/IMPL`
 - [x] PR-07 `symbolic-egraph-strategy/TYPES`
-- [ ] PR-08 `symbolic-egraph-strategy/TESTS`
+- [x] PR-08 `symbolic-egraph-strategy/TESTS`
 - [ ] PR-09 `symbolic-egraph-strategy/IMPL`
 - [ ] PR-10 `symbolic-egraph-io/TYPES`
 - [ ] PR-11 `symbolic-egraph-io/TESTS`
@@ -248,12 +248,12 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - [x] deterministic objective checks included
   - [x] module docs updated in same PR
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-09: `symbolic-egraph-strategy/IMPL`
 
 - Feature id: `symbolic-egraph-strategy`
-- Depends on: `commit:<PR-08 merge sha>`
+- Depends on: `commit:954f8e7`
 - Branch: `feature/symbolic-egraph-strategy-impl`
 - Scope:
   - deterministic extractor implementation
@@ -265,10 +265,10 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - ensure deterministic tie-break behavior
   - keep `hegg` internals encapsulated
 - Progress checks:
-  - [ ] all PR-08 tests now pass
-  - [ ] deterministic extraction objective verified
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
+  - [x] all PR-08 tests now pass
+  - [x] deterministic extraction objective verified
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-10: `symbolic-egraph-io/TYPES`

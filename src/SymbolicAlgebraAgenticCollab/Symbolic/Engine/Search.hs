@@ -10,9 +10,14 @@ module SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search (
 ) where
 
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Build (EGraphSnapshot)
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Extract (
+    ExtractionCost (..),
+    extractBestWithCost,
+ )
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Saturate (
     SaturationConfig,
     SaturationError (SaturationNoRootEClass),
+    saturate,
  )
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Translate (
     EGraphBuildError (..),
@@ -22,7 +27,7 @@ import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Translate (
 import SymbolicAlgebraAgenticCollab.Symbolic.Rule (Rule)
 import SymbolicAlgebraAgenticCollab.Symbolic.Strategy (Strategy)
 import SymbolicAlgebraAgenticCollab.Symbolic.Term (Term)
-import SymbolicAlgebraAgenticCollab.Symbolic.Trace (RewriteTrace)
+import SymbolicAlgebraAgenticCollab.Symbolic.Trace (RewriteTrace (..))
 
 data SearchMode
     = Deterministic
@@ -56,4 +61,15 @@ runStrategy ::
     [Rule] ->
     Term ->
     Either SaturationError RewriteTrace
-runStrategy _ _ _ _ = Left SaturationNoRootEClass
+runStrategy _strategy cfg rules term
+    | null rules = Left SaturationNoRootEClass
+    | otherwise = do
+        snapshot <- saturate cfg rules term
+        (bestTerm, bestCost) <- extractBestWithCost snapshot
+        pure
+            RewriteTrace
+                { traceStart = term
+                , traceSteps = []
+                , traceFinal = bestTerm
+                , traceTotalCost = costRule bestCost
+                }

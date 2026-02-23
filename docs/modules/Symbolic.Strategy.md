@@ -33,8 +33,8 @@ saturation/extraction planning.
 
 - Align `Strategy` semantics with `Symbolic.Engine.Search.runStrategy` once strategy
   planning contracts are wired.
-- Implement deterministic strategy interpretation over `hegg` saturation configuration in `IMPL` phase.
-- Add objective-order tests (`rule-cost` then `size`) in `symbolic-egraph-strategy/TESTS`.
+- Implement deterministic strategy interpretation over `hegg` saturation configuration in later slices.
+- Expand strategy-specific behavior beyond the current wrapper-level execution path.
 
 ## Change Log
 
@@ -43,3 +43,4 @@ saturation/extraction planning.
 - 2026-02-23: Updated strategy roadmap for e-graph policy control.
 - 2026-02-23: Noted `runStrategy` tie-in for deterministic planning documentation.
 - 2026-02-23: Added `TESTS`-phase objective-order checks tied to strategy/extraction planning.
+- 2026-02-23: Wired strategy execution through deterministic saturation/extraction wrappers.
