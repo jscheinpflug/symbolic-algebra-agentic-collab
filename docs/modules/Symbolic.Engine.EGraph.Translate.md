@@ -23,7 +23,9 @@ Define typed translation contracts between `Term` and opaque e-graph snapshots.
 
 ## Test Status
 
-- `TESTS` phase: pending for roundtrip subset and unsupported-shape errors.
+- `TESTS` phase: unit coverage added for typed errors and deterministic repeated
+  translation attempts in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/TranslateTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -33,3 +35,4 @@ Define typed translation contracts between `Term` and opaque e-graph snapshots.
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for translation contracts.
+- 2026-02-23: Added `TESTS`-phase unit coverage for translation error contracts.

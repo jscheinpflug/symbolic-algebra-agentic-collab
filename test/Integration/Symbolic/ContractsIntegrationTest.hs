@@ -3,6 +3,7 @@ module Integration.Symbolic.ContractsIntegrationTest (spec) where
 import Data.Map.Strict qualified as Map
 import SymbolicAlgebraAgenticCollab.Symbolic.Corpus
 import SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Ast
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search
 import SymbolicAlgebraAgenticCollab.Symbolic.Pattern
 import SymbolicAlgebraAgenticCollab.Symbolic.Rule
 import SymbolicAlgebraAgenticCollab.Symbolic.Term
@@ -49,3 +50,9 @@ spec =
             let query = QueryDecl{queryInput = inputTerm, queryTarget = Just (traceFinal trace)}
             caseId corpusCase `shouldBe` declaredRuleId decl
             queryTarget query `shouldBe` Just outputTerm
+
+        it "keeps e-graph wrapper contracts deterministic across repeated runs" $ do
+            let inputTerm = Node (Head "Plus") [Atom "x", Number 0]
+            let first = buildSearchSnapshot inputTerm
+            let second = buildSearchSnapshot inputTerm
+            first `shouldBe` second
