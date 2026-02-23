@@ -29,3 +29,4 @@ Introduces a new project workflow artifact schema and policy script. No runtime 
   - phase ordering enforcement for TESTS/IMPL,
   - additional-properties rejection for artifacts,
   - merge-base and formatting edge cases in error handling.
+- Bootstrap escape hatch is scoped to `policy-tdd-phase-gate` only.

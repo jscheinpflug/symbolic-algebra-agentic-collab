@@ -84,7 +84,7 @@ Policy restrictions:
 
 ## Bootstrap Exception
 
-To bootstrap this policy itself, `depends_on_pr: "bootstrap-initial"` is allowed as a one-time exception for missing prerequisite artifacts.
+To bootstrap this policy itself, `depends_on_pr: "bootstrap-initial"` is allowed as a one-time exception for missing prerequisite artifacts only when `feature_id` is `policy-tdd-phase-gate`.
 
 ## PR Template Requirements
 

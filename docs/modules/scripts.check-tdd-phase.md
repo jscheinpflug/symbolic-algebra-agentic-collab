@@ -25,6 +25,7 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 - [x] Module-doc update enforcement
 - [x] Phase ordering enforcement (`TYPES -> TESTS -> IMPL`)
 - [x] Schema-aligned additional-properties enforcement
+- [x] Scoped bootstrap exception (`policy-tdd-phase-gate` only)
 
 ## Test Status
 

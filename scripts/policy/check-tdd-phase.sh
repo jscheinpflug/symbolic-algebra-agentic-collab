@@ -176,7 +176,11 @@ def check_phase_paths(phase: str, changed: list[str]) -> None:
 
 def check_phase_order(feature_id: str, phase: str, depends_on_pr: str | None) -> None:
     # Bootstrap escape hatch for first deployment of this policy itself.
-    if isinstance(depends_on_pr, str) and depends_on_pr.strip() == "bootstrap-initial":
+    if (
+        feature_id == "policy-tdd-phase-gate"
+        and isinstance(depends_on_pr, str)
+        and depends_on_pr.strip() == "bootstrap-initial"
+    ):
         return
 
     if phase == "TYPES":
