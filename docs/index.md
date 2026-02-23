@@ -23,6 +23,7 @@
 - Symbolic module doc: `docs/modules/Symbolic.Trace.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.Apply.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Build.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Extract.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Rewrite.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Saturate.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Translate.md`
@@ -46,6 +47,8 @@
 - Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/TYPES.json`
 - Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/TESTS.json`
 - Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/IMPL.json`
+- Symbolic e-graph strategy context: `artifacts/tdd/symbolic-egraph-strategy/FEATURE.md`
+- Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/TYPES.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`

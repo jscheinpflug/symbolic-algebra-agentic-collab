@@ -36,7 +36,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-03 `symbolic-egraph-foundation/IMPL`
 - [x] PR-04 `symbolic-egraph-saturation/TYPES`
 - [x] PR-05 `symbolic-egraph-saturation/TESTS`
-- [ ] PR-06 `symbolic-egraph-saturation/IMPL`
+- [x] PR-06 `symbolic-egraph-saturation/IMPL`
 - [ ] PR-07 `symbolic-egraph-strategy/TYPES`
 - [ ] PR-08 `symbolic-egraph-strategy/TESTS`
 - [ ] PR-09 `symbolic-egraph-strategy/IMPL`
@@ -195,12 +195,12 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
   - [x] typed failures for all limit exits
   - [x] module docs updated in same PR
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-07: `symbolic-egraph-strategy/TYPES`
 
 - Feature id: `symbolic-egraph-strategy`
-- Depends on: `commit:<PR-06 merge sha>`
+- Depends on: `commit:ed91557`
 - Branch: `feature/symbolic-egraph-strategy-types`
 - Scope:
   - `src/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/Extract.hs`
@@ -223,10 +223,10 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no behavior implementation added
-  - [ ] all required checks pass
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no behavior implementation added
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-08: `symbolic-egraph-strategy/TESTS`
