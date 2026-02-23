@@ -49,7 +49,7 @@ jobs:
             const rawArgs = body.slice(commandPrefix.length).trim();
             const tokens = rawArgs.length > 0 ? rawArgs.split(/\s+/) : [];
 
-            let parsedTimeout = 300;
+            let parsedTimeout = 900;
             let enableGemini = true;
 
             for (const tokenRaw of tokens) {

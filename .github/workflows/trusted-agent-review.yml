@@ -10,7 +10,7 @@ on:
       timeout_seconds:
         description: "Per-agent review timeout in seconds"
         required: false
-        default: "300"
+        default: "900"
         type: string
       enable_gemini:
         description: "Whether Gemini reviewer is enabled for this run"
