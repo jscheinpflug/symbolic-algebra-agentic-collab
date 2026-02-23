@@ -39,6 +39,7 @@
 - Symbolic e-graph foundation context: `artifacts/tdd/symbolic-egraph-foundation/FEATURE.md`
 - Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/TYPES.json`
 - Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/TESTS.json`
+- Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/IMPL.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`

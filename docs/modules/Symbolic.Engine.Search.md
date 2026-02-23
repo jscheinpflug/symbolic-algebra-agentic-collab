@@ -24,6 +24,7 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - [x] Module scaffold created
 - [x] Search contract placeholders added
 - [x] E-graph translation wrapper contracts added
+- [x] Foundation wrapper wiring implemented
 - [ ] Bounded saturation and extraction behavior
 
 ## Test Status
@@ -43,3 +44,4 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - 2026-02-23: Updated roadmap to e-graph saturation/extraction execution model.
 - 2026-02-23: Added e-graph foundation wrapper contracts for snapshot build/recover flow.
 - 2026-02-23: Added integration test coverage for deterministic wrapper behavior.
+- 2026-02-23: Completed IMPL-phase wrapper wiring for build/recover contracts.

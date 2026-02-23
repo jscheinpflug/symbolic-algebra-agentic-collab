@@ -31,9 +31,9 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 
 ## Progress Dashboard
 
-- [ ] PR-01 `symbolic-egraph-foundation/TYPES`
-- [ ] PR-02 `symbolic-egraph-foundation/TESTS`
-- [ ] PR-03 `symbolic-egraph-foundation/IMPL`
+- [x] PR-01 `symbolic-egraph-foundation/TYPES`
+- [x] PR-02 `symbolic-egraph-foundation/TESTS`
+- [x] PR-03 `symbolic-egraph-foundation/IMPL`
 - [ ] PR-04 `symbolic-egraph-saturation/TYPES`
 - [ ] PR-05 `symbolic-egraph-saturation/TESTS`
 - [ ] PR-06 `symbolic-egraph-saturation/IMPL`
@@ -69,16 +69,16 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no behavior implementation added
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no behavior implementation added
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-02: `symbolic-egraph-foundation/TESTS`
 
 - Feature id: `symbolic-egraph-foundation`
-- Depends on: `commit:<PR-01 merge sha>`
+- Depends on: `commit:3d493ac`
 - Branch: `feature/symbolic-egraph-foundation-tests`
 - Scope:
   - `test/Unit/.../Symbolic/Engine/...`
@@ -91,16 +91,16 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
   - unsupported term shape typed failure
   - deterministic translation representation checks
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] tests are mirrored under unit/integration layout policy
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] deterministic assertions included for translation wrappers
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-03: `symbolic-egraph-foundation/IMPL`
 
 - Feature id: `symbolic-egraph-foundation`
-- Depends on: `commit:<PR-02 merge sha>`
+- Depends on: `commit:d1d8ebf`
 - Branch: `feature/symbolic-egraph-foundation-impl`
 - Scope:
   - implementation in `Build.hs` and `Translate.hs`
@@ -112,10 +112,10 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
   - translate back for supported subset
   - preserve deterministic mapping behavior
 - Progress checks:
-  - [ ] all PR-02 tests now pass
-  - [ ] no raw `hegg` types exposed in public modules
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
+  - [x] all PR-02 tests now pass
+  - [x] no raw `hegg` types exposed in public modules
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-04: `symbolic-egraph-saturation/TYPES`
