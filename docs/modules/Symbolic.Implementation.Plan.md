@@ -116,12 +116,12 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
   - [x] no raw `hegg` types exposed in public modules
   - [x] module docs updated in same PR
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-04: `symbolic-egraph-saturation/TYPES`
 
 - Feature id: `symbolic-egraph-saturation`
-- Depends on: `commit:<PR-03 merge sha>`
+- Depends on: `commit:5d2fe8f`
 - Branch: `feature/symbolic-egraph-saturation-types`
 - Scope:
   - `src/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/Rewrite.hs`
@@ -148,10 +148,10 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no implementation logic added
-  - [ ] all required checks pass
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no implementation logic added
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-05: `symbolic-egraph-saturation/TESTS`

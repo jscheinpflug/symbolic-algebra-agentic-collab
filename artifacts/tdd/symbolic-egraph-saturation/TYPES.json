@@ -1,0 +1,14 @@
+{
+  "feature_id": "symbolic-egraph-saturation",
+  "phase": "TYPES",
+  "feature_context": "artifacts/tdd/symbolic-egraph-saturation/FEATURE.md",
+  "depends_on_pr": "commit:5d2fe8f",
+  "module_docs": [
+    "docs/modules/Symbolic.Engine.Apply.md",
+    "docs/modules/Symbolic.Engine.EGraph.Rewrite.md",
+    "docs/modules/Symbolic.Engine.EGraph.Saturate.md",
+    "docs/modules/Symbolic.Implementation.Plan.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}
