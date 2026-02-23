@@ -41,6 +41,7 @@ library
     SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Pretty
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.Apply
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Build
+    SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Extract
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Rewrite
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Saturate
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Translate

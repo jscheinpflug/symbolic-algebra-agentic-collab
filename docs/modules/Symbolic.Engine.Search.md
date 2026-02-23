@@ -11,13 +11,18 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - `SearchStats`
 - `buildSearchSnapshot`
 - `recoverSearchTerm`
+- `runStrategy`
 - `EGraphBuildError`
 - `EGraphSnapshot`
+- `SaturationConfig`
+- `SaturationError`
+- `RewriteTrace`
 
 ## Invariants
 
 - Search contracts remain independent from parser and corpus layers.
 - Search APIs map to bounded equality saturation and deterministic extraction.
+- `runStrategy` must enforce the `rule-cost`-then-`size` extraction objective.
 
 ## Feature Progress
 
@@ -25,6 +30,7 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - [x] Search contract placeholders added
 - [x] E-graph translation wrapper contracts added
 - [x] Foundation wrapper wiring implemented
+- [x] Strategy planning contracts created (`runStrategy`)
 - [ ] Bounded saturation and extraction behavior
 
 ## Test Status
@@ -32,10 +38,13 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
 - `TESTS` phase: integration coverage added for deterministic repeated
   e-graph wrapper calls in `test/Integration/Symbolic/ContractsIntegrationTest.hs`.
+- `TESTS` phase: strategy planning contracts will mirror the extraction / saturation path.
 
 ## Known Gaps / Next Steps
 
 - Implement deterministic saturation orchestration on `hegg` with typed limit failures in `IMPL` phase.
+- Add `runStrategy` wiring to orchestrate `SaturationConfig` plus extraction heuristics.
+- Replace TYPES-phase `runStrategy` typed placeholder with full strategy execution flow.
 
 ## Change Log
 
@@ -45,3 +54,4 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - 2026-02-23: Added e-graph foundation wrapper contracts for snapshot build/recover flow.
 - 2026-02-23: Added integration test coverage for deterministic wrapper behavior.
 - 2026-02-23: Completed IMPL-phase wrapper wiring for build/recover contracts.
+- 2026-02-23: Documented `runStrategy` contract to prepare deterministic strategy planning.
