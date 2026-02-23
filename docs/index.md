@@ -27,6 +27,7 @@
 - Symbolic module doc: `docs/modules/Symbolic.Corpus.md`
 - Symbolic scaffold feature context: `artifacts/tdd/symbolic-dsl-scaffold/FEATURE.md`
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TYPES.json`
+- Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TESTS.json`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`
 - Benchmark regression checker: `scripts/bench/check-regressions.py`
 - Benchmark cost sanity checker: `scripts/bench/check-cost-sanity.py`

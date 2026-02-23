@@ -22,12 +22,14 @@ Define the foundational tree representation for symbolic expressions.
 
 ## Test Status
 
-- `TYPES` phase only: tests intentionally deferred.
+- `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- Property checks cover bounded-depth generation invariants in `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/TermTest.hs`.
 
 ## Known Gaps / Next Steps
 
-- Add normalization and rendering tests in `TESTS` phase.
+- Implement module behavior and semantic assertions in `IMPL` phase.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold.
+- 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.

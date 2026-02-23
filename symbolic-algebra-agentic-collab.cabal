@@ -69,9 +69,33 @@ executable symbolic-algebra-agentic-collab
 test-suite symbolic-algebra-agentic-collab-test
   import: warnings
   type: exitcode-stdio-1.0
-  main-is: Main.hs
+  main-is: Spec.hs
+  other-modules:
+    Integration.Symbolic.ContractsIntegrationTest
+    Integration.Workflow.ReviewLoopIntegrationTest
+    Support.Generators.Symbolic.Core
+    Support.WorkflowHarness
+    Unit.SymbolicAlgebraAgenticCollab.ConfigTest
+    Unit.SymbolicAlgebraAgenticCollab.LoggingTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.CorpusTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.AstTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.ParserTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.PrettyTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.ApplyTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.SearchTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.PatternTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.RuleTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.StrategyTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.SymbolTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.TermTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.TraceTest
+    Unit.SymbolicAlgebraAgenticCollab.WorkflowTest
+    Unit.SymbolicAlgebraAgenticCollabTest
   build-depends:
     base >=4.18 && <5,
+    containers >=0.6 && <0.9,
+    QuickCheck >=2.14 && <2.16,
+    hspec >=2.11 && <2.12,
     text >=2.0 && <2.2,
     symbolic-algebra-agentic-collab
   hs-source-dirs: test
