@@ -88,6 +88,8 @@ test-suite symbolic-algebra-agentic-collab-test
     Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.PrettyTest
     Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.ApplyTest
     Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.BuildTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.RewriteTest
+    Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.SaturateTest
     Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.TranslateTest
     Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.SearchTest
     Unit.SymbolicAlgebraAgenticCollab.Symbolic.PatternTest

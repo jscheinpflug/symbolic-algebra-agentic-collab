@@ -27,6 +27,8 @@ Define typed contracts for rule compilation/application and saturation wrappers 
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: apply-layer saturation contract coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/ApplyTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -39,3 +41,4 @@ Define typed contracts for rule compilation/application and saturation wrappers 
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Updated roadmap to e-graph backend (`hegg`) wrapper model.
 - 2026-02-23: Added `TYPES`-phase saturation contracts via `SaturationConfig`, `SaturationError`, and `saturate`.
+- 2026-02-23: Added `TESTS`-phase coverage for apply-level saturation contract re-exports.

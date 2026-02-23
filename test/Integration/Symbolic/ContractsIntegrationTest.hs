@@ -3,6 +3,7 @@ module Integration.Symbolic.ContractsIntegrationTest (spec) where
 import Data.Map.Strict qualified as Map
 import SymbolicAlgebraAgenticCollab.Symbolic.Corpus
 import SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Ast
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.Apply
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search
 import SymbolicAlgebraAgenticCollab.Symbolic.Pattern
 import SymbolicAlgebraAgenticCollab.Symbolic.Rule
@@ -55,4 +56,16 @@ spec =
             let inputTerm = Node (Head "Plus") [Atom "x", Number 0]
             let first = buildSearchSnapshot inputTerm
             let second = buildSearchSnapshot inputTerm
+            first `shouldBe` second
+
+        it "keeps saturation wrapper contracts deterministic across repeated runs" $ do
+            let inputTerm = Node (Head "Plus") [Atom "x", Number 0]
+            let cfg =
+                    SaturationConfig
+                        { maxIterations = 8
+                        , maxENodes = 128
+                        , maxEClasses = 64
+                        }
+            let first = saturate cfg [] inputTerm
+            let second = saturate cfg [] inputTerm
             first `shouldBe` second
