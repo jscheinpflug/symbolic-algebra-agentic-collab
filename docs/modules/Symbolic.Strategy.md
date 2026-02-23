@@ -26,6 +26,8 @@ saturation/extraction planning.
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: extraction objective-order contract checks added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/ExtractTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -40,3 +42,4 @@ saturation/extraction planning.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Updated strategy roadmap for e-graph policy control.
 - 2026-02-23: Noted `runStrategy` tie-in for deterministic planning documentation.
+- 2026-02-23: Added `TESTS`-phase objective-order checks tied to strategy/extraction planning.
