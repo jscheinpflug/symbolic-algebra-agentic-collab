@@ -249,6 +249,10 @@ jobs:
           if-no-files-found: error
 
   aggregate-reviews:
+    if: |
+      always() &&
+      needs.trust-gate.result == 'success' &&
+      needs.detect-reviewers.result == 'success'
     needs:
       - trust-gate
       - detect-reviewers
