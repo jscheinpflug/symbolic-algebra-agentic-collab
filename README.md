@@ -49,9 +49,12 @@ Use `./scripts/format.sh` to rewrite files in place.
   - Gemini
   - Codex
 - Aggregation gate requires:
-  - at least `minimum_required_approvals` approvals from `.agent-reviewer-policy.json` (default `2`),
-  - no `blocking=true`,
-  - no `critical` severity findings.
+  - valid artifacts from all available required reviewers,
+  - at least `minimum_required_approvals` available reviewers from `.agent-reviewer-policy.json` (default `2`).
+- Reviewer verdict outcomes are surfaced in the summary as:
+  - `decision=approve|hold`
+  - `strict_gate_passed=true|false`
+  and do not hard-fail the infrastructure aggregate step.
 - Standard trust split:
   - `pull_request` CI runs only on GitHub-hosted runners (`ubuntu-latest`), with no local model execution.
   - Local model reviews run only in manually dispatched trusted workflow.
