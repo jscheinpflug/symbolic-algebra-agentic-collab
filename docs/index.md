@@ -22,6 +22,8 @@
 - Symbolic module doc: `docs/modules/Symbolic.Strategy.md`
 - Symbolic module doc: `docs/modules/Symbolic.Trace.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.Apply.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Build.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Translate.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.Search.md`
 - Symbolic module doc: `docs/modules/Symbolic.Dsl.Ast.md`
 - Symbolic module doc: `docs/modules/Symbolic.Dsl.Parser.md`
@@ -34,6 +36,8 @@
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/IMPL.json`
 - Symbolic implementation strategy context: `artifacts/tdd/symbolic-impl-strategy/FEATURE.md`
 - Symbolic implementation strategy artifact: `artifacts/tdd/symbolic-impl-strategy/TYPES.json`
+- Symbolic e-graph foundation context: `artifacts/tdd/symbolic-egraph-foundation/FEATURE.md`
+- Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/TYPES.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`

@@ -9,6 +9,10 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - `SearchMode`
 - `SearchConfig`
 - `SearchStats`
+- `buildSearchSnapshot`
+- `recoverSearchTerm`
+- `EGraphBuildError`
+- `EGraphSnapshot`
 
 ## Invariants
 
@@ -19,6 +23,7 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 
 - [x] Module scaffold created
 - [x] Search contract placeholders added
+- [x] E-graph translation wrapper contracts added
 - [ ] Bounded saturation and extraction behavior
 
 ## Test Status
@@ -34,3 +39,4 @@ Define search/saturation contracts and stats for deterministic e-graph execution
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Updated roadmap to e-graph saturation/extraction execution model.
+- 2026-02-23: Added e-graph foundation wrapper contracts for snapshot build/recover flow.
