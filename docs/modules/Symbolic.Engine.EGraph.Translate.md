@@ -19,7 +19,7 @@ Define typed translation contracts between `Term` and opaque e-graph snapshots.
 
 - [x] Module scaffold created
 - [x] Translation contract placeholders added
-- [ ] Deterministic translation behavior
+- [x] Deterministic translation wrapper behavior
 
 ## Test Status
 
@@ -29,10 +29,10 @@ Define typed translation contracts between `Term` and opaque e-graph snapshots.
 
 ## Known Gaps / Next Steps
 
-- Add failing-first tests for translation contracts in `symbolic-egraph-foundation/TESTS`.
-- Implement deterministic backend translation in `IMPL` phase.
+- Expand from root-term snapshot wrappers to full e-graph snapshot extraction in saturation slices.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for translation contracts.
 - 2026-02-23: Added `TESTS`-phase unit coverage for translation error contracts.
+- 2026-02-23: Implemented IMPL-phase `hegg`-backed representation wrapper in `termToEGraph`.

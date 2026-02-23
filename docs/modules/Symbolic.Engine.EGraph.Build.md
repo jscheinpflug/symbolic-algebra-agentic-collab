@@ -17,7 +17,7 @@ Define the opaque snapshot contract used to carry backend e-graph state.
 
 - [x] Module scaffold created
 - [x] Snapshot contract placeholder added
-- [ ] Backend snapshot construction behavior
+- [x] Snapshot wrapper behavior implemented
 
 ## Test Status
 
@@ -26,10 +26,10 @@ Define the opaque snapshot contract used to carry backend e-graph state.
 
 ## Known Gaps / Next Steps
 
-- Add failing-first translation tests in `symbolic-egraph-foundation/TESTS`.
-- Implement real backend snapshot wiring in `IMPL` phase.
+- Wire saturated e-graph state (not just root-term snapshot wrapper) in later saturation slices.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for e-graph snapshot contract.
 - 2026-02-23: Added `TESTS`-phase unit coverage for snapshot contract shape.
+- 2026-02-23: Implemented IMPL-phase snapshot wrapper helpers for translation flow.

@@ -1,0 +1,14 @@
+{
+  "feature_id": "symbolic-egraph-foundation",
+  "phase": "IMPL",
+  "feature_context": "artifacts/tdd/symbolic-egraph-foundation/FEATURE.md",
+  "depends_on_pr": "commit:d1d8ebf",
+  "module_docs": [
+    "docs/modules/Symbolic.Engine.EGraph.Build.md",
+    "docs/modules/Symbolic.Engine.EGraph.Translate.md",
+    "docs/modules/Symbolic.Engine.Search.md",
+    "docs/modules/Symbolic.Implementation.Plan.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}

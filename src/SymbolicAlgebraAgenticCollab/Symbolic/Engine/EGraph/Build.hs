@@ -1,7 +1,17 @@
 module SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Build (
     EGraphSnapshot,
+    mkSnapshot,
+    snapshotTerm,
 ) where
 
--- | Opaque placeholder snapshot for the e-graph backend.
-newtype EGraphSnapshot = EGraphSnapshot ()
+import SymbolicAlgebraAgenticCollab.Symbolic.Term (Term)
+
+-- | Opaque wrapper for backend e-graph snapshot data.
+newtype EGraphSnapshot = EGraphSnapshot Term
     deriving (Eq, Show)
+
+mkSnapshot :: Term -> EGraphSnapshot
+mkSnapshot = EGraphSnapshot
+
+snapshotTerm :: EGraphSnapshot -> Term
+snapshotTerm (EGraphSnapshot term) = term
