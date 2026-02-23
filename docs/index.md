@@ -13,6 +13,21 @@
 - Rules catalog: `docs/policy/rules-catalog.md`
 - Policy changelog: `docs/policy/changelog.md`
 - Quality posture: `docs/quality/scorecard.md`
+- Symbolic module doc: `docs/modules/Symbolic.Term.md`
+- Symbolic module doc: `docs/modules/Symbolic.Symbol.md`
+- Symbolic module doc: `docs/modules/Symbolic.Pattern.md`
+- Symbolic module doc: `docs/modules/Symbolic.Rule.md`
+- Symbolic module doc: `docs/modules/Symbolic.Strategy.md`
+- Symbolic module doc: `docs/modules/Symbolic.Trace.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.Apply.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.Search.md`
+- Symbolic module doc: `docs/modules/Symbolic.Dsl.Ast.md`
+- Symbolic module doc: `docs/modules/Symbolic.Dsl.Parser.md`
+- Symbolic module doc: `docs/modules/Symbolic.Dsl.Pretty.md`
+- Symbolic module doc: `docs/modules/Symbolic.Corpus.md`
+- Symbolic scaffold feature context: `artifacts/tdd/symbolic-dsl-scaffold/FEATURE.md`
+- Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TYPES.json`
+- Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TESTS.json`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`
 - Benchmark regression checker: `scripts/bench/check-regressions.py`
 - Benchmark cost sanity checker: `scripts/bench/check-cost-sanity.py`
