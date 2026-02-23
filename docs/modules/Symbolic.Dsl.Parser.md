@@ -20,6 +20,7 @@ Define parser error contracts for the symbolic DSL entrypoint.
 - [x] Module scaffold created
 - [x] Parser contract placeholders added
 - [x] Pipeline execution contract placeholder added
+- [x] Pipeline execution contract wired via trace execution layer
 - [ ] Concrete parser implementation
 
 ## Test Status
@@ -30,7 +31,7 @@ Define parser error contracts for the symbolic DSL entrypoint.
 
 ## Known Gaps / Next Steps
 
-- Implement parser-to-pipeline wiring and real execution behavior in `IMPL` phase.
+- Implement concrete DSL parsing behavior that feeds the execution pipeline.
 
 ## Change Log
 
@@ -38,3 +39,4 @@ Define parser error contracts for the symbolic DSL entrypoint.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Added TYPES-phase `executeProgram` entry contract for the IO pipeline.
 - 2026-02-23: Added `TESTS`-phase coverage for parser execution entry contracts.
+- 2026-02-23: Wired parser-level `executeProgram` contract to implemented trace execution path.

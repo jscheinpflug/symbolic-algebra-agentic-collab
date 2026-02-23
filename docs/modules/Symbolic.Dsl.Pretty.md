@@ -29,6 +29,7 @@ Define pretty-printing contract placeholder for DSL values.
 ## Known Gaps / Next Steps
 
 - Implement trace-aware pretty rendering behavior in `IMPL` phase.
+- Add end-to-end trace rendering output used by IO pipeline integration flows.
 
 ## Change Log
 

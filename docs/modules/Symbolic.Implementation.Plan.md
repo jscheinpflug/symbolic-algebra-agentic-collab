@@ -41,7 +41,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-08 `symbolic-egraph-strategy/TESTS`
 - [x] PR-09 `symbolic-egraph-strategy/IMPL`
 - [x] PR-10 `symbolic-egraph-io/TYPES`
-- [ ] PR-11 `symbolic-egraph-io/TESTS`
+- [x] PR-11 `symbolic-egraph-io/TESTS`
 - [ ] PR-12 `symbolic-egraph-io/IMPL`
 
 ## PR Specs
@@ -322,12 +322,12 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - [x] integration coverage includes full pipeline
   - [x] module docs updated in same PR
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-12: `symbolic-egraph-io/IMPL`
 
 - Feature id: `symbolic-egraph-io`
-- Depends on: `commit:<PR-11 merge sha>`
+- Depends on: `commit:2082718`
 - Branch: `feature/symbolic-egraph-io-impl`
 - Scope:
   - end-to-end execution implementation
@@ -340,10 +340,10 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - produce deterministic trace/corpus outcomes
   - preserve public API boundary
 - Progress checks:
-  - [ ] all PR-11 tests now pass
-  - [ ] end-to-end flow deterministic
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
+  - [x] all PR-11 tests now pass
+  - [x] end-to-end flow deterministic
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
   - [ ] PR merged
 
 ## Cross-PR Definition of Done
