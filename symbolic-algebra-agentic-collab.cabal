@@ -78,6 +78,7 @@ test-suite symbolic-algebra-agentic-collab-test
   main-is: Spec.hs
   other-modules:
     Integration.Symbolic.ContractsIntegrationTest
+    Integration.Symbolic.PipelineIntegrationTest
     Integration.Workflow.ReviewLoopIntegrationTest
     Support.Generators.Symbolic.Core
     Support.WorkflowHarness

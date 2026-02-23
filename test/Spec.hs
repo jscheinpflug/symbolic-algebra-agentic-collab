@@ -1,6 +1,7 @@
 module Main (main) where
 
 import Integration.Symbolic.ContractsIntegrationTest qualified as SymbolicIntegration
+import Integration.Symbolic.PipelineIntegrationTest qualified as SymbolicPipelineIntegration
 import Integration.Workflow.ReviewLoopIntegrationTest qualified as WorkflowIntegration
 import Test.Hspec
 import Unit.SymbolicAlgebraAgenticCollab.ConfigTest qualified as ConfigTest
@@ -54,3 +55,4 @@ main =
         describe "Integration" $ do
             WorkflowIntegration.spec
             SymbolicIntegration.spec
+            SymbolicPipelineIntegration.spec

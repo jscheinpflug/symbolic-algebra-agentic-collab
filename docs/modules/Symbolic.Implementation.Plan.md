@@ -40,7 +40,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-07 `symbolic-egraph-strategy/TYPES`
 - [x] PR-08 `symbolic-egraph-strategy/TESTS`
 - [x] PR-09 `symbolic-egraph-strategy/IMPL`
-- [ ] PR-10 `symbolic-egraph-io/TYPES`
+- [x] PR-10 `symbolic-egraph-io/TYPES`
 - [ ] PR-11 `symbolic-egraph-io/TESTS`
 - [ ] PR-12 `symbolic-egraph-io/IMPL`
 
@@ -301,12 +301,12 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - [x] module docs updated in same PR
   - [x] no behavior implementation added
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-11: `symbolic-egraph-io/TESTS`
 
 - Feature id: `symbolic-egraph-io`
-- Depends on: `commit:<PR-10 merge sha>`
+- Depends on: `commit:0320b65`
 - Branch: `feature/symbolic-egraph-io-tests`
 - Scope:
   - integration tests parse -> saturate -> extract -> pretty
@@ -318,10 +318,10 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - corpus expectation success/failure behavior
   - stable trace shape for equivalent runs
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] integration coverage includes full pipeline
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] integration coverage includes full pipeline
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-12: `symbolic-egraph-io/IMPL`
