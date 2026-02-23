@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "unit": "seconds",
+  "benchmarks": {
+    "workflow/happy-path": 0.018692808951396325,
+    "workflow/retry-loop": 0.018779381379424254,
+    "workflow/conflict-escalation": 0.018713167307651164,
+    "workflow/reject-resubmit": 0.01870839177777451
+  }
+}

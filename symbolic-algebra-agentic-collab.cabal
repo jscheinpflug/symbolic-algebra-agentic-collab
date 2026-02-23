@@ -63,3 +63,15 @@ test-suite symbolic-algebra-agentic-collab-test
     symbolic-algebra-agentic-collab
   hs-source-dirs: test
   default-language: GHC2021
+
+benchmark workflow-bench
+  import: warnings
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  build-depends:
+    base >=4.18 && <5,
+    text >=2.0 && <2.2,
+    criterion >=1.6 && <1.7,
+    symbolic-algebra-agentic-collab
+  hs-source-dirs: bench
+  default-language: GHC2021

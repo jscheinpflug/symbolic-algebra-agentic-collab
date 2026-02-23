@@ -22,10 +22,19 @@ cabal test all
   - `scripts/policy/check-rule-freshness.sh`
   - `scripts/policy/check-policy-coverage.sh`
   - `scripts/policy/check-dead-rules.sh`
+- Benchmark regression checks are enforced via:
+  - `scripts/policy/check-bench-regressions.sh`
+  - `scripts/bench/run-benchmarks.sh`
+  - `scripts/bench/check-regressions.py`
+  - `bench/baseline/workflow-benchmarks.json`
 - CI and local checks both run:
   - `./scripts/format-check.sh`
   - `./scripts/lint.sh`
   - `./scripts/policy/check-all.sh`
+
+Benchmark regression threshold defaults to `10%` via `BENCH_REGRESSION_THRESHOLD_PERCENT`.
+Benchmark runtime defaults to `1.0s` per scenario via `BENCHMARK_TIME_LIMIT`.
+The regression gate only fails when slowdown exceeds threshold and the benchmark mean lower bound also exceeds the threshold.
 
 Use `./scripts/format.sh` to rewrite files in place.
 

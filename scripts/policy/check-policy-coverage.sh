@@ -17,6 +17,7 @@ required_rule_ids = {
     "RULE-004",
     "RULE-005",
     "RULE-006",
+    "RULE-007",
 }
 
 required_tags = {
@@ -28,6 +29,9 @@ required_tags = {
     "policy-docs",
     "review-findings",
     "rule-freshness",
+    "benchmark",
+    "baseline-presence",
+    "performance-regression",
 }
 
 rule_ids = set()

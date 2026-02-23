@@ -7,10 +7,15 @@
 - Agentic loop contract: `docs/domains/agentic-loop.md`
 - Logging contract: `docs/domains/logging.md`
 - Safety contract: `docs/domains/safety.md`
+- Benchmark harness: `bench/Main.hs`
+- Benchmark baseline: `bench/baseline/workflow-benchmarks.json`
 - Rules catalog: `docs/policy/rules-catalog.md`
 - Policy changelog: `docs/policy/changelog.md`
 - Quality posture: `docs/quality/scorecard.md`
+- Benchmark runner: `scripts/bench/run-benchmarks.sh`
+- Benchmark regression checker: `scripts/bench/check-regressions.py`
 - Policy scripts: `scripts/policy/check-all.sh`
+- Benchmark policy gate: `scripts/policy/check-bench-regressions.sh`
 - Partial ban policy: `scripts/policy/check-no-partials.sh`
 - String ban policy: `scripts/policy/check-no-string.sh`
 - Rule freshness policy: `scripts/policy/check-rule-freshness.sh`

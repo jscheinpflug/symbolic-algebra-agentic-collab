@@ -6,6 +6,7 @@ set -euo pipefail
 ./scripts/policy/check-doc-index.sh
 ./scripts/policy/check-protocol-tags.sh
 ./scripts/policy/check-reviewer-policy.sh
+./scripts/policy/check-bench-regressions.sh
 ./scripts/policy/check-no-partials.sh
 ./scripts/policy/check-no-string.sh
 ./scripts/policy/check-rule-freshness.sh

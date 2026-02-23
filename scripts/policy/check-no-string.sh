@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-targets=(src app test)
+targets=(src app test bench)
 
 declare -a checks=(
   "String-type|(?<![\"'])\\bString\\b(?![\"'])"
