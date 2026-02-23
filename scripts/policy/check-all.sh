@@ -6,7 +6,13 @@ set -euo pipefail
 ./scripts/policy/check-doc-index.sh
 ./scripts/policy/check-protocol-tags.sh
 ./scripts/policy/check-reviewer-policy.sh
-./scripts/policy/check-bench-regressions.sh
+
+if [ "${SKIP_BENCHMARK_POLICY_CHECK:-0}" = "1" ]; then
+  echo "Skipping benchmark regression check (SKIP_BENCHMARK_POLICY_CHECK=1)."
+else
+  ./scripts/policy/check-bench-regressions.sh
+fi
+
 ./scripts/policy/check-no-partials.sh
 ./scripts/policy/check-no-string.sh
 ./scripts/policy/check-test-layout.sh

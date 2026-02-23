@@ -9,6 +9,7 @@
 - Safety contract: `docs/domains/safety.md`
 - Testing contract: `docs/domains/testing.md`
 - TDD phase contract: `docs/domains/tdd-phases.md`
+- Symbolic implementation strategy: `docs/domains/symbolic-implementation-strategy.md`
 - Benchmark harness: `bench/Main.hs`
 - Benchmark baseline: `bench/baseline/workflow-benchmarks.json`
 - Rules catalog: `docs/policy/rules-catalog.md`
@@ -26,10 +27,13 @@
 - Symbolic module doc: `docs/modules/Symbolic.Dsl.Parser.md`
 - Symbolic module doc: `docs/modules/Symbolic.Dsl.Pretty.md`
 - Symbolic module doc: `docs/modules/Symbolic.Corpus.md`
+- Symbolic module doc: `docs/modules/Symbolic.Implementation.Plan.md`
 - Symbolic scaffold feature context: `artifacts/tdd/symbolic-dsl-scaffold/FEATURE.md`
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TYPES.json`
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/TESTS.json`
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/IMPL.json`
+- Symbolic implementation strategy context: `artifacts/tdd/symbolic-impl-strategy/FEATURE.md`
+- Symbolic implementation strategy artifact: `artifacts/tdd/symbolic-impl-strategy/TYPES.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`

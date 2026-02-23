@@ -1,0 +1,11 @@
+{
+  "feature_id": "symbolic-impl-strategy",
+  "phase": "TYPES",
+  "feature_context": "artifacts/tdd/symbolic-impl-strategy/FEATURE.md",
+  "depends_on_pr": null,
+  "module_docs": [
+    "docs/modules/Symbolic.Implementation.Plan.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}

@@ -10,7 +10,8 @@
 
 ## Next Steps
 
-1. Expand symbolic expression core types.
-2. Add parser/evaluator primitives.
-3. Add rule engine skeleton and property tests.
-4. Integrate benchmark corpus and regression gates.
+1. Execute `symbolic-term-pattern-core` slice (`docs/modules/Symbolic.Implementation.Plan.md`).
+2. Execute `symbolic-rule-apply-core` slice.
+3. Execute `symbolic-search-deterministic` and `symbolic-strategy-interpreter` slices.
+4. Execute `symbolic-dsl-adapters` and `symbolic-corpus-runner` slices.
+5. Keep architecture and semantics aligned with `docs/domains/symbolic-implementation-strategy.md`.

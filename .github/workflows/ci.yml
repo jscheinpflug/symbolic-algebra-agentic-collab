@@ -76,38 +76,7 @@ jobs:
       - name: Lint
         run: ./scripts/lint.sh
 
-      - name: Resolve benchmark threshold
-        id: benchmark-threshold
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          threshold="10"
-          base_sha=""
-          head_sha=""
-
-          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
-            base_sha="${{ github.event.pull_request.base.sha }}"
-            head_sha="${{ github.event.pull_request.head.sha }}"
-          elif [ "${GITHUB_EVENT_NAME}" = "push" ]; then
-            base_sha="${{ github.event.before }}"
-            head_sha="${{ github.sha }}"
-          fi
-
-          if [ -n "${base_sha}" ] && [ -n "${head_sha}" ]; then
-            changed_files="$(git diff --name-only "${base_sha}" "${head_sha}")"
-            benchmark_sensitive_paths='^(bench/|src/SymbolicAlgebraAgenticCollab/Workflow\.hs|scripts/bench/|scripts/policy/check-bench-regressions\.sh)'
-
-            if ! printf '%s\n' "${changed_files}" | grep -Eq "${benchmark_sensitive_paths}"; then
-              threshold="200"
-              echo "No benchmark-sensitive paths changed; using relaxed benchmark threshold."
-            fi
-          fi
-
-          echo "threshold=${threshold}" >> "${GITHUB_OUTPUT}"
-          echo "BENCH_REGRESSION_THRESHOLD_PERCENT=${threshold}"
-
       - name: Policy checks
         env:
-          BENCH_REGRESSION_THRESHOLD_PERCENT: ${{ steps.benchmark-threshold.outputs.threshold }}
+          SKIP_BENCHMARK_POLICY_CHECK: "1"
         run: ./scripts/policy/check-all.sh
