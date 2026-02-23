@@ -14,3 +14,4 @@
 3. Added `scripts/policy/check-tdd-phase.sh` with feature context validation and module-doc update enforcement.
 4. Updated PR template and CI required sections to include TDD phase metadata and feature context.
 5. Registered RULE-008 for phase-gate enforcement and updated policy coverage requirements.
+6. Incorporated reviewer feedback: phase-order prerequisite checks, schema-aligned key strictness, and commit-range/error-message edge-case fixes in `check-tdd-phase.sh`.

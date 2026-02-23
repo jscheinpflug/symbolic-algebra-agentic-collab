@@ -54,5 +54,46 @@
       "type": "string",
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "const": "TYPES"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "depends_on_pr": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phase": {
+            "enum": [
+              "TESTS",
+              "IMPL"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "depends_on_pr": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
 }

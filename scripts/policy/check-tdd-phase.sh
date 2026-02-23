@@ -51,10 +51,12 @@ def detect_commit_range_changes() -> list[str]:
         base_commit = lines(run_git(["merge-base", "HEAD", f"origin/{base_ref}"]))
         if base_commit:
             base_commit = base_commit[0]
+        else:
+            base_commit = None
     elif subprocess.run(["git", "rev-parse", "--verify", "HEAD~1"], capture_output=True).returncode == 0:
         base_commit = "HEAD~1"
 
-    if base_commit is None:
+    if not base_commit:
         return []
 
     return lines(run_git(["diff", "--name-only", f"{base_commit}...HEAD"]))
@@ -80,6 +82,9 @@ def validate_artifact_shape(payload: dict, path: Path) -> None:
     missing = sorted(required - set(payload))
     if missing:
         raise ValueError(f"{path}: missing required keys: {', '.join(missing)}")
+    unexpected = sorted(set(payload) - required)
+    if unexpected:
+        raise ValueError(f"{path}: unexpected keys (schema additionalProperties=false): {', '.join(unexpected)}")
 
     feature_id = payload["feature_id"]
     phase = payload["phase"]
@@ -152,8 +157,8 @@ def check_phase_paths(phase: str, changed: list[str]) -> None:
     def fail_if_prefix(prefixes: list[str]) -> None:
         violations = [item for item in changed if any(item.startswith(prefix) for prefix in prefixes)]
         if violations:
-            joined = "\\n  - ".join(violations)
-            raise ValueError(f"Phase {phase} forbids changes in these paths:\\n  - {joined}")
+            joined = "\n  - ".join(violations)
+            raise ValueError(f"Phase {phase} forbids changes in these paths:\n  - {joined}")
 
     if phase == "TYPES":
         fail_if_prefix(["test/", "app/", "bench/"])
@@ -169,12 +174,38 @@ def check_phase_paths(phase: str, changed: list[str]) -> None:
         fail_if_prefix(["test/"])
 
 
+def check_phase_order(feature_id: str, phase: str, depends_on_pr: str | None) -> None:
+    # Bootstrap escape hatch for first deployment of this policy itself.
+    if isinstance(depends_on_pr, str) and depends_on_pr.strip() == "bootstrap-initial":
+        return
+
+    if phase == "TYPES":
+        return
+
+    feature_dir = Path("artifacts/tdd") / feature_id
+    required_prior = ["TYPES"] if phase == "TESTS" else ["TYPES", "TESTS"]
+    missing_prior = [
+        str(feature_dir / f"{required_phase}.json")
+        for required_phase in required_prior
+        if not (feature_dir / f"{required_phase}.json").exists()
+    ]
+
+    if missing_prior:
+        raise ValueError(
+            "Phase ordering violation. Missing prerequisite phase artifacts: "
+            + ", ".join(missing_prior)
+        )
+
+
 def main() -> int:
     changed = detect_local_changes()
     if not changed:
         changed = detect_commit_range_changes()
 
     if not changed:
+        if os.getenv("GITHUB_EVENT_NAME") == "pull_request":
+            print("TDD phase check failed: no changed files detected in pull_request context.")
+            return 1
         print("No changed files detected; skipping TDD phase check.")
         return 0
 
@@ -207,6 +238,11 @@ def main() -> int:
         if payload["feature_context"] not in changed:
             raise ValueError("Feature context file must be updated in the same PR")
 
+        check_phase_order(
+            feature_id=payload["feature_id"],
+            phase=payload["phase"],
+            depends_on_pr=payload["depends_on_pr"],
+        )
         check_phase_paths(payload["phase"], changed)
     except ValueError as err:
         print(f"TDD phase check failed: {err}")

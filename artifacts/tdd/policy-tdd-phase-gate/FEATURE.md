@@ -25,3 +25,7 @@ Introduces a new project workflow artifact schema and policy script. No runtime 
 - PRs without valid TDD phase artifacts fail policy checks.
 - PRs missing required feature context fail policy checks.
 - PR template and CI enforce required TDD metadata sections.
+- Reviewer-raised edge cases are fixed:
+  - phase ordering enforcement for TESTS/IMPL,
+  - additional-properties rejection for artifacts,
+  - merge-base and formatting edge cases in error handling.

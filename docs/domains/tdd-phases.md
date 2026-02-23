@@ -56,6 +56,8 @@ Policy restrictions:
 - Must not change `src/`.
 - Must not change `app/`.
 - Must not change `bench/baseline/`.
+- Requires existing prerequisite artifact:
+  - `artifacts/tdd/<feature-id>/TYPES.json`
 
 ### `IMPL`
 
@@ -65,6 +67,9 @@ Policy restrictions:
 
 - Must include at least one changed file under `src/`, `app/`, or `scripts/`.
 - Must not change `test/`.
+- Requires existing prerequisite artifacts:
+  - `artifacts/tdd/<feature-id>/TYPES.json`
+  - `artifacts/tdd/<feature-id>/TESTS.json`
 
 ## Common Per-PR Requirements
 
@@ -76,6 +81,10 @@ Policy restrictions:
    - exist, and
    - be changed in the same PR.
 6. For `TESTS` and `IMPL`, `depends_on_pr` must be non-null and non-empty.
+
+## Bootstrap Exception
+
+To bootstrap this policy itself, `depends_on_pr: "bootstrap-initial"` is allowed as a one-time exception for missing prerequisite artifacts.
 
 ## PR Template Requirements
 

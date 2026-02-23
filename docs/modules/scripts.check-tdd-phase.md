@@ -23,10 +23,16 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 - [x] Feature context heading enforcement
 - [x] Phase-specific path restrictions
 - [x] Module-doc update enforcement
+- [x] Phase ordering enforcement (`TYPES -> TESTS -> IMPL`)
+- [x] Schema-aligned additional-properties enforcement
 
 ## Test Status
 
 - Covered by policy integration run via `./scripts/policy/check-all.sh`.
+- Edge-case fixes applied for:
+  - newline rendering in violation output,
+  - empty merge-base handling,
+  - empty-change detection in pull request context.
 
 ## Known Gaps / Next Steps
 
@@ -35,3 +41,4 @@ Enforce repository TDD phase workflow (`TYPES -> TESTS -> IMPL`) and reviewer co
 ## Change Log
 
 - 2026-02-23: Initial module doc and enforcement script contract added.
+- 2026-02-23: Added phase-order checks, stricter artifact key validation, and reviewer-requested edge-case fixes.
