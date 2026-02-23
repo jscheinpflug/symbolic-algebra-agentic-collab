@@ -35,6 +35,7 @@ required_paths=(
   "scripts/policy/check-dead-rules.sh"
   "scripts/bench/run-benchmarks.sh"
   "scripts/bench/check-regressions.py"
+  "scripts/bench/check-cost-sanity.py"
   "scripts/policy/generate-daily-policy-proposal.py"
   "scripts/policy/validate-policy-artifact.py"
   "scripts/agent/run-review.py"

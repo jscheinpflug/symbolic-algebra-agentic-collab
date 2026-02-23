@@ -26,6 +26,7 @@ cabal test all
   - `scripts/policy/check-bench-regressions.sh`
   - `scripts/bench/run-benchmarks.sh`
   - `scripts/bench/check-regressions.py`
+  - `scripts/bench/check-cost-sanity.py`
   - `bench/baseline/workflow-benchmarks.json`
 - CI and local checks both run:
   - `./scripts/format-check.sh`
@@ -35,6 +36,7 @@ cabal test all
 Benchmark regression threshold defaults to `10%` via `BENCH_REGRESSION_THRESHOLD_PERCENT`.
 Benchmark runtime defaults to `1.0s` per scenario via `BENCHMARK_TIME_LIMIT`.
 The regression gate only fails when slowdown exceeds threshold and the benchmark mean lower bound also exceeds the threshold.
+Benchmark cost sanity defaults to minimum slowest/fastest ratio `5.0` via `BENCH_COST_SANITY_MIN_RATIO`.
 
 Use `./scripts/format.sh` to rewrite files in place.
 

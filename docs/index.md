@@ -14,6 +14,7 @@
 - Quality posture: `docs/quality/scorecard.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`
 - Benchmark regression checker: `scripts/bench/check-regressions.py`
+- Benchmark cost sanity checker: `scripts/bench/check-cost-sanity.py`
 - Policy scripts: `scripts/policy/check-all.sh`
 - Benchmark policy gate: `scripts/policy/check-bench-regressions.sh`
 - Partial ban policy: `scripts/policy/check-no-partials.sh`
