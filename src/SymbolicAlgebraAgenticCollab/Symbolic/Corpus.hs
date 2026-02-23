@@ -8,11 +8,11 @@ module SymbolicAlgebraAgenticCollab.Symbolic.Corpus (
 import Data.Text (Text)
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Saturate (
     SaturationConfig,
-    SaturationError (SaturationNoRootEClass),
+    SaturationError,
  )
 import SymbolicAlgebraAgenticCollab.Symbolic.Rule (Rule)
 import SymbolicAlgebraAgenticCollab.Symbolic.Term (Term)
-import SymbolicAlgebraAgenticCollab.Symbolic.Trace (RewriteTrace)
+import SymbolicAlgebraAgenticCollab.Symbolic.Trace (RewriteTrace, executeProgram)
 
 data CorpusCase = CorpusCase
     { caseId :: Text
@@ -33,4 +33,4 @@ data CorpusExpectation
     deriving (Eq, Show)
 
 evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either SaturationError RewriteTrace
-evaluateCorpusCase _ _ _ = Left SaturationNoRootEClass
+evaluateCorpusCase cfg rules corpusCase = executeProgram cfg rules (caseInput corpusCase)

@@ -20,6 +20,7 @@ Define trace data contracts for auditable rewrite execution.
 - [x] Module scaffold created
 - [x] Trace type placeholders added
 - [x] Pipeline execution contract placeholder added
+- [x] Deterministic execution trace finalization wiring
 - [ ] Replay/validation behavior
 
 ## Test Status
@@ -31,7 +32,8 @@ Define trace data contracts for auditable rewrite execution.
 
 ## Known Gaps / Next Steps
 
-- Implement end-to-end execution behavior and trace finalization in `IMPL` phase.
+- Extend execution behavior with richer trace finalization semantics.
+- Populate `traceSteps` with concrete rewrite-step provenance from backend execution.
 
 ## Change Log
 
@@ -39,3 +41,4 @@ Define trace data contracts for auditable rewrite execution.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Added TYPES-phase `executeProgram` contract for pipeline orchestration.
 - 2026-02-23: Added `TESTS`-phase deterministic coverage for `executeProgram`.
+- 2026-02-23: Implemented deterministic `executeProgram` wiring via saturation and extraction contracts.
