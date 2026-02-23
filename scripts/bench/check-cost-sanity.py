@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -44,9 +45,20 @@ def fail(message: str) -> int:
     return 1
 
 
+def require_finite(value: float, context: str) -> float:
+    if not math.isfinite(value):
+        raise ValueError(f"{context} must be finite.")
+    return value
+
+
 def main() -> int:
     args = parse_args()
-    if args.min_ratio <= 1.0:
+    try:
+        min_ratio = require_finite(float(args.min_ratio), "--min-ratio")
+    except ValueError as error:
+        return fail(str(error))
+
+    if min_ratio <= 1.0:
         return fail("--min-ratio must be > 1.0")
 
     bench_path = Path(args.bench_json)
@@ -77,7 +89,10 @@ def main() -> int:
         if not isinstance(value, (int, float)):
             return fail(f"Benchmark value for '{name}' must be numeric.")
 
-        numeric = float(value)
+        try:
+            numeric = require_finite(float(value), f"Benchmark value for '{name}'")
+        except ValueError as error:
+            return fail(str(error))
         if numeric <= 0.0:
             return fail(f"Benchmark value for '{name}' must be > 0.")
         values[name] = numeric
@@ -95,10 +110,12 @@ def main() -> int:
     fastest = values[EXPECTED_ORDER[0]]
     slowest = values[EXPECTED_ORDER[-1]]
     ratio = slowest / fastest
-    if ratio < args.min_ratio:
+    if not math.isfinite(ratio):
+        return fail("Computed slowest/fastest ratio must be finite.")
+    if ratio < min_ratio:
         return fail(
             "Benchmark spread too narrow for expected complexity: "
-            f"slowest/fastest ratio={ratio:.3f}, required>={args.min_ratio:.3f}."
+            f"slowest/fastest ratio={ratio:.3f}, required>={min_ratio:.3f}."
         )
 
     print(

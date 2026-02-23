@@ -323,6 +323,7 @@ jobs:
             --artifacts-dir artifacts/download \
             --required-approvals "${minimum_required_approvals}" \
             "${reviewer_args[@]}" \
+            --advisory-mode \
             --output-json "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.json" \
             --output-md "artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.md"
 
@@ -349,6 +350,31 @@ jobs:
               issue_number: prNumber,
               body
             });
+
+      - name: Enforce reviewer gate
+        run: |
+          python3 - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          summary_path = Path("artifacts/reviews/${{ needs.trust-gate.outputs.pr_number }}/summary.json")
+          payload = json.loads(summary_path.read_text(encoding="utf-8"))
+          summary = payload.get("summary", {})
+          if summary.get("gate_passed") is True:
+              print("Reviewer gate passed.")
+              raise SystemExit(0)
+
+          print(
+              "Reviewer gate failed: "
+              f"decision={summary.get('decision')}, "
+              f"approvals={summary.get('approvals')}/{summary.get('approvals_required')}, "
+              f"blocking={summary.get('blocking_reviewers')}, "
+              f"critical={summary.get('critical_reviewers')}.",
+              file=sys.stderr,
+          )
+          raise SystemExit(1)
+          PY
 
   publish-status:
     if: always() && needs.trust-gate.result == 'success'

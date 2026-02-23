@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -41,6 +42,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def require_finite(value: float, context: str) -> float:
+    if not math.isfinite(value):
+        raise ValueError(f"{context} must be finite.")
+    return value
+
+
 def load_baseline(path: Path) -> dict[str, float]:
     if not path.exists():
         raise ValueError(f"Baseline file not found: {path}")
@@ -59,7 +66,7 @@ def load_baseline(path: Path) -> dict[str, float]:
             raise ValueError("Baseline benchmark names must be strings.")
         if not isinstance(value, (int, float)):
             raise ValueError(f"Baseline value for '{name}' must be numeric.")
-        numeric = float(value)
+        numeric = require_finite(float(value), f"Baseline value for '{name}'")
         if numeric <= 0:
             raise ValueError(f"Baseline value for '{name}' must be > 0.")
         parsed[name] = numeric
@@ -102,7 +109,9 @@ def load_current_csv(path: Path) -> dict[str, dict[str, float]]:
                 raise ValueError(f"Row {row_index} missing mean value for '{name}'.")
 
             try:
-                mean_value = float(mean_text)
+                mean_value = require_finite(
+                    float(mean_text), f"Row {row_index} mean value for '{name}'"
+                )
             except ValueError as exc:
                 raise ValueError(
                     f"Row {row_index} has invalid mean value '{mean_text}' for '{name}'."
@@ -121,21 +130,37 @@ def load_current_csv(path: Path) -> dict[str, dict[str, float]]:
                 mean_lb_text = row.get(mean_lb_key, "").strip()
                 if mean_lb_text:
                     try:
-                        parsed[name]["mean_lb"] = float(mean_lb_text)
+                        mean_lb_value = require_finite(
+                            float(mean_lb_text),
+                            f"Row {row_index} MeanLB value for '{name}'",
+                        )
                     except ValueError as exc:
                         raise ValueError(
                             f"Row {row_index} has invalid MeanLB value '{mean_lb_text}' for '{name}'."
                         ) from exc
+                    if mean_lb_value <= 0:
+                        raise ValueError(
+                            f"Row {row_index} has non-positive MeanLB value for '{name}'."
+                        )
+                    parsed[name]["mean_lb"] = mean_lb_value
 
             if mean_ub_key is not None:
                 mean_ub_text = row.get(mean_ub_key, "").strip()
                 if mean_ub_text:
                     try:
-                        parsed[name]["mean_ub"] = float(mean_ub_text)
+                        mean_ub_value = require_finite(
+                            float(mean_ub_text),
+                            f"Row {row_index} MeanUB value for '{name}'",
+                        )
                     except ValueError as exc:
                         raise ValueError(
                             f"Row {row_index} has invalid MeanUB value '{mean_ub_text}' for '{name}'."
                         ) from exc
+                    if mean_ub_value <= 0:
+                        raise ValueError(
+                            f"Row {row_index} has non-positive MeanUB value for '{name}'."
+                        )
+                    parsed[name]["mean_ub"] = mean_ub_value
 
     if not parsed:
         raise ValueError("No benchmark rows found in current CSV.")
@@ -252,7 +277,9 @@ def print_summary(report: dict) -> None:
 
 def main() -> int:
     args = parse_args()
-    threshold_percent = float(args.threshold_percent)
+    threshold_percent = require_finite(
+        float(args.threshold_percent), "--threshold-percent"
+    )
     if threshold_percent < 0:
         print("threshold-percent must be non-negative.", file=sys.stderr)
         return 1

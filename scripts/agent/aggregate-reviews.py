@@ -82,7 +82,7 @@ def build_summary(
         "total_reviewers": len(reviews),
         "blocking_reviewers": blocking_reviewers,
         "critical_reviewers": critical_reviewers,
-        "gate_passed": True,
+        "gate_passed": strict_gate_passed,
         "strict_gate_passed": strict_gate_passed,
         "decision": "approve" if strict_gate_passed else "hold",
     }
@@ -153,6 +153,11 @@ def main() -> int:
     parser.add_argument("--output-md", required=True)
     parser.add_argument("--required-reviewer", action="append")
     parser.add_argument("--required-approvals", type=int, default=2)
+    parser.add_argument(
+        "--advisory-mode",
+        action="store_true",
+        help="Do not fail process exit code when gate does not pass.",
+    )
     args = parser.parse_args()
 
     artifacts_dir = Path(args.artifacts_dir)
@@ -204,6 +209,20 @@ def main() -> int:
     write_summary_markdown(
         output_md, reviews, summary, reviewer_order=required_reviewers
     )
+
+    if not summary["gate_passed"]:
+        message = (
+            "Agent review gate failed: "
+            f"approvals={summary['approvals']}/{summary['approvals_required']}, "
+            f"blocking={summary['blocking_reviewers']}, "
+            f"critical={summary['critical_reviewers']}."
+        )
+        if args.advisory_mode:
+            print(f"{message} Continuing due to --advisory-mode.")
+            print("Agent review aggregation completed.")
+            return 0
+        print(message, file=sys.stderr)
+        return 1
 
     print("Agent review aggregation completed.")
     return 0
