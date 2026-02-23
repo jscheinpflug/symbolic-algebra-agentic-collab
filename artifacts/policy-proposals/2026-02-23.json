@@ -1,0 +1,18 @@
+{
+  "date": "2026-02-23",
+  "source_signal_file": "artifacts/policy-signals/2026-02-23.json",
+  "proposals": [
+    {
+      "id": "POLICY-20260223-01",
+      "target": ".github/workflows/ci.yml",
+      "severity": "high",
+      "change": "Review top failing checks and tighten either flaky detection or ownership/runbook entries for those checks.",
+      "evidence": [
+        "failed_runs=20",
+        "failing_checks=ci, trusted-agent-review, trusted-review-dispatch, agent-loop"
+      ],
+      "risk": "Overfitting CI policy to short-term noise.",
+      "rollback_condition": "Revert if failure rate does not improve over 3 daily cycles."
+    }
+  ]
+}
