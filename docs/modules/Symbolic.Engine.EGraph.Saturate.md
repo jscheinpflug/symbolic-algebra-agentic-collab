@@ -13,14 +13,14 @@ Define typed contracts for bounded equality saturation over e-graph snapshots.
 ## Invariants
 
 - Saturation APIs expose typed project errors and do not leak raw backend e-graph types.
-- `TYPES` phase saturation behavior is intentionally placeholder-only.
+- Saturation enforces explicit iteration, e-node, and e-class limit checks before snapshot emission.
 
 ## Feature Progress
 
 - [x] Module scaffold created
 - [x] Saturation contract placeholders added
 - [x] Contract-level `TESTS` coverage added
-- [ ] Bounded saturation implementation
+- [x] Bounded saturation wrapper implementation
 
 ## Test Status
 
@@ -31,9 +31,10 @@ Define typed contracts for bounded equality saturation over e-graph snapshots.
 
 ## Known Gaps / Next Steps
 
-- Implement bounded saturation and typed limit exits in `IMPL` phase.
+- Replace current bounded wrapper checks with full equality-saturation execution over compiled rewrites.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold for saturation contracts.
 - 2026-02-23: Added `TESTS`-phase unit/property/integration coverage for saturation contract determinism.
+- 2026-02-23: Implemented deterministic bounded saturation checks with typed limit failures.
