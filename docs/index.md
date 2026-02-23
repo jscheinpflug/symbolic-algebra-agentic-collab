@@ -45,6 +45,7 @@
 - Symbolic e-graph saturation context: `artifacts/tdd/symbolic-egraph-saturation/FEATURE.md`
 - Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/TYPES.json`
 - Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/TESTS.json`
+- Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/IMPL.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`

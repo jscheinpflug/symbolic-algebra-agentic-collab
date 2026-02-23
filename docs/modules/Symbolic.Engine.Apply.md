@@ -22,7 +22,8 @@ Define typed contracts for rule compilation/application and saturation wrappers 
 - [x] Module scaffold created
 - [x] Apply contract placeholders added
 - [x] Saturation wrapper contracts added
-- [ ] E-graph rewrite and saturation implementation
+- [x] Bounded saturation wrapper implementation wired
+- [ ] Full backend rewrite + extraction implementation
 
 ## Test Status
 
@@ -32,8 +33,7 @@ Define typed contracts for rule compilation/application and saturation wrappers 
 
 ## Known Gaps / Next Steps
 
-- Add failing-first saturation tests in `symbolic-egraph-saturation/TESTS`.
-- Implement rule-to-rewrite compilation and bounded saturation behavior in `IMPL` phase.
+- Implement direct backend rewrite lowering and extraction-oriented apply flow in a later implementation slice.
 
 ## Change Log
 
@@ -42,3 +42,4 @@ Define typed contracts for rule compilation/application and saturation wrappers 
 - 2026-02-23: Updated roadmap to e-graph backend (`hegg`) wrapper model.
 - 2026-02-23: Added `TYPES`-phase saturation contracts via `SaturationConfig`, `SaturationError`, and `saturate`.
 - 2026-02-23: Added `TESTS`-phase coverage for apply-level saturation contract re-exports.
+- 2026-02-23: Wired `saturate` into bounded limit-checking implementation path.
