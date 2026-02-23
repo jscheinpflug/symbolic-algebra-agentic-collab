@@ -11,6 +11,7 @@ set -euo pipefail
 ./scripts/policy/check-no-string.sh
 ./scripts/policy/check-rule-freshness.sh
 ./scripts/policy/check-policy-coverage.sh
+./scripts/policy/check-tdd-phase.sh
 ./scripts/policy/check-dead-rules.sh
 
 echo "All policy checks passed."

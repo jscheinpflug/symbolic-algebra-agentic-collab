@@ -2,6 +2,28 @@
 
 <!-- Describe data type / interface changes first. -->
 
+## TDD Phase
+
+<!-- TYPES | TESTS | IMPL -->
+
+## Feature ID
+
+<!-- Canonical feature id, for example symbolic-term-core -->
+
+## Depends On PR
+
+<!-- Required for TESTS and IMPL phases (PR number/link or bootstrap note). -->
+
+## Feature Context
+
+<!-- Link artifacts/tdd/<feature-id>/FEATURE.md and summarize this phase contribution. -->
+
+## Module Docs Updated
+
+<!-- List docs/modules/*.md files updated in this PR. -->
+
+- [ ] I confirm this PR only includes changes allowed for the declared TDD phase.
+
 ## Tests Added
 
 <!-- Show failing-first tests and what they cover. -->

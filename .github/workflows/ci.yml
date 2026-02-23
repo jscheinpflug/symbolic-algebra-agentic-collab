@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Validate PR template sections
         if: github.event_name == 'pull_request'
@@ -22,6 +24,11 @@ jobs:
             const body = context.payload.pull_request.body || "";
             const required = [
               "## Type Changes",
+              "## TDD Phase",
+              "## Feature ID",
+              "## Depends On PR",
+              "## Feature Context",
+              "## Module Docs Updated",
               "## Tests Added",
               "## Benchmark Impact",
               "## Known Risks",
