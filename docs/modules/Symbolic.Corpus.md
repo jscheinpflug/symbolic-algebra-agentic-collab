@@ -8,15 +8,19 @@ Define corpus case contracts for autonomous symbolic regression sets.
 
 - `CorpusCase`
 - `Corpus`
+- `CorpusExpectation`
+- `evaluateCorpusCase`
 
 ## Invariants
 
 - Corpus contracts are data-only in `TYPES` phase.
+- Corpus expectation evaluation stays typed and returns project-owned failures.
 
 ## Feature Progress
 
 - [x] Module scaffold created
 - [x] Corpus type placeholders added
+- [x] Corpus expectation contracts added
 - [ ] Corpus execution and expectation checks
 
 ## Test Status
@@ -25,9 +29,10 @@ Define corpus case contracts for autonomous symbolic regression sets.
 
 ## Known Gaps / Next Steps
 
-- Implement module behavior and semantic assertions in `IMPL` phase.
+- Implement corpus expectation evaluation behavior in `IMPL` phase.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
+- 2026-02-23: Added TYPES-phase corpus expectation contracts for IO pipeline planning.

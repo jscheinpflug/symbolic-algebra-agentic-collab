@@ -1,9 +1,11 @@
 module SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Parser (
     ParseError (..),
     ParserContract (..),
+    executeProgram,
 ) where
 
 import Data.Text (Text)
+import SymbolicAlgebraAgenticCollab.Symbolic.Trace (executeProgram)
 
 data ParseError = ParseError
     { parseErrorLine :: Int

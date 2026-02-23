@@ -39,7 +39,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-06 `symbolic-egraph-saturation/IMPL`
 - [x] PR-07 `symbolic-egraph-strategy/TYPES`
 - [x] PR-08 `symbolic-egraph-strategy/TESTS`
-- [ ] PR-09 `symbolic-egraph-strategy/IMPL`
+- [x] PR-09 `symbolic-egraph-strategy/IMPL`
 - [ ] PR-10 `symbolic-egraph-io/TYPES`
 - [ ] PR-11 `symbolic-egraph-io/TESTS`
 - [ ] PR-12 `symbolic-egraph-io/IMPL`
@@ -269,12 +269,12 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - [x] deterministic extraction objective verified
   - [x] module docs updated in same PR
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-10: `symbolic-egraph-io/TYPES`
 
 - Feature id: `symbolic-egraph-io`
-- Depends on: `commit:<PR-09 merge sha>`
+- Depends on: `commit:d226b11`
 - Branch: `feature/symbolic-egraph-io-types`
 - Scope:
   - `src/SymbolicAlgebraAgenticCollab/Symbolic/Dsl/Parser.hs`
@@ -297,10 +297,10 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no behavior implementation added
-  - [ ] all required checks pass
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no behavior implementation added
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-11: `symbolic-egraph-io/TESTS`

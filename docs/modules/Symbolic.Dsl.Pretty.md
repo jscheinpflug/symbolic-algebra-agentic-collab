@@ -7,6 +7,7 @@ Define pretty-printing contract placeholder for DSL values.
 ## Public Interface
 
 - `PrettyContract`
+- `PrettyTraceContract`
 
 ## Invariants
 
@@ -16,6 +17,7 @@ Define pretty-printing contract placeholder for DSL values.
 
 - [x] Module scaffold created
 - [x] Pretty contract placeholder added
+- [x] Trace rendering contract placeholder added
 - [ ] Pretty rendering behavior
 
 ## Test Status
@@ -24,9 +26,10 @@ Define pretty-printing contract placeholder for DSL values.
 
 ## Known Gaps / Next Steps
 
-- Implement module behavior and semantic assertions in `IMPL` phase.
+- Implement trace-aware pretty rendering behavior in `IMPL` phase.
 
 ## Change Log
 
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
+- 2026-02-23: Added TYPES-phase trace rendering contract placeholder for IO pipeline work.

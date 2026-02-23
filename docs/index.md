@@ -51,6 +51,8 @@
 - Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/TYPES.json`
 - Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/TESTS.json`
 - Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/IMPL.json`
+- Symbolic e-graph IO context: `artifacts/tdd/symbolic-egraph-io/FEATURE.md`
+- Symbolic e-graph IO artifact: `artifacts/tdd/symbolic-egraph-io/TYPES.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`
