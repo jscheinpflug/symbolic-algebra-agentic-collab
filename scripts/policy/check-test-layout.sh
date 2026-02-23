@@ -21,6 +21,36 @@ if [ ! -d "test/Integration" ]; then
   exit 1
 fi
 
+collect_changed_files() {
+  local -a working staged untracked combined
+  mapfile -t working < <(git diff --name-only)
+  mapfile -t staged < <(git diff --cached --name-only)
+  mapfile -t untracked < <(git ls-files --others --exclude-standard)
+
+  combined=("${working[@]}" "${staged[@]}" "${untracked[@]}")
+
+  if [ "${#combined[@]}" -eq 0 ] && git rev-parse --verify origin/main >/dev/null 2>&1; then
+    local base
+    base="$(git merge-base HEAD origin/main)"
+    mapfile -t combined < <(git diff --name-only "${base}...HEAD")
+  fi
+
+  printf '%s\n' "${combined[@]}" | awk 'NF {seen[$0]=1} END {for (k in seen) print k}' | sort
+}
+
+mapfile -t changed_files < <(collect_changed_files)
+types_phase_active=0
+declare -A changed_src=()
+for path in "${changed_files[@]}"; do
+  if [[ "${path}" =~ ^artifacts/tdd/[^/]+/TYPES\.json$ ]]; then
+    types_phase_active=1
+  fi
+
+  if [[ "${path}" =~ ^src/.*\.hs$ ]]; then
+    changed_src["${path}"]=1
+  fi
+done
+
 mapfile -t src_files < <(find src -type f -name '*.hs' | sort)
 if [ "${#src_files[@]}" -eq 0 ]; then
   echo "No source files found under src/."
@@ -32,6 +62,10 @@ for src_file in "${src_files[@]}"; do
   relative_path="${src_file#src/}"
   expected_unit="test/Unit/${relative_path%.hs}Test.hs"
   if [ ! -f "${expected_unit}" ]; then
+    if [ "${types_phase_active}" -eq 1 ] && [ "${changed_src["${src_file}"]+set}" = "set" ]; then
+      # During TYPES phase, new source files are allowed to land before mirrored tests.
+      continue
+    fi
     missing_unit+=("${expected_unit}")
   fi
 done

@@ -18,6 +18,11 @@ For every source file `src/<path>/<File>.hs`, a mirrored unit test must exist at
 
 This mapping is enforced by `scripts/policy/check-test-layout.sh`.
 
+Exception for TDD `TYPES` phase:
+
+- If a PR is a `TYPES` phase PR and introduces new `src/**/*.hs` files, mirrored unit tests may land in the follow-up `TESTS` phase PR for that feature.
+- Existing source files still require mirrored tests.
+
 ### Naming Rule
 
 - Unit test files must end with `Test.hs`.

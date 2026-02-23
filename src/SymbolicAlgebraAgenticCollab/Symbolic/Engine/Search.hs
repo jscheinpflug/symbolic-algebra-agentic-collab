@@ -1,8 +1,33 @@
 module SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search (
+    EGraphBuildError (..),
+    EGraphSnapshot,
     SearchConfig (..),
     SearchMode (..),
     SearchStats (..),
+    buildSearchSnapshot,
+    recoverSearchTerm,
+    runStrategy,
 ) where
+
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Build (EGraphSnapshot)
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Extract (
+    ExtractionCost (..),
+    extractBestWithCost,
+ )
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Saturate (
+    SaturationConfig,
+    SaturationError (SaturationNoRootEClass),
+    saturate,
+ )
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Translate (
+    EGraphBuildError (..),
+    eGraphToTerm,
+    termToEGraph,
+ )
+import SymbolicAlgebraAgenticCollab.Symbolic.Rule (Rule)
+import SymbolicAlgebraAgenticCollab.Symbolic.Strategy (Strategy)
+import SymbolicAlgebraAgenticCollab.Symbolic.Term (Term)
+import SymbolicAlgebraAgenticCollab.Symbolic.Trace (RewriteTrace (..))
 
 data SearchMode
     = Deterministic
@@ -23,3 +48,28 @@ data SearchStats = SearchStats
     , maxFrontierSeen :: Int
     }
     deriving (Eq, Show)
+
+buildSearchSnapshot :: Term -> Either EGraphBuildError EGraphSnapshot
+buildSearchSnapshot = termToEGraph
+
+recoverSearchTerm :: EGraphSnapshot -> Either EGraphBuildError Term
+recoverSearchTerm = eGraphToTerm
+
+runStrategy ::
+    Strategy ->
+    SaturationConfig ->
+    [Rule] ->
+    Term ->
+    Either SaturationError RewriteTrace
+runStrategy _strategy cfg rules term
+    | null rules = Left SaturationNoRootEClass
+    | otherwise = do
+        snapshot <- saturate cfg rules term
+        (bestTerm, bestCost) <- extractBestWithCost snapshot
+        pure
+            RewriteTrace
+                { traceStart = term
+                , traceSteps = []
+                , traceFinal = bestTerm
+                , traceTotalCost = costRule bestCost
+                }

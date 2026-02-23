@@ -1,0 +1,14 @@
+{
+  "feature_id": "symbolic-egraph-strategy",
+  "phase": "TESTS",
+  "feature_context": "artifacts/tdd/symbolic-egraph-strategy/FEATURE.md",
+  "depends_on_pr": "commit:5028f28",
+  "module_docs": [
+    "docs/modules/Symbolic.Engine.EGraph.Extract.md",
+    "docs/modules/Symbolic.Engine.Search.md",
+    "docs/modules/Symbolic.Strategy.md",
+    "docs/modules/Symbolic.Implementation.Plan.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}

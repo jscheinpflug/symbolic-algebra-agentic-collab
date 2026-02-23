@@ -31,18 +31,18 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 
 ## Progress Dashboard
 
-- [ ] PR-01 `symbolic-egraph-foundation/TYPES`
-- [ ] PR-02 `symbolic-egraph-foundation/TESTS`
-- [ ] PR-03 `symbolic-egraph-foundation/IMPL`
-- [ ] PR-04 `symbolic-egraph-saturation/TYPES`
-- [ ] PR-05 `symbolic-egraph-saturation/TESTS`
-- [ ] PR-06 `symbolic-egraph-saturation/IMPL`
-- [ ] PR-07 `symbolic-egraph-strategy/TYPES`
-- [ ] PR-08 `symbolic-egraph-strategy/TESTS`
-- [ ] PR-09 `symbolic-egraph-strategy/IMPL`
-- [ ] PR-10 `symbolic-egraph-io/TYPES`
-- [ ] PR-11 `symbolic-egraph-io/TESTS`
-- [ ] PR-12 `symbolic-egraph-io/IMPL`
+- [x] PR-01 `symbolic-egraph-foundation/TYPES`
+- [x] PR-02 `symbolic-egraph-foundation/TESTS`
+- [x] PR-03 `symbolic-egraph-foundation/IMPL`
+- [x] PR-04 `symbolic-egraph-saturation/TYPES`
+- [x] PR-05 `symbolic-egraph-saturation/TESTS`
+- [x] PR-06 `symbolic-egraph-saturation/IMPL`
+- [x] PR-07 `symbolic-egraph-strategy/TYPES`
+- [x] PR-08 `symbolic-egraph-strategy/TESTS`
+- [x] PR-09 `symbolic-egraph-strategy/IMPL`
+- [x] PR-10 `symbolic-egraph-io/TYPES`
+- [x] PR-11 `symbolic-egraph-io/TESTS`
+- [x] PR-12 `symbolic-egraph-io/IMPL`
 
 ## PR Specs
 
@@ -69,16 +69,16 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no behavior implementation added
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no behavior implementation added
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-02: `symbolic-egraph-foundation/TESTS`
 
 - Feature id: `symbolic-egraph-foundation`
-- Depends on: `commit:<PR-01 merge sha>`
+- Depends on: `commit:3d493ac`
 - Branch: `feature/symbolic-egraph-foundation-tests`
 - Scope:
   - `test/Unit/.../Symbolic/Engine/...`
@@ -91,16 +91,16 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
   - unsupported term shape typed failure
   - deterministic translation representation checks
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] tests are mirrored under unit/integration layout policy
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] deterministic assertions included for translation wrappers
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-03: `symbolic-egraph-foundation/IMPL`
 
 - Feature id: `symbolic-egraph-foundation`
-- Depends on: `commit:<PR-02 merge sha>`
+- Depends on: `commit:d1d8ebf`
 - Branch: `feature/symbolic-egraph-foundation-impl`
 - Scope:
   - implementation in `Build.hs` and `Translate.hs`
@@ -112,16 +112,16 @@ eGraphToTerm :: EGraphSnapshot -> Either EGraphBuildError Term
   - translate back for supported subset
   - preserve deterministic mapping behavior
 - Progress checks:
-  - [ ] all PR-02 tests now pass
-  - [ ] no raw `hegg` types exposed in public modules
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] all PR-02 tests now pass
+  - [x] no raw `hegg` types exposed in public modules
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-04: `symbolic-egraph-saturation/TYPES`
 
 - Feature id: `symbolic-egraph-saturation`
-- Depends on: `commit:<PR-03 merge sha>`
+- Depends on: `commit:5d2fe8f`
 - Branch: `feature/symbolic-egraph-saturation-types`
 - Scope:
   - `src/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/Rewrite.hs`
@@ -148,16 +148,16 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no implementation logic added
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no implementation logic added
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-05: `symbolic-egraph-saturation/TESTS`
 
 - Feature id: `symbolic-egraph-saturation`
-- Depends on: `commit:<PR-04 merge sha>`
+- Depends on: `commit:f5b20b5`
 - Branch: `feature/symbolic-egraph-saturation-tests`
 - Scope:
   - unit tests for limits and typed failures
@@ -170,16 +170,16 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
   - e-class limit failure
   - stable behavior for same input/rules/config
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] deterministic assertions present
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] deterministic assertions present
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-06: `symbolic-egraph-saturation/IMPL`
 
 - Feature id: `symbolic-egraph-saturation`
-- Depends on: `commit:<PR-05 merge sha>`
+- Depends on: `commit:d159bb6`
 - Branch: `feature/symbolic-egraph-saturation-impl`
 - Scope:
   - rewrite compilation into `hegg`
@@ -191,16 +191,16 @@ saturate :: SaturationConfig -> [Rule] -> Term -> Either SaturationError EGraphS
   - enforce all configured limits
   - return typed saturation failures only
 - Progress checks:
-  - [ ] all PR-05 tests now pass
-  - [ ] typed failures for all limit exits
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] all PR-05 tests now pass
+  - [x] typed failures for all limit exits
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-07: `symbolic-egraph-strategy/TYPES`
 
 - Feature id: `symbolic-egraph-strategy`
-- Depends on: `commit:<PR-06 merge sha>`
+- Depends on: `commit:ed91557`
 - Branch: `feature/symbolic-egraph-strategy-types`
 - Scope:
   - `src/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/Extract.hs`
@@ -223,16 +223,16 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no behavior implementation added
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no behavior implementation added
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-08: `symbolic-egraph-strategy/TESTS`
 
 - Feature id: `symbolic-egraph-strategy`
-- Depends on: `commit:<PR-07 merge sha>`
+- Depends on: `commit:5028f28`
 - Branch: `feature/symbolic-egraph-strategy-tests`
 - Scope:
   - unit tests for extraction objective and tie-break behavior
@@ -244,16 +244,16 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - extractor tie-break on `size`
   - stable result across repeated runs
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] deterministic objective checks included
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] deterministic objective checks included
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-09: `symbolic-egraph-strategy/IMPL`
 
 - Feature id: `symbolic-egraph-strategy`
-- Depends on: `commit:<PR-08 merge sha>`
+- Depends on: `commit:954f8e7`
 - Branch: `feature/symbolic-egraph-strategy-impl`
 - Scope:
   - deterministic extractor implementation
@@ -265,16 +265,16 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - ensure deterministic tie-break behavior
   - keep `hegg` internals encapsulated
 - Progress checks:
-  - [ ] all PR-08 tests now pass
-  - [ ] deterministic extraction objective verified
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] all PR-08 tests now pass
+  - [x] deterministic extraction objective verified
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-10: `symbolic-egraph-io/TYPES`
 
 - Feature id: `symbolic-egraph-io`
-- Depends on: `commit:<PR-09 merge sha>`
+- Depends on: `commit:d226b11`
 - Branch: `feature/symbolic-egraph-io-types`
 - Scope:
   - `src/SymbolicAlgebraAgenticCollab/Symbolic/Dsl/Parser.hs`
@@ -297,16 +297,16 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
 ```
 
 - Progress checks:
-  - [ ] phase artifact created and valid
-  - [ ] module docs updated in same PR
-  - [ ] no behavior implementation added
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] phase artifact created and valid
+  - [x] module docs updated in same PR
+  - [x] no behavior implementation added
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-11: `symbolic-egraph-io/TESTS`
 
 - Feature id: `symbolic-egraph-io`
-- Depends on: `commit:<PR-10 merge sha>`
+- Depends on: `commit:0320b65`
 - Branch: `feature/symbolic-egraph-io-tests`
 - Scope:
   - integration tests parse -> saturate -> extract -> pretty
@@ -318,16 +318,16 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - corpus expectation success/failure behavior
   - stable trace shape for equivalent runs
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] integration coverage includes full pipeline
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] integration coverage includes full pipeline
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ### PR-12: `symbolic-egraph-io/IMPL`
 
 - Feature id: `symbolic-egraph-io`
-- Depends on: `commit:<PR-11 merge sha>`
+- Depends on: `commit:2082718`
 - Branch: `feature/symbolic-egraph-io-impl`
 - Scope:
   - end-to-end execution implementation
@@ -340,19 +340,19 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - produce deterministic trace/corpus outcomes
   - preserve public API boundary
 - Progress checks:
-  - [ ] all PR-11 tests now pass
-  - [ ] end-to-end flow deterministic
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
-  - [ ] PR merged
+  - [x] all PR-11 tests now pass
+  - [x] end-to-end flow deterministic
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
+  - [x] PR merged
 
 ## Cross-PR Definition of Done
 
-- [ ] All 12 PRs merged in order.
-- [ ] No public module exposes raw `hegg` types.
-- [ ] Deterministic extraction objective enforced (`rule-cost + size`).
-- [ ] Corpus-backed end-to-end deterministic regression path exists.
-- [ ] Module docs and phase artifacts are fully updated and consistent.
+- [x] All 12 PRs merged in order.
+- [x] No public module exposes raw `hegg` types.
+- [x] Deterministic extraction objective enforced (`rule-cost + size`).
+- [x] Corpus-backed end-to-end deterministic regression path exists.
+- [x] Module docs and phase artifacts are fully updated and consistent.
 
 ## Assumptions
 

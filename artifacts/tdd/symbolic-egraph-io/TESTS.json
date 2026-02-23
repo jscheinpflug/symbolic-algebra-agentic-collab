@@ -1,0 +1,15 @@
+{
+  "feature_id": "symbolic-egraph-io",
+  "phase": "TESTS",
+  "feature_context": "artifacts/tdd/symbolic-egraph-io/FEATURE.md",
+  "depends_on_pr": "commit:0320b65",
+  "module_docs": [
+    "docs/modules/Symbolic.Dsl.Parser.md",
+    "docs/modules/Symbolic.Dsl.Pretty.md",
+    "docs/modules/Symbolic.Corpus.md",
+    "docs/modules/Symbolic.Trace.md",
+    "docs/modules/Symbolic.Implementation.Plan.md"
+  ],
+  "status": "ready",
+  "updated_at": "2026-02-23"
+}

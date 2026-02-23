@@ -8,3 +8,6 @@ spec =
     describe "Symbolic.Dsl.Pretty" $ do
         it "exposes pretty contract constructor" $ do
             PrettyContract `shouldBe` PrettyContract
+
+        it "exposes pretty trace contract constructor" $ do
+            PrettyTraceContract `shouldBe` PrettyTraceContract

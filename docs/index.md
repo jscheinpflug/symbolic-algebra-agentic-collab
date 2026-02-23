@@ -22,6 +22,11 @@
 - Symbolic module doc: `docs/modules/Symbolic.Strategy.md`
 - Symbolic module doc: `docs/modules/Symbolic.Trace.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.Apply.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Build.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Extract.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Rewrite.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Saturate.md`
+- Symbolic module doc: `docs/modules/Symbolic.Engine.EGraph.Translate.md`
 - Symbolic module doc: `docs/modules/Symbolic.Engine.Search.md`
 - Symbolic module doc: `docs/modules/Symbolic.Dsl.Ast.md`
 - Symbolic module doc: `docs/modules/Symbolic.Dsl.Parser.md`
@@ -34,6 +39,24 @@
 - Symbolic scaffold phase artifact: `artifacts/tdd/symbolic-dsl-scaffold/IMPL.json`
 - Symbolic implementation strategy context: `artifacts/tdd/symbolic-impl-strategy/FEATURE.md`
 - Symbolic implementation strategy artifact: `artifacts/tdd/symbolic-impl-strategy/TYPES.json`
+- Symbolic e-graph foundation context: `artifacts/tdd/symbolic-egraph-foundation/FEATURE.md`
+- Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/TYPES.json`
+- Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/TESTS.json`
+- Symbolic e-graph foundation artifact: `artifacts/tdd/symbolic-egraph-foundation/IMPL.json`
+- Symbolic e-graph saturation context: `artifacts/tdd/symbolic-egraph-saturation/FEATURE.md`
+- Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/TYPES.json`
+- Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/TESTS.json`
+- Symbolic e-graph saturation artifact: `artifacts/tdd/symbolic-egraph-saturation/IMPL.json`
+- Symbolic e-graph strategy context: `artifacts/tdd/symbolic-egraph-strategy/FEATURE.md`
+- Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/TYPES.json`
+- Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/TESTS.json`
+- Symbolic e-graph strategy artifact: `artifacts/tdd/symbolic-egraph-strategy/IMPL.json`
+- Symbolic e-graph IO context: `artifacts/tdd/symbolic-egraph-io/FEATURE.md`
+- Symbolic e-graph IO artifact: `artifacts/tdd/symbolic-egraph-io/TYPES.json`
+- Symbolic e-graph IO artifact: `artifacts/tdd/symbolic-egraph-io/TESTS.json`
+- Symbolic e-graph IO artifact: `artifacts/tdd/symbolic-egraph-io/IMPL.json`
+- Symbolic closeout context: `artifacts/tdd/symbolic-plan-closeout/FEATURE.md`
+- Symbolic closeout artifact: `artifacts/tdd/symbolic-plan-closeout/TYPES.json`
 - Policy module doc: `docs/modules/scripts.check-test-layout.md`
 - Policy module doc: `docs/modules/scripts.check-property-tests.md`
 - Benchmark runner: `scripts/bench/run-benchmarks.sh`
