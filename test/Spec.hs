@@ -11,6 +11,7 @@ import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.ParserTest qualified as Ds
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Dsl.PrettyTest qualified as DslPrettyTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.ApplyTest qualified as EngineApplyTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.BuildTest qualified as EGraphBuildTest
+import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.ExtractTest qualified as EGraphExtractTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.RewriteTest qualified as EGraphRewriteTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.SaturateTest qualified as EGraphSaturateTest
 import Unit.SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.TranslateTest qualified as EGraphTranslateTest
@@ -40,6 +41,7 @@ main =
             TraceTest.spec
             EngineApplyTest.spec
             EGraphBuildTest.spec
+            EGraphExtractTest.spec
             EGraphRewriteTest.spec
             EGraphSaturateTest.spec
             EGraphTranslateTest.spec

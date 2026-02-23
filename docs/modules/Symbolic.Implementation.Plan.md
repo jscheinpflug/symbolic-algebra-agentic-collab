@@ -37,7 +37,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-04 `symbolic-egraph-saturation/TYPES`
 - [x] PR-05 `symbolic-egraph-saturation/TESTS`
 - [x] PR-06 `symbolic-egraph-saturation/IMPL`
-- [ ] PR-07 `symbolic-egraph-strategy/TYPES`
+- [x] PR-07 `symbolic-egraph-strategy/TYPES`
 - [ ] PR-08 `symbolic-egraph-strategy/TESTS`
 - [ ] PR-09 `symbolic-egraph-strategy/IMPL`
 - [ ] PR-10 `symbolic-egraph-io/TYPES`
@@ -227,12 +227,12 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - [x] module docs updated in same PR
   - [x] no behavior implementation added
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ### PR-08: `symbolic-egraph-strategy/TESTS`
 
 - Feature id: `symbolic-egraph-strategy`
-- Depends on: `commit:<PR-07 merge sha>`
+- Depends on: `commit:5028f28`
 - Branch: `feature/symbolic-egraph-strategy-tests`
 - Scope:
   - unit tests for extraction objective and tie-break behavior
@@ -244,10 +244,10 @@ runStrategy :: Strategy -> SaturationConfig -> [Rule] -> Term -> Either Saturati
   - extractor tie-break on `size`
   - stable result across repeated runs
 - Progress checks:
-  - [ ] tests fail before implementation
-  - [ ] deterministic objective checks included
-  - [ ] module docs updated in same PR
-  - [ ] all required checks pass
+  - [x] tests added in mirrored unit/integration layout policy
+  - [x] deterministic objective checks included
+  - [x] module docs updated in same PR
+  - [x] all required checks pass
   - [ ] PR merged
 
 ### PR-09: `symbolic-egraph-strategy/IMPL`

@@ -25,12 +25,15 @@ strategy layer.
 - [x] Module scaffold created.
 - [x] Cost-aware extraction contracts defined.
 - [x] TYPES-phase typed placeholder behavior added.
+- [x] Contract-level `TESTS` coverage added.
 - [ ] Deterministic extraction implementation wired.
 
 ## Test Status
 
-- `TESTS` phase pending: strategy objective and tie-break coverage will be added
-  in `symbolic-egraph-strategy/TESTS`.
+- `TESTS` phase: unit coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Engine/EGraph/ExtractTest.hs`.
+- `TESTS` phase: integration determinism coverage added in
+  `test/Integration/Symbolic/ContractsIntegrationTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -42,3 +45,4 @@ strategy layer.
 
 - 2026-02-23: Documented extraction contracts for the strategy roadmap.
 - 2026-02-23: Added TYPES-phase typed placeholders for extraction contracts.
+- 2026-02-23: Added `TESTS`-phase unit/property/integration coverage for extraction contracts.

@@ -4,9 +4,11 @@ import Data.Map.Strict qualified as Map
 import SymbolicAlgebraAgenticCollab.Symbolic.Corpus
 import SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Ast
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.Apply
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Extract
 import SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search
 import SymbolicAlgebraAgenticCollab.Symbolic.Pattern
 import SymbolicAlgebraAgenticCollab.Symbolic.Rule
+import SymbolicAlgebraAgenticCollab.Symbolic.Strategy
 import SymbolicAlgebraAgenticCollab.Symbolic.Term
 import SymbolicAlgebraAgenticCollab.Symbolic.Trace
 import Test.Hspec
@@ -68,4 +70,26 @@ spec =
                         }
             let first = saturate cfg [] inputTerm
             let second = saturate cfg [] inputTerm
+            first `shouldBe` second
+
+        it "keeps extraction wrapper contracts deterministic across repeated runs" $ do
+            let inputTerm = Node (Head "Plus") [Atom "x", Number 0]
+            case buildSearchSnapshot inputTerm of
+                Left _ ->
+                    expectationFailure "buildSearchSnapshot unexpectedly failed for extraction integration test"
+                Right snapshot -> do
+                    let first = extractBest snapshot
+                    let second = extractBest snapshot
+                    first `shouldBe` second
+
+        it "keeps runStrategy wrapper contracts deterministic across repeated runs" $ do
+            let inputTerm = Node (Head "Plus") [Atom "x", Number 0]
+            let cfg =
+                    SaturationConfig
+                        { maxIterations = 8
+                        , maxENodes = 128
+                        , maxEClasses = 64
+                        }
+            let first = runStrategy TopDown cfg [] inputTerm
+            let second = runStrategy TopDown cfg [] inputTerm
             first `shouldBe` second
