@@ -15,6 +15,7 @@ Enforce mirrored unit test layout and integration test naming contracts.
 - `test/Spec.hs` must exist.
 - `test/Main.hs` must not exist.
 - Each `src/**/*.hs` file must have mirrored `test/Unit/**/*Test.hs`.
+- If a `TYPES` phase artifact is present in the PR, newly introduced `src/**/*.hs` files in that PR may defer mirrored tests to the `TESTS` phase.
 - Unit and integration test files must end with `Test.hs`.
 - `test/Integration/` must include at least one test file.
 
@@ -35,3 +36,4 @@ Enforce mirrored unit test layout and integration test naming contracts.
 ## Change Log
 
 - 2026-02-23: Initial enforcement script and module documentation added.
+- 2026-02-23: Added TDD-aware exception for new source files in `TYPES` phase PRs.

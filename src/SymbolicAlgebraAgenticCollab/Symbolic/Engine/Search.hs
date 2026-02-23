@@ -1,8 +1,20 @@
 module SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search (
+    EGraphBuildError (..),
+    EGraphSnapshot,
+    buildSearchSnapshot,
+    recoverSearchTerm,
     SearchConfig (..),
     SearchMode (..),
     SearchStats (..),
 ) where
+
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Build (EGraphSnapshot)
+import SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Translate (
+    EGraphBuildError (..),
+    eGraphToTerm,
+    termToEGraph,
+ )
+import SymbolicAlgebraAgenticCollab.Symbolic.Term (Term)
 
 data SearchMode
     = Deterministic
@@ -23,3 +35,9 @@ data SearchStats = SearchStats
     , maxFrontierSeen :: Int
     }
     deriving (Eq, Show)
+
+buildSearchSnapshot :: Term -> Either EGraphBuildError EGraphSnapshot
+buildSearchSnapshot = termToEGraph
+
+recoverSearchTerm :: EGraphSnapshot -> Either EGraphBuildError Term
+recoverSearchTerm = eGraphToTerm

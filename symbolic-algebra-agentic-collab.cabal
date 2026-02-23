@@ -40,6 +40,8 @@ library
     SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Parser
     SymbolicAlgebraAgenticCollab.Symbolic.Dsl.Pretty
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.Apply
+    SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Build
+    SymbolicAlgebraAgenticCollab.Symbolic.Engine.EGraph.Translate
     SymbolicAlgebraAgenticCollab.Symbolic.Engine.Search
     SymbolicAlgebraAgenticCollab.Symbolic.Pattern
     SymbolicAlgebraAgenticCollab.Symbolic.Rule
