@@ -42,7 +42,7 @@ Provide a PR-by-PR execution tracker for delivering the symbolic system on a `he
 - [x] PR-09 `symbolic-egraph-strategy/IMPL`
 - [x] PR-10 `symbolic-egraph-io/TYPES`
 - [x] PR-11 `symbolic-egraph-io/TESTS`
-- [ ] PR-12 `symbolic-egraph-io/IMPL`
+- [x] PR-12 `symbolic-egraph-io/IMPL`
 
 ## PR Specs
 
@@ -344,15 +344,15 @@ evaluateCorpusCase :: SaturationConfig -> [Rule] -> CorpusCase -> Either Saturat
   - [x] end-to-end flow deterministic
   - [x] module docs updated in same PR
   - [x] all required checks pass
-  - [ ] PR merged
+  - [x] PR merged
 
 ## Cross-PR Definition of Done
 
-- [ ] All 12 PRs merged in order.
-- [ ] No public module exposes raw `hegg` types.
-- [ ] Deterministic extraction objective enforced (`rule-cost + size`).
-- [ ] Corpus-backed end-to-end deterministic regression path exists.
-- [ ] Module docs and phase artifacts are fully updated and consistent.
+- [x] All 12 PRs merged in order.
+- [x] No public module exposes raw `hegg` types.
+- [x] Deterministic extraction objective enforced (`rule-cost + size`).
+- [x] Corpus-backed end-to-end deterministic regression path exists.
+- [x] Module docs and phase artifacts are fully updated and consistent.
 
 ## Assumptions
 
