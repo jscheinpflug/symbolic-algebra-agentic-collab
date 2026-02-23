@@ -25,6 +25,8 @@ Define parser error contracts for the symbolic DSL entrypoint.
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: parser-level `executeProgram` contract coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Dsl/ParserTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -35,3 +37,4 @@ Define parser error contracts for the symbolic DSL entrypoint.
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Added TYPES-phase `executeProgram` entry contract for the IO pipeline.
+- 2026-02-23: Added `TESTS`-phase coverage for parser execution entry contracts.

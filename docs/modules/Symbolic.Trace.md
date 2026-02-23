@@ -25,6 +25,9 @@ Define trace data contracts for auditable rewrite execution.
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: execution determinism coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/TraceTest.hs` and
+  `test/Integration/Symbolic/PipelineIntegrationTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -35,3 +38,4 @@ Define trace data contracts for auditable rewrite execution.
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Added TYPES-phase `executeProgram` contract for pipeline orchestration.
+- 2026-02-23: Added `TESTS`-phase deterministic coverage for `executeProgram`.

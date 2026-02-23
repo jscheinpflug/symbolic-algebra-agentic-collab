@@ -23,6 +23,8 @@ Define pretty-printing contract placeholder for DSL values.
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: pretty trace contract coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/Dsl/PrettyTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -33,3 +35,4 @@ Define pretty-printing contract placeholder for DSL values.
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Added TYPES-phase trace rendering contract placeholder for IO pipeline work.
+- 2026-02-23: Added `TESTS`-phase coverage for pretty trace contracts.

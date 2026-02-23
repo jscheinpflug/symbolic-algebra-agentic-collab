@@ -26,6 +26,9 @@ Define corpus case contracts for autonomous symbolic regression sets.
 ## Test Status
 
 - `TESTS` phase: structured hspec coverage added under `test/Unit` and `test/Integration`.
+- `TESTS` phase: corpus expectation and evaluation determinism coverage added in
+  `test/Unit/SymbolicAlgebraAgenticCollab/Symbolic/CorpusTest.hs` and
+  `test/Integration/Symbolic/PipelineIntegrationTest.hs`.
 
 ## Known Gaps / Next Steps
 
@@ -36,3 +39,4 @@ Define corpus case contracts for autonomous symbolic regression sets.
 - 2026-02-23: Initial `TYPES` scaffold.
 - 2026-02-23: Expanded `TESTS`-phase coverage with mirrored unit tests and integration suites.
 - 2026-02-23: Added TYPES-phase corpus expectation contracts for IO pipeline planning.
+- 2026-02-23: Added `TESTS`-phase corpus expectation and deterministic evaluation coverage.
