@@ -1,0 +1,18 @@
+{
+  "date": "2026-02-24",
+  "window_hours": 24,
+  "ci": {
+    "failed_runs": 9,
+    "failing_checks": [
+      "ci",
+      "trusted-agent-review",
+      "policy-daily"
+    ],
+    "flaky_checks": []
+  },
+  "reviews": {
+    "changes_requested": 0,
+    "recurring_findings": []
+  },
+  "dead_rules": []
+}
