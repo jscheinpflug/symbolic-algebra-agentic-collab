@@ -22,3 +22,8 @@
 11. Added `scripts/policy/check-test-layout.sh` to enforce test layout mirroring and naming contracts.
 12. Added `scripts/policy/check-property-tests.sh` to enforce baseline QuickCheck property coverage for symbolic core AST modules.
 13. Registered RULE-009 and extended policy-coverage requirements for `unit-tests`, `integration-tests`, `property-tests`, and `test-layout`.
+
+## 2026-02-26
+
+1. Added daily policy signal artifact: `artifacts/policy-signals/2026-02-26.json`.
+2. Added daily policy proposal artifacts under `artifacts/policy-proposals/`.
