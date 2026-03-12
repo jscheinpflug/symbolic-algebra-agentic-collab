@@ -1,0 +1,17 @@
+{
+  "date": "2026-03-12",
+  "source_signal_file": "artifacts/policy-signals/2026-03-12.json",
+  "proposals": [
+    {
+      "id": "POLICY-20260312-01",
+      "target": "docs/policy/changelog.md",
+      "severity": "low",
+      "change": "No rule changes proposed today; keep current policy set.",
+      "evidence": [
+        "No CI/review/dead-rule triggers crossed thresholds."
+      ],
+      "risk": "Slow drift might be missed without threshold tuning.",
+      "rollback_condition": "N/A"
+    }
+  ]
+}
