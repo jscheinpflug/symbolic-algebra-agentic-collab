@@ -1,0 +1,16 @@
+{
+  "date": "2026-03-14",
+  "window_hours": 24,
+  "ci": {
+    "failed_runs": 1,
+    "failing_checks": [
+      "policy-daily"
+    ],
+    "flaky_checks": []
+  },
+  "reviews": {
+    "changes_requested": 0,
+    "recurring_findings": []
+  },
+  "dead_rules": []
+}
